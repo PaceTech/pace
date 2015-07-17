@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 let darkBlueColor = UIColor(red: 27/255, green: 78/255, blue: 93/255, alpha: 1)
 let tealColor = UIColor(red: 54/255, green: 179/255, blue: 168/255, alpha: 1)
@@ -16,6 +17,20 @@ class FirstViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        var camera = GMSCameraPosition.cameraWithLatitude(-33.86, longitude: 151.20, zoom: 6)
+        var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
+        mapView.myLocationEnabled = true
+        self.view = mapView
+        
+        var marker = GMSMarker(position: CLLocationCoordinate2DMake(-33.86, 151.20))
+        marker.title = "Sydney"
+        marker.snippet = "Australia"
+        marker.map = mapView
+        
+        
         tabBarController?.tabBar.backgroundColor = UIColor.clearColor()
         tabBarController?.tabBar.backgroundImage = UIImage()
         tabBarController?.tabBar.clipsToBounds = true
