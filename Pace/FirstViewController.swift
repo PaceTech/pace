@@ -20,16 +20,22 @@ class FirstViewController: UIViewController {
         
         
         
-        var camera = GMSCameraPosition.cameraWithLatitude(-33.86, longitude: 151.20, zoom: 6)
+        var camera = GMSCameraPosition.cameraWithLatitude(40.7903, longitude: -73.9597, zoom: 12)
         var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
         mapView.myLocationEnabled = true
-        self.view = mapView
+//        view.addSubview(mapView)
         
-        var marker = GMSMarker(position: CLLocationCoordinate2DMake(-33.86, 151.20))
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
+        
+        var marker = GMSMarker(position: CLLocationCoordinate2DMake(40.7903, -73.9597))
+        marker.title = "New York City"
+        marker.snippet = "NY"
         marker.map = mapView
         
+        if let mylocation = mapView.myLocation {
+            NSLog("User's location: %@", mylocation)
+        } else {
+            NSLog("User's location is unknown")
+        }
         
         tabBarController?.tabBar.backgroundColor = UIColor.clearColor()
         tabBarController?.tabBar.backgroundImage = UIImage()
@@ -49,7 +55,9 @@ class FirstViewController: UIViewController {
         
         headerView.addSubview(titleButton)
         
-        view.addSubview(headerView)
+        mapView.addSubview(headerView)
+        
+        self.view = mapView
     }
 
     override func didReceiveMemoryWarning() {
