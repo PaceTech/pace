@@ -13,17 +13,31 @@ let darkBlueColor = UIColor(red: 27/255, green: 78/255, blue: 93/255, alpha: 1)
 let tealColor = UIColor(red: 54/255, green: 179/255, blue: 168/255, alpha: 1)
 
 
-class FirstViewController: UIViewController {
+class FirstViewController: UIViewController, UISearchBarDelegate {
 
+    
+    var firstLocationUpdate: Bool?
+    let locationManager=CLLocationManager()
+    var mapView: GMSMapView!
+    var searchActive : Bool = false
+    var searchBar : UISearchBar?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+         self.locationManager.requestWhenInUseAuthorization()
         
         var camera = GMSCameraPosition.cameraWithLatitude(40.7903, longitude: -73.9597, zoom: 12)
-        var mapView = GMSMapView.mapWithFrame(CGRectZero, camera: camera)
-        mapView.myLocationEnabled = true
-//        view.addSubview(mapView)
+        mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
+        mapView.settings.compassButton = true
+        mapView.settings.myLocationButton = true
+        
+        mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.mapView.myLocationEnabled = true
+        })
+        println(mapView.myLocation)
         
         
         var marker = GMSMarker(position: CLLocationCoordinate2DMake(40.7903, -73.9597))
@@ -31,13 +45,7 @@ class FirstViewController: UIViewController {
         marker.snippet = "NY"
         marker.map = mapView
         
-        if let mylocation = mapView.myLocation {
-            NSLog("User's location: %@", mylocation)
-        } else {
-            NSLog("User's location is unknown")
-        }
-        
-        tabBarController?.tabBar.backgroundColor = UIColor.clearColor()
+        tabBarController?.tabBar.backgroundColor = UIColor.whiteColor()
         tabBarController?.tabBar.backgroundImage = UIImage()
         tabBarController?.tabBar.clipsToBounds = true
 
@@ -55,9 +63,19 @@ class FirstViewController: UIViewController {
         
         headerView.addSubview(titleButton)
         
+        searchBar = UISearchBar(frame: CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40))
+        searchBar!.delegate = self
+        mapView.addSubview(searchBar!)
+        
         mapView.addSubview(headerView)
         
         self.view = mapView
+    }
+    
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        firstLocationUpdate = true
+        let location = change[NSKeyValueChangeNewKey] as! CLLocation
+//        mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 14)
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,8 +83,36 @@ class FirstViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        tabBarController?.tabBar.hidden = false
+    }
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent;
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+//        searchBar?.becomeFirstResponder()
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchActive = true
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchActive = false
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchActive = false
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchActive = false
+        println(searchBar.text)
+        searchBar.resignFirstResponder()
     }
 
 

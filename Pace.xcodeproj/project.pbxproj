@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D866E79E0A1A9A5D0567DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF5EC911D50DF4CCE3B89BF1 /* libPods.a */; };
+		DB2B14EC1B5F1D27002BD161 /* SelectHostLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2B14EB1B5F1D27002BD161 /* SelectHostLocation.swift */; };
 		DB508F511B4E134D00604F0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F501B4E134D00604F0D /* AppDelegate.swift */; };
 		DB508F531B4E134D00604F0D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F521B4E134D00604F0D /* FirstViewController.swift */; };
 		DB508F551B4E134D00604F0D /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F541B4E134D00604F0D /* SecondViewController.swift */; };
@@ -15,6 +16,7 @@
 		DB508F5A1B4E134D00604F0D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB508F591B4E134D00604F0D /* Images.xcassets */; };
 		DB508F5D1B4E134D00604F0D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB508F5B1B4E134D00604F0D /* LaunchScreen.xib */; };
 		DB508F691B4E134E00604F0D /* PaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F681B4E134E00604F0D /* PaceTests.swift */; };
+		DBBADEEA1B5F03350009EAD8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBADEE91B5F03350009EAD8 /* DetailViewController.swift */; };
 		DBDE95D61B4F56880022D95B /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE95D51B4F56880022D95B /* ThirdViewController.swift */; };
 		DBF8571B1B55EC3700AD1C23 /* pace.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF8571A1B55EC3700AD1C23 /* pace.png */; };
 /* End PBXBuildFile section */
@@ -31,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		7F4EFA226FC05AFE75E2D318 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		DB2B14EB1B5F1D27002BD161 /* SelectHostLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectHostLocation.swift; sourceTree = "<group>"; };
 		DB508F4B1B4E134D00604F0D /* Pace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB508F4F1B4E134D00604F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB508F501B4E134D00604F0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +45,7 @@
 		DB508F621B4E134E00604F0D /* PaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB508F671B4E134E00604F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB508F681B4E134E00604F0D /* PaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceTests.swift; sourceTree = "<group>"; };
+		DBBADEE91B5F03350009EAD8 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DBDE95D51B4F56880022D95B /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		DBF8571A1B55EC3700AD1C23 /* pace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pace.png; sourceTree = "<group>"; };
 		DF5EC911D50DF4CCE3B89BF1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +115,8 @@
 				DB508F521B4E134D00604F0D /* FirstViewController.swift */,
 				DB508F541B4E134D00604F0D /* SecondViewController.swift */,
 				DBDE95D51B4F56880022D95B /* ThirdViewController.swift */,
+				DB2B14EB1B5F1D27002BD161 /* SelectHostLocation.swift */,
+				DBBADEE91B5F03350009EAD8 /* DetailViewController.swift */,
 				DB508F561B4E134D00604F0D /* Main.storyboard */,
 				DB508F591B4E134D00604F0D /* Images.xcassets */,
 				DB508F5B1B4E134D00604F0D /* LaunchScreen.xib */,
@@ -283,7 +289,9 @@
 			files = (
 				DB508F551B4E134D00604F0D /* SecondViewController.swift in Sources */,
 				DB508F511B4E134D00604F0D /* AppDelegate.swift in Sources */,
+				DBBADEEA1B5F03350009EAD8 /* DetailViewController.swift in Sources */,
 				DBDE95D61B4F56880022D95B /* ThirdViewController.swift in Sources */,
+				DB2B14EC1B5F1D27002BD161 /* SelectHostLocation.swift in Sources */,
 				DB508F531B4E134D00604F0D /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,6 +421,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Pace/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -424,6 +433,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Pace/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -57,7 +57,12 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("You selected cell #\(indexPath.row)!")
+
+        let vc = DetailViewController()
+        vc.titleText = items[indexPath.row]
+        navigationController!.pushViewController(vc, animated: true)
     }
+    
+    
     
 }
