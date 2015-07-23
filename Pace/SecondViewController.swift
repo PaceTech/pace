@@ -17,6 +17,9 @@ class SecondViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tabBarController?.tabBar.hidden = false
+        
         var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 60))
         headerView.backgroundColor = darkBlueColor
         

@@ -48,7 +48,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
         tabBarController?.tabBar.backgroundColor = UIColor.whiteColor()
         tabBarController?.tabBar.backgroundImage = UIImage()
         tabBarController?.tabBar.clipsToBounds = true
-
+        tabBarController?.tabBar.hidden = false
         tabBarController?.tabBar.tintColor = tealColor
         
         
@@ -71,6 +71,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
         
         self.view = mapView
     }
+
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
@@ -83,9 +84,6 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        tabBarController?.tabBar.hidden = false
-    }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent;
