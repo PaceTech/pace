@@ -109,7 +109,7 @@
                                 <color key="tintColor" red="0.1058823529" green="0.30588235289999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AFH-gg-ONd">
-                                <rect key="frame" x="220" y="481" width="160" height="30"/>
+                                <rect key="frame" x="220" y="505" width="160" height="30"/>
                                 <color key="backgroundColor" red="0.1058823529" green="0.30588235289999999" blue="0.36470588240000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="160" id="8l8-XI-ong"/>
@@ -153,7 +153,7 @@
                             <constraint firstItem="PBF-Tv-ADD" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="15" id="KEk-J7-Dqg"/>
                             <constraint firstItem="PBF-Tv-ADD" firstAttribute="top" secondItem="kIT-IX-nYO" secondAttribute="bottom" constant="60" id="S7X-fF-SbV"/>
                             <constraint firstItem="kIT-IX-nYO" firstAttribute="top" secondItem="1rX-Lb-l4G" secondAttribute="bottom" constant="80" id="Ycg-Qs-31G"/>
-                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="AFH-gg-ONd" secondAttribute="bottom" constant="40" id="b32-lo-cC9"/>
+                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="AFH-gg-ONd" secondAttribute="bottom" constant="16" id="b32-lo-cC9"/>
                             <constraint firstItem="1rX-Lb-l4G" firstAttribute="baseline" secondItem="nNo-IW-mAR" secondAttribute="baseline" constant="-15" id="cc5-Mn-vaM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="nNo-IW-mAR" secondAttribute="trailing" constant="15" id="dgB-7L-3AP"/>
                             <constraint firstItem="kIT-IX-nYO" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="15" id="foD-Ys-BcU"/>
@@ -324,6 +324,7 @@
         <!--Host-->
         <scene sceneID="PrB-2p-9BG">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cIN-0b-F5H" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="m1g-c1-VL9" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Host" image="first" id="cPa-gy-q4n"/>
                     <toolbarItems/>
@@ -338,7 +339,6 @@
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="rootViewController" id="EKj-nL-B2t"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cIN-0b-F5H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="750" y="360"/>
         </scene>

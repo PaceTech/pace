@@ -32,8 +32,6 @@ class SecondViewController: UIViewController {
         selectButton.titleLabel?.numberOfLines = 0
         selectButton.titleLabel?.lineBreakMode = .ByWordWrapping
         
-        tabBarController?.tabBar.hidden = true
-        
         headerView.addSubview(titleButton)
         view.addSubview(headerView)
     }
