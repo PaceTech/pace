@@ -96,6 +96,8 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
     
     func select() {
         //send selected location to other view
+        let vc = navigationController?.viewControllers[0] as! SecondViewController
+        vc.location = savedLocation
         navigationController?.popToRootViewControllerAnimated(true)
     }
     

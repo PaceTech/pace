@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 class SecondViewController: UIViewController {
     
@@ -15,9 +16,13 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var pacePicker: UISegmentedControl!
     @IBOutlet weak var distancePicker: UISegmentedControl!
     
+    let distance = [3, 4, 5, 6, 7]
+    let pace = [7.5, 8, 8.5, 9, 9.5]
+    var location : CLLocationCoordinate2D?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tabBarController?.tabBar.hidden = false
         
         var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 60))
@@ -40,6 +45,10 @@ class SecondViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        println(location)
+    }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent;
@@ -51,7 +60,12 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func createPace(sender: UIButton) {
-        println(pacePicker.selectedSegmentIndex)
+        let myPace = Pace()
+        myPace.distance = distance[distancePicker.selectedSegmentIndex]
+        myPace.pace = pace[pacePicker.selectedSegmentIndex]
+        myPace.location = location
+        let vc = tabBarController?.viewControllers?.first as! FirstViewController
+        vc.newPace = myPace
         tabBarController?.selectedIndex = 0
     }
 

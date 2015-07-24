@@ -21,6 +21,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
     var mapView: GMSMapView!
     var searchActive : Bool = false
     var searchBar : UISearchBar?
+    var newPace : Pace?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +91,11 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
+        if let pace = newPace {
+            var marker = GMSMarker(position: pace.location!)
+            marker.title = "Your new pace!"
+            marker.map = mapView
+        }
 //        searchBar?.becomeFirstResponder()
     }
     
