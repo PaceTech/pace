@@ -10,6 +10,7 @@
 		8D866E79E0A1A9A5D0567DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF5EC911D50DF4CCE3B89BF1 /* libPods.a */; };
 		DB2B14EC1B5F1D27002BD161 /* SelectHostLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2B14EB1B5F1D27002BD161 /* SelectHostLocation.swift */; };
 		DB2B14EE1B61DC74002BD161 /* Pace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2B14ED1B61DC74002BD161 /* Pace.swift */; };
+		DB2B14F11B68F3BF002BD161 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2B14F01B68F3BF002BD161 /* LoginViewController.swift */; };
 		DB508F511B4E134D00604F0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F501B4E134D00604F0D /* AppDelegate.swift */; };
 		DB508F531B4E134D00604F0D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F521B4E134D00604F0D /* FirstViewController.swift */; };
 		DB508F551B4E134D00604F0D /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F541B4E134D00604F0D /* SecondViewController.swift */; };
@@ -36,6 +37,8 @@
 		7F4EFA226FC05AFE75E2D318 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		DB2B14EB1B5F1D27002BD161 /* SelectHostLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectHostLocation.swift; sourceTree = "<group>"; };
 		DB2B14ED1B61DC74002BD161 /* Pace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pace.swift; sourceTree = "<group>"; };
+		DB2B14EF1B68F1F7002BD161 /* Pace-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pace-Bridging-Header.h"; sourceTree = "<group>"; };
+		DB2B14F01B68F3BF002BD161 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DB508F4B1B4E134D00604F0D /* Pace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB508F4F1B4E134D00604F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB508F501B4E134D00604F0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				DB508F501B4E134D00604F0D /* AppDelegate.swift */,
+				DB2B14EF1B68F1F7002BD161 /* Pace-Bridging-Header.h */,
 				DB2B14ED1B61DC74002BD161 /* Pace.swift */,
 				DB508F521B4E134D00604F0D /* FirstViewController.swift */,
 				DB508F541B4E134D00604F0D /* SecondViewController.swift */,
@@ -121,6 +125,7 @@
 				DB2B14EB1B5F1D27002BD161 /* SelectHostLocation.swift */,
 				DBBADEE91B5F03350009EAD8 /* DetailViewController.swift */,
 				DB508F561B4E134D00604F0D /* Main.storyboard */,
+				DB2B14F01B68F3BF002BD161 /* LoginViewController.swift */,
 				DB508F591B4E134D00604F0D /* Images.xcassets */,
 				DB508F5B1B4E134D00604F0D /* LaunchScreen.xib */,
 				DB508F4E1B4E134D00604F0D /* Supporting Files */,
@@ -294,6 +299,7 @@
 				DB2B14EE1B61DC74002BD161 /* Pace.swift in Sources */,
 				DB508F511B4E134D00604F0D /* AppDelegate.swift in Sources */,
 				DBBADEEA1B5F03350009EAD8 /* DetailViewController.swift in Sources */,
+				DB2B14F11B68F3BF002BD161 /* LoginViewController.swift in Sources */,
 				DBDE95D61B4F56880022D95B /* ThirdViewController.swift in Sources */,
 				DB2B14EC1B5F1D27002BD161 /* SelectHostLocation.swift in Sources */,
 				DB508F531B4E134D00604F0D /* FirstViewController.swift in Sources */,
@@ -428,6 +434,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Pace/Pace-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -440,6 +448,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Pace/Pace-Bridging-Header.h";
 			};
 			name = Release;
 		};

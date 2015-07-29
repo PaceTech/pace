@@ -176,10 +176,10 @@
             </objects>
             <point key="canvasLocation" x="1478" y="334"/>
         </scene>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="tKX-N5-SXM">
             <objects>
-                <viewController id="Jq5-BG-IAy" sceneMemberID="viewController">
+                <viewController id="Jq5-BG-IAy" customClass="LoginViewController" customModule="Pace" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FUv-Ca-gXZ"/>
                         <viewControllerLayoutGuide type="bottom" id="zqX-oS-YYO"/>

@@ -40,12 +40,6 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
         })
         println(mapView.myLocation)
         
-        
-        var marker = GMSMarker(position: CLLocationCoordinate2DMake(40.7903, -73.9597))
-        marker.title = "New York City"
-        marker.snippet = "NY"
-        marker.map = mapView
-        
         tabBarController?.tabBar.backgroundColor = UIColor.whiteColor()
         tabBarController?.tabBar.backgroundImage = UIImage()
         tabBarController?.tabBar.clipsToBounds = true
@@ -71,12 +65,38 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
         mapView.addSubview(headerView)
         
         self.view = mapView
+        
     }
 
+    func getPaces() {
+        var urlString = "http://japace.com/pace/get"
+        var url: NSURL = NSURL(string: urlString)!
+        var request1: NSURLRequest = NSURLRequest(URL: url)
+        var response: AutoreleasingUnsafeMutablePointer<NSURLResponse?>=nil
+        var dataVal: NSData =  NSURLConnection.sendSynchronousRequest(request1, returningResponse: response, error:nil)!
+        var jsonResult = NSJSONSerialization.JSONObjectWithData(dataVal, options: .MutableContainers, error: nil) as! NSDictionary
+        
+        
+        if let results: AnyObject = jsonResult["data"] {
+            if let paces = results["allPaces"] as? [AnyObject]{
+                for pace in paces {
+                    if let latmark = pace["lat"] as? NSString, lonmark = pace["long"] as? NSString {
+                            var marker = GMSMarker(position: CLLocationCoordinate2DMake(latmark.doubleValue, lonmark.doubleValue))
+                            marker.title = "Join Pace"
+                            marker.map = mapView
+                            mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
+                        
+                    }
+                }
+            }
+        }
+
+    }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
         let location = change[NSKeyValueChangeNewKey] as! CLLocation
+        
 //        mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 14)
     }
 
@@ -91,12 +111,15 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
+        getPaces()
         if let pace = newPace {
             var marker = GMSMarker(position: pace.location!)
             marker.title = "Your new pace!"
             marker.map = mapView
+            mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
         }
 //        searchBar?.becomeFirstResponder()
+        
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
