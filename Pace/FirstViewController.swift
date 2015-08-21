@@ -13,9 +13,8 @@ let darkBlueColor = UIColor(red: 27/255, green: 78/255, blue: 93/255, alpha: 1)
 let tealColor = UIColor(red: 54/255, green: 179/255, blue: 168/255, alpha: 1)
 
 
-class FirstViewController: UIViewController, UISearchBarDelegate {
+class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDelegate {
 
-    
     var firstLocationUpdate: Bool?
     let locationManager=CLLocationManager()
     var mapView: GMSMapView!
@@ -38,7 +37,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.mapView.myLocationEnabled = true
         })
-        println(mapView.myLocation)
+        mapView.delegate = self
         
         tabBarController?.tabBar.backgroundColor = UIColor.whiteColor()
         tabBarController?.tabBar.backgroundImage = UIImage()
@@ -47,7 +46,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
         tabBarController?.tabBar.tintColor = tealColor
         
         
-        var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 60))
+        var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 70))
         headerView.backgroundColor = darkBlueColor
         
         var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
@@ -58,7 +57,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
         
         headerView.addSubview(titleButton)
         
-        searchBar = UISearchBar(frame: CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40))
+        searchBar = UISearchBar(frame: CGRect(x: 20, y: 100, width: view.frame.width - 40, height: 40))
         searchBar!.delegate = self
         mapView.addSubview(searchBar!)
         
@@ -69,27 +68,20 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
     }
 
     func getPaces() {
-        var urlString = "http://japace.com/pace/get"
-        var url: NSURL = NSURL(string: urlString)!
-        var request1: NSURLRequest = NSURLRequest(URL: url)
-        var response: AutoreleasingUnsafeMutablePointer<NSURLResponse?>=nil
-        var dataVal: NSData =  NSURLConnection.sendSynchronousRequest(request1, returningResponse: response, error:nil)!
-        var jsonResult = NSJSONSerialization.JSONObjectWithData(dataVal, options: .MutableContainers, error: nil) as! NSDictionary
-        
-        
-        if let results: AnyObject = jsonResult["data"] {
-            if let paces = results["allPaces"] as? [AnyObject]{
-                for pace in paces {
-                    if let latmark = pace["lat"] as? NSString, lonmark = pace["long"] as? NSString {
-                            var marker = GMSMarker(position: CLLocationCoordinate2DMake(latmark.doubleValue, lonmark.doubleValue))
-                            marker.title = "Join Pace"
-                            marker.map = mapView
-                            mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
-                        
-                    }
-                }
+        NetworkController().getPaces({paces in
+            for pace in paces {
+                var marker = GMSMarker(position: pace.location!)
+                marker.title = "Join Pace"
+                marker.map = self.mapView
+                marker.userData = pace
             }
-        }
+            }, failureHandler: {
+                error in
+                println(error)
+                
+        })
+        
+
 
     }
     
@@ -117,6 +109,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
             marker.title = "Your new pace!"
             marker.map = mapView
             mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
+            marker.userData = pace
         }
 //        searchBar?.becomeFirstResponder()
         
@@ -138,9 +131,17 @@ class FirstViewController: UIViewController, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchActive = false
-        println(searchBar.text)
         searchBar.resignFirstResponder()
     }
+    
+    func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
+        let vc = PaceDetailViewController()
+        vc.paceInfo = marker.userData as! Pace?
+        navigationController?.pushViewController(vc, animated: true)
+        return true
+    }
+    
+
 
 
 }

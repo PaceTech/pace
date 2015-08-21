@@ -47,7 +47,7 @@ class SecondViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        println(location)
+        
     }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -61,13 +61,31 @@ class SecondViewController: UIViewController {
     
     @IBAction func createPace(sender: UIButton) {
         let myPace = Pace()
-        myPace.distance = distance[distancePicker.selectedSegmentIndex]
-        myPace.pace = pace[pacePicker.selectedSegmentIndex]
+        myPace.distance = String(distance[distancePicker.selectedSegmentIndex])
+        myPace.pace = String(stringInterpolationSegment: pace[pacePicker.selectedSegmentIndex])
         myPace.location = location
-        let vc = tabBarController?.viewControllers?.first as! FirstViewController
-        vc.newPace = myPace
+        let navVC = tabBarController?.viewControllers?.first as? UINavigationController
+        let vc = navVC?.viewControllers[0] as? FirstViewController
+        vc!.newPace = myPace
+        
+        let uid = 1
+        let departureTime = "2016-06-25 09:15:37"
+        
+        if let lat = myPace.location?.latitude, lon = myPace.location?.longitude, distance = myPace.distance, pacespeed = myPace.pace {
+            
+            var dataString = "latitute=\(lat)&longitude=\(lon)&distance=\(distance)&pace=\(pacespeed)&runtime=2015-08-11T01:57:57.579870Z&owner=\(AccountController.sharedInstance.userID)&participants=\(AccountController.sharedInstance.userID)"
+            
+            NetworkController().createPace(dataString, successHandler: {boolvar in
+                }, failureHandler: {error in
+            })
+            
+        
+        }
         tabBarController?.selectedIndex = 0
     }
+    
+    
+
 
 
 }

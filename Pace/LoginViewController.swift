@@ -8,20 +8,36 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 
+    var loginButton: FBSDKLoginButton?
+    
+    @IBOutlet weak var idText: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        var loginButton = FBSDKLoginButton()
-        loginButton.frame = CGRect(x: 60, y: view.frame.height - 80, width: view.frame.width - 120, height: 50)
-        view.addSubview(loginButton)
+        loginButton = FBSDKLoginButton()
+        loginButton?.readPermissions = ["public_profile", "email"]
+        loginButton?.delegate = self
+        loginButton?.frame = CGRect(x: 60, y: view.frame.height - 80, width: view.frame.width - 120, height: 50)
+        view.addSubview(loginButton!)
+        idText.layer.borderColor = UIColor.redColor().CGColor
+        idText.layer.borderWidth = 3.0
 
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        AccountController.sharedInstance.userID = idText.text
     }
+    
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        performSegueWithIdentifier("loginSegue", sender: self)
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+    }
+
+
     
 
     /*

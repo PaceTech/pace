@@ -10,7 +10,10 @@ import UIKit
 import GoogleMaps
 
 class Pace: NSObject {
-    var distance: Int?
-    var pace: Double?
+    var id : String?
+    var distance: String?
+    var pace: String?
     var location: CLLocationCoordinate2D?
+    var owner: String?
+    var participants: [AnyObject]?
 }

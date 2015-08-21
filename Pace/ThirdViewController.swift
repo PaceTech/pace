@@ -49,11 +49,19 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        if indexPath.row != 1 {
+            cell.userInteractionEnabled = false
+        }
         
         cell.textLabel?.text = self.items[indexPath.row]
-        
+        cell.textLabel?.textColor = tealColor
+        cell.textLabel?.font = UIFont(name: "helvetica", size: 20)
         return cell
         
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
