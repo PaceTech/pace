@@ -182,8 +182,9 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     
                     cell.nameText.text = user.firstname
                     if let image = user.imageurl {
-                        println(image)
                         if image != "" {
+                            println(image)
+                            
                             cell.profImageView.sd_setImageWithURL(NSURL(string: image))
                         }
                         
