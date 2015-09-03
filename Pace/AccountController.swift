@@ -10,7 +10,7 @@ import UIKit
 
 class AccountController: NSObject {
     
-    var userID = "0"
+    var currentuser : User?
     
     class var sharedInstance: AccountController {
         struct Static {

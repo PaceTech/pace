@@ -73,6 +73,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                 var marker = GMSMarker(position: pace.location!)
                 marker.title = "Join Pace"
                 marker.map = self.mapView
+                marker.icon = UIImage(named: "blue-run-small")
                 marker.userData = pace
             }
             }, failureHandler: {
@@ -80,14 +81,15 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                 println(error)
                 
         })
-        
-
-
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+//        mapView.removeObserver(self, forKeyPath: "myLocation")
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
-        let location = change[NSKeyValueChangeNewKey] as! CLLocation
+        let location = change[NSKeyValueChangeNewKey] as? CLLocation
         
 //        mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 14)
     }
@@ -108,10 +110,11 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
             var marker = GMSMarker(position: pace.location!)
             marker.title = "Your new pace!"
             marker.map = mapView
+            marker.icon = UIImage(named: "blue-run-small")
             mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
             marker.userData = pace
         }
-//        searchBar?.becomeFirstResponder()
+        searchBar?.becomeFirstResponder()
         
     }
     
@@ -136,7 +139,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
     
     func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {
         let vc = PaceDetailViewController()
-        vc.paceInfo = marker.userData as! Pace?
+        vc.paceInfo = marker.userData as? Pace
         navigationController?.pushViewController(vc, animated: true)
         return true
     }

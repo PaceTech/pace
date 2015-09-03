@@ -15,5 +15,6 @@ class Pace: NSObject {
     var pace: String?
     var location: CLLocationCoordinate2D?
     var owner: String?
+    var time: String?
     var participants: [AnyObject]?
 }

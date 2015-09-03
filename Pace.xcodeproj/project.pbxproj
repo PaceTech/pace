@@ -28,8 +28,11 @@
 		DB508F5A1B4E134D00604F0D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB508F591B4E134D00604F0D /* Images.xcassets */; };
 		DB508F5D1B4E134D00604F0D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB508F5B1B4E134D00604F0D /* LaunchScreen.xib */; };
 		DB508F691B4E134E00604F0D /* PaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F681B4E134E00604F0D /* PaceTests.swift */; };
-		DBBADEEA1B5F03350009EAD8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBADEE91B5F03350009EAD8 /* DetailViewController.swift */; };
+		DBBADEEA1B5F03350009EAD8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */; };
 		DBDE95D61B4F56880022D95B /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE95D51B4F56880022D95B /* ThirdViewController.swift */; };
+		DBEE5F8F1B8A6CE800BD247A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE5F8E1B8A6CE800BD247A /* User.swift */; };
+		DBEE5F911B8E779A00BD247A /* MyRunsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE5F901B8E779A00BD247A /* MyRunsViewController.swift */; };
+		DBEE5F931B8E7A0300BD247A /* blue-run-small.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEE5F921B8E7A0300BD247A /* blue-run-small.png */; };
 		DBF8571B1B55EC3700AD1C23 /* pace.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF8571A1B55EC3700AD1C23 /* pace.png */; };
 /* End PBXBuildFile section */
 
@@ -70,8 +73,11 @@
 		DB508F621B4E134E00604F0D /* PaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB508F671B4E134E00604F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB508F681B4E134E00604F0D /* PaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceTests.swift; sourceTree = "<group>"; };
-		DBBADEE91B5F03350009EAD8 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DBDE95D51B4F56880022D95B /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
+		DBEE5F8E1B8A6CE800BD247A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DBEE5F901B8E779A00BD247A /* MyRunsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRunsViewController.swift; sourceTree = "<group>"; };
+		DBEE5F921B8E7A0300BD247A /* blue-run-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue-run-small.png"; sourceTree = "<group>"; };
 		DBF8571A1B55EC3700AD1C23 /* pace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pace.png; sourceTree = "<group>"; };
 		DF5EC911D50DF4CCE3B89BF1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E649EAB90611584E492DDD9A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,7 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				DBDE95D51B4F56880022D95B /* ThirdViewController.swift */,
-				DBBADEE91B5F03350009EAD8 /* DetailViewController.swift */,
+				DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */,
+				DBEE5F901B8E779A00BD247A /* MyRunsViewController.swift */,
 			);
 			name = "Third View";
 			sourceTree = "<group>";
@@ -147,6 +154,7 @@
 				DB15DA651B79A1AC00FA39AB /* AccountController.swift */,
 				DB15DA631B79877B00FA39AB /* NetworkController.swift */,
 				DB2B14ED1B61DC74002BD161 /* Pace.swift */,
+				DBEE5F8E1B8A6CE800BD247A /* User.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -193,6 +201,7 @@
 			children = (
 				DB15DA6E1B85453E00FA39AB /* profile.jpg */,
 				DB2E6A8F1B86AE0800953D36 /* placeholder.png */,
+				DBEE5F921B8E7A0300BD247A /* blue-run-small.png */,
 				DB15DA701B86AC5B00FA39AB /* congrats.png */,
 				DB15DA721B86AC9A00FA39AB /* profile1.jpg */,
 				DB2B14F21B699709002BD161 /* home@2x.png */,
@@ -313,6 +322,7 @@
 				DB508F5D1B4E134D00604F0D /* LaunchScreen.xib in Resources */,
 				DB15DA711B86AC5B00FA39AB /* congrats.png in Resources */,
 				DB2B14F71B699726002BD161 /* location-join@2x.png in Resources */,
+				DBEE5F931B8E7A0300BD247A /* blue-run-small.png in Resources */,
 				DB2E6A901B86AE0800953D36 /* placeholder.png in Resources */,
 				DB508F5A1B4E134D00604F0D /* Images.xcassets in Resources */,
 			);
@@ -369,12 +379,14 @@
 				DB15DA661B79A1AC00FA39AB /* AccountController.swift in Sources */,
 				DB2B14EE1B61DC74002BD161 /* Pace.swift in Sources */,
 				DB508F511B4E134D00604F0D /* AppDelegate.swift in Sources */,
-				DBBADEEA1B5F03350009EAD8 /* DetailViewController.swift in Sources */,
+				DBBADEEA1B5F03350009EAD8 /* ProfileViewController.swift in Sources */,
 				DB15DA681B79A83800FA39AB /* PaceDetailViewController.swift in Sources */,
 				DB2B14F11B68F3BF002BD161 /* LoginViewController.swift in Sources */,
 				DBDE95D61B4F56880022D95B /* ThirdViewController.swift in Sources */,
+				DBEE5F8F1B8A6CE800BD247A /* User.swift in Sources */,
 				DB2B14EC1B5F1D27002BD161 /* SelectHostLocation.swift in Sources */,
 				DB508F531B4E134D00604F0D /* FirstViewController.swift in Sources */,
+				DBEE5F911B8E779A00BD247A /* MyRunsViewController.swift in Sources */,
 				DB15DA641B79877B00FA39AB /* NetworkController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,7 +517,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Pace/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -520,7 +532,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Pace/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";

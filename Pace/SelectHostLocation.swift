@@ -82,7 +82,7 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
-        let location = change[NSKeyValueChangeNewKey] as! CLLocation
+        let location = change[NSKeyValueChangeNewKey] as? CLLocation
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -96,9 +96,10 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
     
     func select() {
         //send selected location to other view
-        let vc = navigationController?.viewControllers[0] as! SecondViewController
-        vc.location = savedLocation
-        navigationController?.popToRootViewControllerAnimated(true)
+        if let vc = navigationController?.viewControllers[0] as? SecondViewController {
+            vc.location = savedLocation
+            navigationController?.popToRootViewControllerAnimated(true)
+        }
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
@@ -131,22 +132,23 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
         var request1: NSURLRequest = NSURLRequest(URL: url)
         var response: AutoreleasingUnsafeMutablePointer<NSURLResponse?>=nil
         var dataVal: NSData =  NSURLConnection.sendSynchronousRequest(request1, returningResponse: response, error:nil)!
-        var jsonResult = NSJSONSerialization.JSONObjectWithData(dataVal, options: .MutableContainers, error: nil) as! NSDictionary
+        if let  jsonResult = NSJSONSerialization.JSONObjectWithData(dataVal, options: .MutableContainers, error: nil) as? NSDictionary {
         
         
         if let results: AnyObject = jsonResult["results"] {
             if let geometry = results[0]["geometry"] as? NSDictionary {
                 if let location = geometry["location"] as? NSDictionary {
-                    var latitude = location["lat"] as! Double
-                    var longitude = location["lng"] as! Double
-                    mapView.camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude), zoom: 12)
-                    var position = CLLocationCoordinate2DMake(latitude, longitude)
+                    var latitude = location["lat"] as? Double
+                    var longitude = location["lng"] as? Double
+                    mapView.camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!), zoom: 12)
+                    var position = CLLocationCoordinate2DMake(latitude!, longitude!)
                     savedLocation = position
                     var marker = GMSMarker(position: position)
                     marker.title = "Start A Pace"
                     marker.map = mapView
                 }
             }
+        }
         }
 
 

@@ -8,24 +8,14 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class MyRunsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
     var titleText: String?
     var tableView: UITableView  =   UITableView()
-    var items: [String] = ["Current Company?", "College?", "33 friends on pace", "5 paces joined", "6 paces hosted"]
-    var runners: [String] = ["Nick", "Taylor"]
-
+    var items: [String] = [String]()
+    var paces: [Pace] = [Pace]()
+    
     override func viewDidLoad() {
-        tableView.frame         =   CGRectMake(0, 200, view.frame.width, 400);
-        tableView.delegate      =   self
-        tableView.dataSource    =   self
-        
-        tableView.registerClass(CustomTableViewCellInfo.self, forCellReuseIdentifier: "infoCell")
-        
-        
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
-        self.view.addSubview(tableView)
         
         var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 70))
         headerView.backgroundColor = darkBlueColor
@@ -33,7 +23,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         
         view.backgroundColor = UIColor.whiteColor()
-
+        
         let backButton = UIButton(frame: CGRect(x: 10, y: 20, width: 70, height: 50))
         backButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         backButton.setTitle("Back", forState: .Normal)
@@ -53,65 +43,78 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         profImageView.layer.cornerRadius = 50
         view.addSubview(profImageView)
         
+
         
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"])
-        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-            if ((error) != nil){}
-            else {
-                println("fetched user: \(result)")
-                let photo = result.valueForKey("picture") as! NSDictionary
-                let data = photo.valueForKey("data") as! NSDictionary
-                let url = NSURL(string: data.valueForKey("url") as! String)
-                profImageView.sd_setImageWithURL(url)
+        tableView.frame         =   CGRectMake(0, 280, view.frame.width, 400);
+        tableView.delegate      =   self
+        tableView.dataSource    =   self
+        
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        self.view.addSubview(tableView)
+        
+        NetworkController().getPaces({paces in
+            for pace in paces {
+                self.items.append("\(pace.time!)")
+                self.paces.append(pace)
+                self.tableView.reloadData()
             }
+        }, failureHandler: {
+                error in
+                println(error)
+                
         })
+
+        
+        
         
     }
     
-    func goBack() {
-        navigationController?.popViewControllerAnimated(true)
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
     }
+    
+  
+
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+  
             return self.items.count
-        } else {
-            return runners.count
-        }
+        
         
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        if indexPath.section == 0 {
+
+            var cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
+            
             cell.textLabel?.text = self.items[indexPath.row]
-        } else {
-            cell.textLabel?.text = self.runners[indexPath.row]
-        }
+
+            return cell
+
         
         
-        return cell
         
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50
+        return 70
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return ""
-        } else {
-            return "Friends"
-        }
-    }
+
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("You selected cell #\(indexPath.row)!")
+        let vc = PaceDetailViewController()
+        vc.paceInfo = paces[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
+
     }
+
+    
+    func goBack() {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
 }

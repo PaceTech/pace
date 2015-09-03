@@ -20,6 +20,9 @@ class SecondViewController: UIViewController {
     let pace = [7.5, 8, 8.5, 9, 9.5]
     var location : CLLocationCoordinate2D?
     
+    var congratsImg : UIImageView?
+    var myTimer : NSTimer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,6 +44,7 @@ class SecondViewController: UIViewController {
         view.addSubview(headerView)
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -60,30 +64,74 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func createPace(sender: UIButton) {
+        if AccountController.sharedInstance.currentuser != nil {
+            
+
         let myPace = Pace()
         myPace.distance = String(distance[distancePicker.selectedSegmentIndex])
-        myPace.pace = String(stringInterpolationSegment: pace[pacePicker.selectedSegmentIndex])
+        myPace.pace = "\(pace[pacePicker.selectedSegmentIndex])"
         myPace.location = location
+        
+        var dateFormatter = NSDateFormatter()
+        var dateFormatter2 = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter2.dateFormat = "HH:mm:ss"
+        var strDate = dateFormatter.stringFromDate(datePicker.date)
+        var strTime = dateFormatter2.stringFromDate(datePicker.date)
+        myPace.time = "\(strDate)T\(strTime)"
+        
         let navVC = tabBarController?.viewControllers?.first as? UINavigationController
         let vc = navVC?.viewControllers[0] as? FirstViewController
         vc!.newPace = myPace
         
-        let uid = 1
-        let departureTime = "2016-06-25 09:15:37"
-        
-        if let lat = myPace.location?.latitude, lon = myPace.location?.longitude, distance = myPace.distance, pacespeed = myPace.pace {
-            
-            var dataString = "latitute=\(lat)&longitude=\(lon)&distance=\(distance)&pace=\(pacespeed)&runtime=2015-08-11T01:57:57.579870Z&owner=\(AccountController.sharedInstance.userID)&participants=\(AccountController.sharedInstance.userID)"
-            
-            NetworkController().createPace(dataString, successHandler: {boolvar in
-                }, failureHandler: {error in
-            })
-            
-        
+        if let lat = myPace.location?.latitude {
+            if let lon = myPace.location?.longitude {
+                if let distance = myPace.distance {
+                    if let pacespeed = myPace.pace {
+                        if let time = myPace.time {
+                            if let userid = AccountController.sharedInstance.currentuser?.id {
+                                var dataString = "latitute=\(lat)&longitude=\(lon)&distance=\(distance)&pace=\(pacespeed)&runtime=\(time)&owner=\(userid)&participants=\(userid)"
+                                
+                                NetworkController().createPace(dataString, successHandler: {boolvar in
+                                    print("worked")
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.congratsImg = UIImageView(frame: self.view.frame)
+                                        let image = UIImage(named: "congrats")
+                                        self.congratsImg?.image = image
+                                        self.view.addSubview(self.congratsImg!)
+                                        self.view.bringSubviewToFront(self.congratsImg!)
+                                        self.myTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("myPerformeCode:"), userInfo: nil, repeats: false)
+                                    })
+                                    }, failureHandler: {error in
+                                        print("didn't work")
+                                        self.tabBarController?.selectedIndex = 0
+                                })
+                            }
+                        }
+                    }
+                }
+            }
         }
-        tabBarController?.selectedIndex = 0
-    }
+    //
+    //        if let lat = myPace.location?.latitude, lon = myPace.location?.longitude, distance = myPace.distance, pacespeed = myPace.pace, time = myPace.time, userid = AccountController.sharedInstance.currentuser?.id {
+            
+            
+                
+            
+    //        }
+        } else {
+            let loginVC = LoginViewController()
+            navigationController?.presentViewController(loginVC, animated: true, completion: nil)
+        }
     
+    }
+
+    func myPerformeCode(timer : NSTimer) {
+        tabBarController?.selectedIndex = 0
+        self.myTimer = nil
+        congratsImg?.image = nil
+        self.view.sendSubviewToBack(self.congratsImg!)
+    }
     
 
 

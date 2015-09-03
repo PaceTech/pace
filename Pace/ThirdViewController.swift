@@ -48,8 +48,8 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        if indexPath.row != 1 {
+        var cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
+        if indexPath.row > 1  {
             cell.userInteractionEnabled = false
         }
         
@@ -65,12 +65,25 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-        let vc = DetailViewController()
-        vc.titleText = items[indexPath.row]
-        navigationController!.pushViewController(vc, animated: true)
+          if AccountController.sharedInstance.currentuser != nil {
+        
+        if indexPath.row == 1 {
+            let vc = DetailViewController()
+            vc.titleText = items[indexPath.row]
+            navigationController!.pushViewController(vc, animated: true)
+        } else if indexPath.row == 0 {
+            let vc = MyRunsViewController()
+            vc.titleText = items[indexPath.row]
+            navigationController!.pushViewController(vc, animated: true)
+        }
+        
+            } else {
+            let loginVC = LoginViewController()
+            navigationController?.presentViewController(loginVC, animated: true, completion: nil)
+            }
+    
     }
-    
-    
+
+
     
 }

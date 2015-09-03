@@ -12,11 +12,17 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
 
     var paceInfo : Pace?
     var tableView: UITableView  =   UITableView()
-    var items: [String] = ["Departing In", "Departing From", "Distance", "Pace"]
-    var runners: [String] = ["Steven", "Nick"]
+    var items: [String] = ["Departing In", "Distance", "Pace"]
+    var answers: [String] = ["10 minutes", "Distance", "Pace"]
+    var runners: [String] = []
+    var congratsImg : UIImageView?
+    var myTimer : NSTimer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        getPace()
         
         var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 70))
         headerView.backgroundColor = darkBlueColor
@@ -43,17 +49,13 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.dataSource    =   self
         
         tableView.registerClass(CustomTableViewCellInfo.self, forCellReuseIdentifier: "infoCell")
-
+        tableView.registerClass(CustomTableViewCellDetails.self, forCellReuseIdentifier: "detailsCell")
         
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         self.view.addSubview(tableView)
         
-//        distance.text = String(stringInterpolationSegment: paceInfo?.distance)
-//        pace.text = String(stringInterpolationSegment: paceInfo?.pace)
-//        runners.text = String(stringInterpolationSegment: paceInfo?.participants?.first)
-//        runnerslast.text = String(stringInterpolationSegment: paceInfo?.participants?.last)
-
+        
         
         let joinButton = UIButton(frame: CGRect(x: 20, y: view.frame.height - 120, width: view.frame.width - 40, height: 50))
         joinButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -61,8 +63,51 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         joinButton.setTitle("JOIN", forState: .Normal)
         joinButton.addTarget(self, action: "join", forControlEvents: .TouchUpInside)
         view.addSubview(joinButton)
+        
     }
 
+    func reloadinfo() {
+        if let info = paceInfo?.distance {
+            answers[1] = "\(info) miles"
+        }
+        
+        if let speedinfo = paceInfo?.pace {
+            answers[2] = "\(speedinfo) minutes per mile"
+        }
+        
+        
+        
+        if let myrunners = paceInfo?.participants {
+            for runner in myrunners {
+                self.runners.append("\(runner)")
+            }
+        }
+
+    }
+    
+    func getPace() {
+        if let paceinfoid = paceInfo?.id {
+            NetworkController().getAPace(paceinfoid.toInt()!, {paces in
+            
+                for pace in paces {
+                    self.paceInfo = pace
+                
+                    self.reloadinfo()
+                    self.tableView.reloadData()
+                }
+                }, failureHandler: {
+                    error in
+                    println("error")
+                    
+            })
+        }
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -73,14 +118,38 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func join() {
+        if AccountController.sharedInstance.currentuser != nil {
+     
+        
+        
         NetworkController().updatePace(paceInfo!, successHandler: {
             boolval in
-            
+      
+            self.getPace()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.congratsImg = UIImageView(frame: self.view.frame)
+            let image = UIImage(named: "congrats")
+            self.congratsImg?.image = image
+            self.view.addSubview(self.congratsImg!)
+            self.view.bringSubviewToFront(self.congratsImg!)
+            self.myTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("myPerformeCode:"), userInfo: nil, repeats: false)
+            })
             }, failureHandler: {
                 error in
                 println(error)
         })
-        navigationController?.popToRootViewControllerAnimated(true)
+            
+        } else {
+            let loginVC = LoginViewController()
+            navigationController?.presentViewController(loginVC, animated: true, completion: nil)
+        }
+//        navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    func myPerformeCode(timer : NSTimer) {
+        self.myTimer = nil
+        congratsImg?.image = nil
+        self.view.sendSubviewToBack(self.congratsImg!)
     }
     
     func goBack() {
@@ -99,14 +168,34 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            var cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+            var cell:CustomTableViewCellDetails = tableView.dequeueReusableCellWithIdentifier("detailsCell") as CustomTableViewCellDetails!
 
-            cell.textLabel?.text = self.items[indexPath.row]
+            cell.typeLabel.text = self.items[indexPath.row]
+            cell.detailLabel.text = self.answers[indexPath.row]
              return cell
         } else {
-            var cell:CustomTableViewCellInfo = tableView.dequeueReusableCellWithIdentifier("infoCell") as! CustomTableViewCellInfo
-
-            cell.nameText.text = self.runners[indexPath.row]
+            
+            var cell:CustomTableViewCellInfo = tableView.dequeueReusableCellWithIdentifier("infoCell") as CustomTableViewCellInfo!
+            
+            if let userid = runners[indexPath.row].toInt() {
+                NetworkController().getUser(userid, successHandler: {user in
+                    
+                    cell.nameText.text = user.firstname
+                    if let image = user.imageurl {
+                        println(image)
+                        if image != "" {
+                            cell.profImageView.sd_setImageWithURL(NSURL(string: image))
+                        }
+                        
+                    }
+                    
+                    }, failureHandler: {
+                        error in
+                        println(error)
+                })
+            }
+            
+            
              return cell
         }
         
@@ -128,7 +217,7 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("did select")
+  
         if indexPath.section == 1 {
             let vc = DetailViewController()
             vc.titleText = items[indexPath.row]
@@ -143,11 +232,12 @@ class CustomTableViewCellInfo: UITableViewCell {
     
     var message: UILabel = UILabel()
     var nameText = UILabel()
+    var profImageView: UIImageView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        var image = UIImage(named:"profile.jpg")
-        let profImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
+        var image = UIImage(named:"profile")
+        profImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
         profImageView.image = image
         profImageView.clipsToBounds = true
         profImageView.layer.cornerRadius = 25
@@ -156,6 +246,36 @@ class CustomTableViewCellInfo: UITableViewCell {
         nameText = UILabel(frame: CGRect(x: 130, y: 10, width: 100, height: 50))
     
         contentView.addSubview(nameText)
+    }
+    
+    required init(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        
+    }
+    
+}
+
+
+class CustomTableViewCellDetails: UITableViewCell {
+    
+    var typeLabel = UILabel()
+    var detailLabel = UILabel()
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        
+        typeLabel = UILabel(frame: CGRect(x: 20, y: 10, width: 200, height: 50))
+        
+        detailLabel = UILabel(frame: CGRect(x: 150, y: 10, width: 200, height: 50))
+        
+        contentView.addSubview(typeLabel)
+        contentView.addSubview(detailLabel)
     }
     
     required init(coder decoder: NSCoder) {
