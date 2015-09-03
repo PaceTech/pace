@@ -28,6 +28,7 @@
 		DB508F5A1B4E134D00604F0D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB508F591B4E134D00604F0D /* Images.xcassets */; };
 		DB508F5D1B4E134D00604F0D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB508F5B1B4E134D00604F0D /* LaunchScreen.xib */; };
 		DB508F691B4E134E00604F0D /* PaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F681B4E134E00604F0D /* PaceTests.swift */; };
+		DB52A2421B99100D00A838CF /* PersistentDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB52A2411B99100D00A838CF /* PersistentDataStore.swift */; };
 		DBBADEEA1B5F03350009EAD8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */; };
 		DBDE95D61B4F56880022D95B /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE95D51B4F56880022D95B /* ThirdViewController.swift */; };
 		DBEE5F8F1B8A6CE800BD247A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE5F8E1B8A6CE800BD247A /* User.swift */; };
@@ -73,6 +74,7 @@
 		DB508F621B4E134E00604F0D /* PaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB508F671B4E134E00604F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB508F681B4E134E00604F0D /* PaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceTests.swift; sourceTree = "<group>"; };
+		DB52A2411B99100D00A838CF /* PersistentDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentDataStore.swift; sourceTree = "<group>"; };
 		DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DBDE95D51B4F56880022D95B /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		DBEE5F8E1B8A6CE800BD247A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				DB2B14F01B68F3BF002BD161 /* LoginViewController.swift */,
 				DB15DA651B79A1AC00FA39AB /* AccountController.swift */,
+				DB52A2411B99100D00A838CF /* PersistentDataStore.swift */,
 				DB15DA631B79877B00FA39AB /* NetworkController.swift */,
 				DB2B14ED1B61DC74002BD161 /* Pace.swift */,
 				DBEE5F8E1B8A6CE800BD247A /* User.swift */,
@@ -377,6 +380,7 @@
 			files = (
 				DB508F551B4E134D00604F0D /* SecondViewController.swift in Sources */,
 				DB15DA661B79A1AC00FA39AB /* AccountController.swift in Sources */,
+				DB52A2421B99100D00A838CF /* PersistentDataStore.swift in Sources */,
 				DB2B14EE1B61DC74002BD161 /* Pace.swift in Sources */,
 				DB508F511B4E134D00604F0D /* AppDelegate.swift in Sources */,
 				DBBADEEA1B5F03350009EAD8 /* ProfileViewController.swift in Sources */,
@@ -465,7 +469,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -503,7 +507,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -517,7 +521,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Pace/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -532,7 +536,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Pace/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";

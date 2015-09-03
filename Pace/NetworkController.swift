@@ -28,7 +28,7 @@ class NetworkController: NSObject {
             NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
                 URLResponse, responsedata, error in
                 if (error == nil) {
-                    if ((URLResponse as NSHTTPURLResponse!).statusCode == 200){
+                    if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200){
                         var jsonerror: NSError?
                         if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
                             let myUser = User()
@@ -43,7 +43,7 @@ class NetworkController: NSObject {
                             }
                         }
                     }else{
-                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as NSHTTPURLResponse!).statusCode, userInfo: [:]))
+                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
                     }
                 }else{
                     failureHandler(error!)
@@ -61,7 +61,7 @@ class NetworkController: NSObject {
             NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
                 URLResponse, responsedata, error in
                 if (error == nil) {
-                    if ((URLResponse as NSHTTPURLResponse!).statusCode == 200){
+                    if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200){
                         var jsonerror: NSError?
                         if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
                             var paces = [Pace]()
@@ -96,7 +96,7 @@ class NetworkController: NSObject {
                             successHandler(paces)
                         }
                     }else{
-                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as NSHTTPURLResponse!).statusCode, userInfo: [:]))
+                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
                     }
                 }else{
                     failureHandler(error!)
@@ -115,7 +115,7 @@ class NetworkController: NSObject {
             NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
                 URLResponse, responsedata, error in
                 if (error == nil) {
-                    if ((URLResponse as NSHTTPURLResponse!).statusCode == 200){
+                    if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200){
                         var jsonerror: NSError?
                         if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
                             var paces = [Pace]()
@@ -150,7 +150,7 @@ class NetworkController: NSObject {
                          successHandler(paces)
                         }
                     }else{
-                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as NSHTTPURLResponse!).statusCode, userInfo: [:]))
+                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
                     }
                 }else{
                     failureHandler(error!)
@@ -161,7 +161,7 @@ class NetworkController: NSObject {
     }
 
     func getMyRuns(successHandler:([Pace]) -> (), failureHandler:NSError -> ()){
-        if let userid = AccountController.sharedInstance.currentuser!.id {
+        if let userid = AccountController.sharedInstance.getUser()!.id {
             if let url = NSURL(string: ngrok + "/api/v1/accounts/\(userid)/runs"){
                 var request = NSMutableURLRequest(URL: url)
                 request.addValue(token, forHTTPHeaderField: "Authorization")
@@ -169,7 +169,7 @@ class NetworkController: NSObject {
                 NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
                     URLResponse, responsedata, error in
                     if (error == nil) {
-                        if ((URLResponse as NSHTTPURLResponse!).statusCode == 200){
+                        if ((URLResponse as! NSHTTPURLResponse).statusCode == 200){
                             var jsonerror: NSError?
                             if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
                                 var paces = [Pace]()
@@ -204,7 +204,7 @@ class NetworkController: NSObject {
                                 successHandler(paces)
                             }
                         }else{
-                            failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as NSHTTPURLResponse!).statusCode, userInfo: [:]))
+                            failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
                         }
                     }else{
                         failureHandler(error!)
@@ -233,7 +233,7 @@ class NetworkController: NSObject {
             NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
                 URLResponse, responsedata, error in
                 if (error == nil) {
-                    if ((URLResponse as NSHTTPURLResponse!).statusCode == 200 || (URLResponse as NSHTTPURLResponse!).statusCode == 201){
+                    if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200 || (URLResponse as! NSHTTPURLResponse!).statusCode == 201){
                         var jsonerror: NSError?
                         if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
                           
@@ -242,8 +242,8 @@ class NetworkController: NSObject {
                         }
                         
                     }else{
-                        println((URLResponse as NSHTTPURLResponse!).statusCode)
-                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as NSHTTPURLResponse!).statusCode, userInfo: [:]))
+                        println((URLResponse as! NSHTTPURLResponse!).statusCode)
+                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
                     }
                 } else{
                     failureHandler(error!)
@@ -269,7 +269,7 @@ class NetworkController: NSObject {
             NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
                 URLResponse, responsedata, error in
                 if (error == nil) {
-                    if ((URLResponse as NSHTTPURLResponse!).statusCode == 200 || (URLResponse as NSHTTPURLResponse!).statusCode == 201){
+                    if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200 || (URLResponse as! NSHTTPURLResponse!).statusCode == 201){
                         if let jsondict: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
                             if let json = jsondict as? NSDictionary {
                                 let user = User()
@@ -285,7 +285,7 @@ class NetworkController: NSObject {
                         }
                     }else{
                         println(URLResponse as? NSHTTPURLResponse)
-                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as NSHTTPURLResponse!).statusCode, userInfo: [:]))
+                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
                     }
                 }else{
                     println("error 2")
@@ -305,7 +305,7 @@ class NetworkController: NSObject {
     
         if let participants = pace.participants {
             
-            if let accountid = AccountController.sharedInstance.currentuser?.id {
+            if let accountid = AccountController.sharedInstance.getUser()?.id {
                 var participantArray  = ["\(accountid)"]
             
             

@@ -114,7 +114,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
             mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
             marker.userData = pace
         }
-        searchBar?.becomeFirstResponder()
+//        searchBar?.becomeFirstResponder()
         
     }
     

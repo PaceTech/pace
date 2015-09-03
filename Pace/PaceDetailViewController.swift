@@ -87,7 +87,7 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func getPace() {
         if let paceinfoid = paceInfo?.id {
-            NetworkController().getAPace(paceinfoid.toInt()!, {paces in
+            NetworkController().getAPace(paceinfoid.toInt()!, successHandler: {paces in
             
                 for pace in paces {
                     self.paceInfo = pace
@@ -118,7 +118,7 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func join() {
-        if AccountController.sharedInstance.currentuser != nil {
+        if AccountController.sharedInstance.getUser() != nil {
      
         
         
@@ -168,23 +168,27 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            var cell:CustomTableViewCellDetails = tableView.dequeueReusableCellWithIdentifier("detailsCell") as CustomTableViewCellDetails!
+            var cell:CustomTableViewCellDetails = tableView.dequeueReusableCellWithIdentifier("detailsCell") as! CustomTableViewCellDetails!
 
             cell.typeLabel.text = self.items[indexPath.row]
             cell.detailLabel.text = self.answers[indexPath.row]
              return cell
         } else {
             
-            var cell:CustomTableViewCellInfo = tableView.dequeueReusableCellWithIdentifier("infoCell") as CustomTableViewCellInfo!
+            var cell:CustomTableViewCellInfo = tableView.dequeueReusableCellWithIdentifier("infoCell") as! CustomTableViewCellInfo!
             
             if let userid = runners[indexPath.row].toInt() {
                 NetworkController().getUser(userid, successHandler: {user in
                     
                     cell.nameText.text = user.firstname
+                    println(user.firstname)
+                    println(user.imageurl)
+                    println("\n\n\n\n\n\n")
                     if let image = user.imageurl {
+                        if image == "" {
+                            cell.profImageView.image = UIImage(named: "profile")
+                        }
                         if image != "" {
-                            println(image)
-                            
                             cell.profImageView.sd_setImageWithURL(NSURL(string: image))
                         }
                         

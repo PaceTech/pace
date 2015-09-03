@@ -54,7 +54,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                             var dataString = "password=password&username=\(email)&email=\(email)&first_name=\(first)&last_name=\(last)&facebook_id=\(id)&image_url=\(url)"
                                             
                                             NetworkController().createAccount(dataString, successHandler: {user in
-                                                
+                                                PersistentDataStore.sharedInstance.saveUser(user)
                                                 AccountController.sharedInstance.currentuser = user
                                                 self.dismissViewControllerAnimated(true, completion: nil)
 //                                                self.performSegueWithIdentifier("loginSegue", sender: self)
@@ -86,7 +86,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
 
     func signIn() {
-        NetworkController().getUser(17, successHandler: {user in
+        NetworkController().getUser(1, successHandler: {user in
+            PersistentDataStore.sharedInstance.saveUser(user)
             AccountController.sharedInstance.currentuser = user
             self.dismissViewControllerAnimated(true, completion: nil)
 //            self.performSegueWithIdentifier("loginSegue", sender: self)

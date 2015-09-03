@@ -104,7 +104,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
+        var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell!
         if indexPath.section == 0 {
             cell.textLabel?.text = self.items[indexPath.row]
         } else {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class User: NSObject {
+public class User: NSObject {
     var id: Int?
     var facebook_id: String?
     var firstname : String?
