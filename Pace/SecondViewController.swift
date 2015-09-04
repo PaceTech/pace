@@ -64,7 +64,7 @@ class SecondViewController: UIViewController {
     }
     
     @IBAction func createPace(sender: UIButton) {
-        if AccountController.sharedInstance.currentuser != nil {
+        if AccountController.sharedInstance.getUser() != nil {
             
 
         let myPace = Pace()

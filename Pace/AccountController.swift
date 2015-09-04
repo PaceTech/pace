@@ -10,7 +10,7 @@ import UIKit
 
 class AccountController: NSObject {
     
-    private var currentuser : User?
+    var currentuser : User?
     
     class var sharedInstance: AccountController {
         struct Static {
@@ -25,7 +25,7 @@ class AccountController: NSObject {
         return Static.instance!
     }
     
-    public func getUser() -> User? {
+    func getUser() -> User? {
         return PersistentDataStore.sharedInstance.retrieveUser()
     }
     

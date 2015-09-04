@@ -25,6 +25,12 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NetworkController().getToken("tara@joinapace.com", sentPassword: "password", successHandler: {bool in
+            println("success")
+            }, failureHandler: { error in
+                println(error)
+        })
+        
          self.locationManager.requestWhenInUseAuthorization()
         
         var camera = GMSCameraPosition.cameraWithLatitude(40.7903, longitude: -73.9597, zoom: 12)

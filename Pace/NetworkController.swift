@@ -52,6 +52,44 @@ class NetworkController: NSObject {
             }
         }
     }
+
+    func getMe(successHandler:(User) -> (), failureHandler:NSError -> ()) {
+        let urlstring = "http://pace-api.elasticbeanstalk.com/api/v1/me"
+        if let url = NSURL(string: urlstring){
+            var request = NSMutableURLRequest(URL: url)
+            if let mytoken = PersistentDataStore.sharedInstance.getToken() {
+                let tokenstring = "Token \(mytoken)"
+                request.addValue(tokenstring, forHTTPHeaderField: "Authorization")
+            }
+            request.HTTPMethod = "GET"
+            NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
+                URLResponse, responsedata, error in
+                if (error == nil) {
+                    if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200){
+                        var jsonerror: NSError?
+                        if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
+                            let myUser = User()
+                            if let jsonDict = json as? NSDictionary {
+                                myUser.firstname = jsonDict["first_name"] as? String
+                                myUser.imageurl = jsonDict["image_url"] as? String
+                                myUser.facebook_id = jsonDict["facebook_id"] as? String
+                                myUser.username = jsonDict["email"] as? String
+                                myUser.lastname = jsonDict["last_name"] as? String
+                                myUser.id = jsonDict["id"] as? Int
+                                successHandler(myUser)
+                            }
+                        }
+                    }else{
+                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
+                    }
+                }else{
+                    failureHandler(error!)
+                }
+                
+            }
+        }
+
+    }
     
     func getPaces(successHandler:([Pace]) -> (), failureHandler:NSError -> ()){
         if let url = NSURL(string: ngrok + "/api/v1/runs/"){
@@ -252,7 +290,47 @@ class NetworkController: NSObject {
                 }
             }
         }
+
     
+    func getToken(sentUsername: String, sentPassword: String, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
+        if let url = NSURL(string: ngrok + "/api/v1/api-token-auth/"){
+            var request = NSMutableURLRequest(URL: url)
+            request.addValue(token, forHTTPHeaderField: "Authorization")
+            var dataString = "username=\(sentUsername)&password=\(sentPassword)"
+            let requestBodyData = (dataString as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+            request.HTTPBody = requestBodyData
+            request.HTTPMethod = "POST"
+            
+            let boundaryConstant = "----WebKitFormBoundaryE19zNvXGzXaLvS5C";
+            let contentType = "multipart/form-data; boundary=" + boundaryConstant
+            NSURLProtocol.setProperty(contentType, forKey: "Content-Type", inRequest: request)
+            
+            NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
+                URLResponse, responsedata, error in
+                if (error == nil) {
+                    if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200 || (URLResponse as! NSHTTPURLResponse!).statusCode == 201){
+                        var jsonerror: NSError?
+                        if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
+                            if let jsondict = json as? NSDictionary {
+                                if let tok = jsondict["token"] as? Int {
+                                    PersistentDataStore.sharedInstance.saveToken(tok)
+                                }
+                                successHandler(true)
+                            }
+                        }
+                        
+                    }else{
+                        println((URLResponse as! NSHTTPURLResponse!).statusCode)
+                        failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
+                    }
+                } else{
+                    failureHandler(error!)
+                }
+                
+            }
+        }
+    }
+
 
     func createAccount(pace: String, successHandler:(User) -> (), failureHandler:NSError -> ()){
         if let url = NSURL(string: ngrok + "/api/v1/accounts/create/"){

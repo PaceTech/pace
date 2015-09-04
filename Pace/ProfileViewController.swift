@@ -76,7 +76,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func addprofimage() {
-        if let photo = AccountController.sharedInstance.currentuser?.imageurl {
+        if let photo = AccountController.sharedInstance.getUser()?.imageurl {
             if let url = NSURL(string: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/v/t1.0-1/p200x200/10940434_10153602476883975_4314529171487600602_n.jpg?oh=3c6605130e181bba1d49c0a52c0bf850&oe=563C6711&__gda__=1449959808_d348aa819575656eccf5a5c2376d174c") {
                 println(url)
                 if let imageview = profImageView {
