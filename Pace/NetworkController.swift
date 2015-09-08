@@ -257,6 +257,7 @@ class NetworkController: NSObject {
     
     
     func createPace(pace: String, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
+        println("create pace")
         if let url = NSURL(string: ngrok + "/api/v1/runs/"){
             var request = NSMutableURLRequest(URL: url)
             request.addValue(token, forHTTPHeaderField: "Authorization")
@@ -271,6 +272,7 @@ class NetworkController: NSObject {
             NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
                 URLResponse, responsedata, error in
                 if (error == nil) {
+                    println("created")
                     if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200 || (URLResponse as! NSHTTPURLResponse!).statusCode == 201){
                         var jsonerror: NSError?
                         if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
@@ -280,10 +282,12 @@ class NetworkController: NSObject {
                         }
                         
                     }else{
+                        println("not created")
                         println((URLResponse as! NSHTTPURLResponse!).statusCode)
                         failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
                     }
                 } else{
+                    println("not created")
                     failureHandler(error!)
                 }
                 
@@ -308,6 +312,7 @@ class NetworkController: NSObject {
             NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
                 URLResponse, responsedata, error in
                 if (error == nil) {
+                    println("got response")
                     if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200 || (URLResponse as! NSHTTPURLResponse!).statusCode == 201){
                         var jsonerror: NSError?
                         if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
@@ -324,6 +329,7 @@ class NetworkController: NSObject {
                         failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
                     }
                 } else{
+                    println("fail")
                     failureHandler(error!)
                 }
                 

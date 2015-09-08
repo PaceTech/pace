@@ -19,19 +19,31 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         loginButton = FBSDKLoginButton()
         loginButton?.readPermissions = ["public_profile", "email"]
         loginButton?.delegate = self
-        loginButton?.frame = CGRect(x: 60, y: view.frame.height - 480, width: view.frame.width - 120, height: 50)
+        loginButton?.frame = CGRect(x: 50, y: view.frame.height - 260, width: view.frame.width - 100, height: 50)
         view.addSubview(loginButton!)
 
-        let signinButton = UIButton(frame: CGRect(x: 100, y: view.frame.height - 260, width: view.frame.width - 200, height: 50))
-        signinButton.backgroundColor = tealColor
-        signinButton.setTitle("Sign In", forState: .Normal)
-        signinButton.addTarget(self, action: "signIn", forControlEvents: .TouchUpInside)
-        view.addSubview(signinButton)
+        let blueview = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2))
+        blueview.backgroundColor = darkBlueColor
+        view.addSubview(blueview)
+        
+        let paceimgview = UIImageView(frame: CGRect(x: 75, y: 100, width: view.frame.width - 150, height: 150))
+        paceimgview.image = UIImage(named: "pace")
+        paceimgview.contentMode = .ScaleAspectFit
+        view.addSubview(paceimgview)
+        
+        let pacestring = UILabel(frame: CGRect(x: 0, y: 250, width: view.frame.width, height: 100))
+        pacestring.text = "Running is social. Pace Connects."
+        pacestring.textColor = tealColor
+        pacestring.textAlignment = .Center
+        view.addSubview(pacestring)
+        
+//        let signinButton = UIButton(frame: CGRect(x: 50, y: view.frame.height - 260, width: view.frame.width - 100, height: 50))
+//        signinButton.backgroundColor = tealColor
+//        signinButton.setTitle("Sign In", forState: .Normal)
+//        signinButton.addTarget(self, action: "signIn", forControlEvents: .TouchUpInside)
+//        view.addSubview(signinButton)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        AccountController.sharedInstance.userID = idText.text
-    }
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         
@@ -40,7 +52,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"])
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             if ((error) != nil){
-                            }
+                 println(error)           }
             else {
                 if let photo = result.valueForKey("picture") as? NSDictionary {
 
@@ -54,11 +66,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                                             var dataString = "password=password&username=\(email)&email=\(email)&first_name=\(first)&last_name=\(last)&facebook_id=\(id)&image_url=\(url)"
                                             
                                             NetworkController().createAccount(dataString, successHandler: {user in
+                                                println("try")
                                                 PersistentDataStore.sharedInstance.saveUser(user)
                                                 AccountController.sharedInstance.currentuser = user
                                                 self.dismissViewControllerAnimated(true, completion: nil)
-//                                                self.performSegueWithIdentifier("loginSegue", sender: self)
                                                 }, failureHandler: {error in
+                                                    println(error)
                                             })
                                             
                                         }
@@ -69,11 +82,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                             }
                         }
                     }
-//                
-//                if let email = result.valueForKey("email") as? String, let url =  data.valueForKey("url") as? String, let id =  result.valueForKey("id") as? String, first = result.valueForKey("first_name") as? String, last = result.valueForKey("last_name") as? String {
-                    
-                    
-//                }
 
 
             }
@@ -90,20 +98,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             PersistentDataStore.sharedInstance.saveUser(user)
             AccountController.sharedInstance.currentuser = user
             self.dismissViewControllerAnimated(true, completion: nil)
-//            self.performSegueWithIdentifier("loginSegue", sender: self)
             }, failureHandler: {error in
         })
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

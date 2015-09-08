@@ -51,7 +51,7 @@ class SecondViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        
+        println(location)
     }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -80,16 +80,13 @@ class SecondViewController: UIViewController {
         var strTime = dateFormatter2.stringFromDate(datePicker.date)
         myPace.time = "\(strDate)T\(strTime)"
         
-        let navVC = tabBarController?.viewControllers?.first as? UINavigationController
-        let vc = navVC?.viewControllers[0] as? FirstViewController
-        vc!.newPace = myPace
         
         if let lat = myPace.location?.latitude {
             if let lon = myPace.location?.longitude {
                 if let distance = myPace.distance {
                     if let pacespeed = myPace.pace {
                         if let time = myPace.time {
-                            if let userid = AccountController.sharedInstance.currentuser?.id {
+                            if let userid = AccountController.sharedInstance.getUser()!.id {
                                 var dataString = "latitute=\(lat)&longitude=\(lon)&distance=\(distance)&pace=\(pacespeed)&runtime=\(time)&owner=\(userid)&participants=\(userid)"
                                 
                                 NetworkController().createPace(dataString, successHandler: {boolvar in
@@ -101,6 +98,11 @@ class SecondViewController: UIViewController {
                                         self.view.addSubview(self.congratsImg!)
                                         self.view.bringSubviewToFront(self.congratsImg!)
                                         self.myTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("myPerformeCode:"), userInfo: nil, repeats: false)
+                                        
+                                        let navVC = self.tabBarController?.viewControllers?.first as? UINavigationController
+                                        let vc = navVC?.viewControllers[0] as? FirstViewController
+                                        vc!.newPace = myPace
+                                        
                                     })
                                     }, failureHandler: {error in
                                         print("didn't work")
@@ -112,13 +114,7 @@ class SecondViewController: UIViewController {
                 }
             }
         }
-    //
-    //        if let lat = myPace.location?.latitude, lon = myPace.location?.longitude, distance = myPace.distance, pacespeed = myPace.pace, time = myPace.time, userid = AccountController.sharedInstance.currentuser?.id {
-            
-            
-                
-            
-    //        }
+
         } else {
             let loginVC = LoginViewController()
             navigationController?.presentViewController(loginVC, animated: true, completion: nil)

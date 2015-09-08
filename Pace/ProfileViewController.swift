@@ -12,8 +12,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var titleText: String?
     var tableView: UITableView  =   UITableView()
-    var items: [String] = [ "33 friends on pace", "5 paces joined", "6 paces hosted"]
-    var runners: [String] = ["Nick", "Taylor"]
+    var items: [String] = [ "Work", "Education", "0 friends on pace", "paces joined", "paces hosted"]
+    var runners: [Int] = [18]
     var profImageView: UIImageView!
 
     override func viewDidLoad() {
@@ -22,7 +22,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.dataSource    =   self
         
         tableView.registerClass(CustomTableViewCellInfo.self, forCellReuseIdentifier: "infoCell")
-        
         
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
@@ -47,40 +46,35 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         titleLabel.textAlignment = .Center
         view.addSubview(titleLabel)
         
-//        var image = UIImage(named:"placeholder")
         profImageView = UIImageView(frame: CGRect(x: view.frame.width/2 - 50, y: 100, width: 100, height: 100))
-//        profImageView.image = image
         profImageView.clipsToBounds = true
         profImageView.layer.cornerRadius = 50
         view.addSubview(profImageView)
         addprofimage()
         
+
         
-//        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"])
-//        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-//            if ((error) != nil){}
-//            else {
-//                println("fetched user: \(result)")
-//                    if let data = photo.valueForKey("data") as? NSDictionary {
-//                        let url = NSURL(string: data.valueForKey("url") as String!)
-//                        println(url)
-//                        profImageView.sd_setImageWithURL(url)
-//                    }
-                    
-//                }
-//
-//            }
-//        })
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me/friends", parameters: nil)
+        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+            if ((error) != nil){
+            println(error)
+            }
+            else {
+                println("fetched user: \(result)")
+                
+                }
+
+        })
 
 
     }
     
+    
     func addprofimage() {
         if let photo = AccountController.sharedInstance.getUser()?.imageurl {
-            if let url = NSURL(string: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/v/t1.0-1/p200x200/10940434_10153602476883975_4314529171487600602_n.jpg?oh=3c6605130e181bba1d49c0a52c0bf850&oe=563C6711&__gda__=1449959808_d348aa819575656eccf5a5c2376d174c") {
-                println(url)
+            if let fbid =  AccountController.sharedInstance.getUser()?.facebook_id {
                 if let imageview = profImageView {
-                    imageview.sd_setImageWithURL(url)
+                    imageview.sd_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(fbid)/picture?type=large"))
                 }
                 
             }
@@ -102,13 +96,58 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 50
+        }
+        return 70
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell!
         if indexPath.section == 0 {
             cell.textLabel?.text = self.items[indexPath.row]
+            if indexPath.row == 0 {
+                cell.textLabel?.enabled = false
+            }
+            if indexPath.row == 1 {
+                cell.textLabel?.enabled = false
+            }
+            cell.textLabel?.textAlignment = .Center
         } else {
-            cell.textLabel?.text = self.runners[indexPath.row]
+            var cell:CustomTableViewCellInfo = tableView.dequeueReusableCellWithIdentifier("infoCell") as! CustomTableViewCellInfo!
+            
+            let userid = runners[indexPath.row]
+                NetworkController().getUser(userid, successHandler: {user in
+                    
+                    if let frst = user.firstname {
+                        if let lst = user.lastname {
+                            cell.nameText.text = "\(frst) \(lst)"
+                            cell.profImageView.image = UIImage(named: "placeholder")
+                        }
+                    }
+            
+                    if let fbid = user.facebook_id {
+                        if fbid == "" {
+                            cell.profImageView.image = UIImage(named: "placeholder")
+                        }
+                        if fbid != "" {
+                            cell.profImageView.sd_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(fbid)/picture?type=large"))
+                        }
+                    } else {
+                        cell.profImageView.image = UIImage(named: "placeholder")
+                    
+                    }
+            
+                    }, failureHandler: {
+                        error in
+                        println(error)
+                })
+            
+            
+            
+            return cell
         }
         
         
@@ -120,9 +159,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return 2
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50
-    }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {

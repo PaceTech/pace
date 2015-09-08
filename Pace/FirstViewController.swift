@@ -25,12 +25,6 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkController().getToken("tara@joinapace.com", sentPassword: "password", successHandler: {bool in
-            println("success")
-            }, failureHandler: { error in
-                println(error)
-        })
-        
          self.locationManager.requestWhenInUseAuthorization()
         
         var camera = GMSCameraPosition.cameraWithLatitude(40.7903, longitude: -73.9597, zoom: 12)
@@ -76,12 +70,65 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
     func getPaces() {
         NetworkController().getPaces({paces in
             for pace in paces {
-                var marker = GMSMarker(position: pace.location!)
-                marker.title = "Join Pace"
-                marker.map = self.mapView
-                marker.icon = UIImage(named: "blue-run-small")
-                marker.userData = pace
+                var shoulddrop = false
+                let currentDate = NSDate()
+                let calendar = NSCalendar.currentCalendar()
+                let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
+                
+                if let timestring = pace.time as NSString? {
+                    let arr = timestring.componentsSeparatedByString("T")
+                    let date = arr[0].componentsSeparatedByString("-")
+                    let time = arr[1].componentsSeparatedByString(":")
+                    if let year = date[0] as? String {
+                        var val = year.toInt()
+                        if val < components.year {
+                            shoulddrop = true
+                        } else if val == components.year {
+                            if let month = date[1] as? String {
+                                var val = month.toInt()
+                                if val < components.month {
+                                    shoulddrop = true
+                                } else if val == components.month {
+                                    if let day = date[2] as? String {
+                                        var val = day.toInt()
+                                        if val < components.day {
+                                            shoulddrop = true
+                                        } else if val == components.day {
+                                            if let hour = time[0] as? String {
+                                                var val = hour.toInt()
+                                                if val < components.hour {
+                                                    shoulddrop = true
+                                                } else if val == components.hour {
+                                                    if let min = time[1] as? String {
+                                                        var val = min.toInt()
+                                                        if val < components.minute {
+                                                            shoulddrop = true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                
+                println(shoulddrop)
+                
+                if shoulddrop {
+                } else {
+                    var marker = GMSMarker(position: pace.location!)
+                    marker.title = "Join Pace"
+                    marker.map = self.mapView
+                    marker.icon = UIImage(named: "blue-run-small")
+                    marker.userData = pace
+                }
+
+                
             }
+            }
+            
             }, failureHandler: {
                 error in
                 println(error)

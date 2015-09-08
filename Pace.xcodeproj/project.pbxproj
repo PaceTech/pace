@@ -29,6 +29,8 @@
 		DB508F5D1B4E134D00604F0D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB508F5B1B4E134D00604F0D /* LaunchScreen.xib */; };
 		DB508F691B4E134E00604F0D /* PaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F681B4E134E00604F0D /* PaceTests.swift */; };
 		DB52A2421B99100D00A838CF /* PersistentDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB52A2411B99100D00A838CF /* PersistentDataStore.swift */; };
+		DB52A2441B9D107000A838CF /* profileyesicon.png in Resources */ = {isa = PBXBuildFile; fileRef = DB52A2431B9D107000A838CF /* profileyesicon.png */; };
+		DB52A2461B9D11C300A838CF /* LocationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB52A2451B9D11C300A838CF /* LocationDetailViewController.swift */; };
 		DBBADEEA1B5F03350009EAD8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */; };
 		DBDE95D61B4F56880022D95B /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE95D51B4F56880022D95B /* ThirdViewController.swift */; };
 		DBEE5F8F1B8A6CE800BD247A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE5F8E1B8A6CE800BD247A /* User.swift */; };
@@ -75,6 +77,8 @@
 		DB508F671B4E134E00604F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB508F681B4E134E00604F0D /* PaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceTests.swift; sourceTree = "<group>"; };
 		DB52A2411B99100D00A838CF /* PersistentDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentDataStore.swift; sourceTree = "<group>"; };
+		DB52A2431B9D107000A838CF /* profileyesicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profileyesicon.png; sourceTree = "<group>"; };
+		DB52A2451B9D11C300A838CF /* LocationDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDetailViewController.swift; sourceTree = "<group>"; };
 		DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DBDE95D51B4F56880022D95B /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		DBEE5F8E1B8A6CE800BD247A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 			children = (
 				DB508F521B4E134D00604F0D /* FirstViewController.swift */,
 				DB15DA671B79A83800FA39AB /* PaceDetailViewController.swift */,
+				DB52A2451B9D11C300A838CF /* LocationDetailViewController.swift */,
 			);
 			name = "First View";
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				DB15DA6E1B85453E00FA39AB /* profile.jpg */,
+				DB52A2431B9D107000A838CF /* profileyesicon.png */,
 				DB2E6A8F1B86AE0800953D36 /* placeholder.png */,
 				DBEE5F921B8E7A0300BD247A /* blue-run-small.png */,
 				DB15DA701B86AC5B00FA39AB /* congrats.png */,
@@ -319,6 +325,7 @@
 				DB2B14F31B699709002BD161 /* home@2x.png in Resources */,
 				DBF8571B1B55EC3700AD1C23 /* pace.png in Resources */,
 				DB508F581B4E134D00604F0D /* Main.storyboard in Resources */,
+				DB52A2441B9D107000A838CF /* profileyesicon.png in Resources */,
 				DB15DA731B86AC9A00FA39AB /* profile1.jpg in Resources */,
 				DB15DA6F1B85453E00FA39AB /* profile.jpg in Resources */,
 				DB2B14F51B69970F002BD161 /* location-host@2x.png in Resources */,
@@ -382,6 +389,7 @@
 				DB15DA661B79A1AC00FA39AB /* AccountController.swift in Sources */,
 				DB52A2421B99100D00A838CF /* PersistentDataStore.swift in Sources */,
 				DB2B14EE1B61DC74002BD161 /* Pace.swift in Sources */,
+				DB52A2461B9D11C300A838CF /* LocationDetailViewController.swift in Sources */,
 				DB508F511B4E134D00604F0D /* AppDelegate.swift in Sources */,
 				DBBADEEA1B5F03350009EAD8 /* ProfileViewController.swift in Sources */,
 				DB15DA681B79A83800FA39AB /* PaceDetailViewController.swift in Sources */,

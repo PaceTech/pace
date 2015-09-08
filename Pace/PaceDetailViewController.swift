@@ -12,8 +12,8 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
 
     var paceInfo : Pace?
     var tableView: UITableView  =   UITableView()
-    var items: [String] = ["Departing In", "Distance", "Pace"]
-    var answers: [String] = ["10 minutes", "Distance", "Pace"]
+    var items: [String] = ["Departing In", "Distance", "Pace", "Location"]
+    var answers: [String] = ["...", "Distance", "Pace", ">"]
     var runners: [String] = []
     var congratsImg : UIImageView?
     var myTimer : NSTimer?
@@ -67,6 +67,72 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func reloadinfo() {
+        if let datetime = paceInfo?.time {
+        
+            var printstring = "..."
+            let currentDate = NSDate()
+            let calendar = NSCalendar.currentCalendar()
+            let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
+            
+            if let timestring = datetime as NSString? {
+                let arr = timestring.componentsSeparatedByString("T")
+                let date = arr[0].componentsSeparatedByString("-")
+                let time = arr[1].componentsSeparatedByString(":")
+                if let year = date[0] as? String {
+                    var val = year.toInt()
+                    if val > components.year {
+                        printstring = "Next year..."
+                    } else if val == components.year {
+                        if let month = date[1] as? String {
+                            var val = month.toInt()
+                            if val > components.month {
+                                printstring = "Next month..."
+                            } else if val == components.month {
+                                if let day = date[2] as? String {
+                                    var val = day.toInt()
+                                    if val < components.day {
+                                        let daysnum = components.day - val!
+                                        if daysnum == 1 {
+                                            printstring = "Tomorrow"
+                                        } else {
+                                            printstring = "In \(daysnum) days"
+                                        }
+                                    } else if val == components.day {
+                                        if let hour = time[0] as? String {
+                                            var val = hour.toInt()
+                                            if val < components.hour {
+                                                let hoursnum = components.hour - val!
+                                                if hoursnum == 1 {
+                                                    printstring = "1 hour"
+                                                } else {
+                                                    printstring = "In \(hoursnum) hours"
+                                                }
+                                            } else if val == components.hour {
+                                                if let min = time[1] as? String {
+                                                    var val = min.toInt()
+                                                    if val < components.minute {
+                                                        let minnum = components.minute - val!
+                                                        if minnum == 1 {
+                                                            printstring = "1 minute"
+                                                        } else {
+                                                            printstring = "In \(minnum) minutes"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
+            answers[0] = printstring
+        }
+        
         if let info = paceInfo?.distance {
             answers[1] = "\(info) miles"
         }
@@ -147,6 +213,8 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func myPerformeCode(timer : NSTimer) {
+        reloadinfo()
+        tableView.reloadData()
         self.myTimer = nil
         congratsImg?.image = nil
         self.view.sendSubviewToBack(self.congratsImg!)
@@ -180,18 +248,20 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             if let userid = runners[indexPath.row].toInt() {
                 NetworkController().getUser(userid, successHandler: {user in
                     
-                    cell.nameText.text = user.firstname
-                    println(user.firstname)
-                    println(user.imageurl)
-                    println("\n\n\n\n\n\n")
-                    if let image = user.imageurl {
-                        if image == "" {
+                    if let frst = user.firstname {
+                        if let lst = user.lastname {
+                            cell.nameText.text = "\(frst) \(lst)"
+                            cell.profImageView.image = UIImage(named: "placeholder")
+                        }
+                    }
+
+                    if let fbid = user.facebook_id {
+                        if fbid == "" {
                             cell.profImageView.image = UIImage(named: "profile")
                         }
-                        if image != "" {
-                            cell.profImageView.sd_setImageWithURL(NSURL(string: image))
+                        if fbid != "" {
+                            cell.profImageView.sd_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(fbid)/picture?type=large"))
                         }
-                        
                     }
                     
                     }, failureHandler: {
@@ -227,6 +297,12 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             let vc = DetailViewController()
             vc.titleText = items[indexPath.row]
             navigationController!.pushViewController(vc, animated: true)
+        } else if indexPath.row == 3 {
+            let vc = LocationDetailViewController()
+            if let loc = paceInfo?.location {
+                vc.savedLocation = loc
+            }
+            navigationController?.showViewController(vc, sender: self)
         }
         
     }
@@ -238,6 +314,7 @@ class CustomTableViewCellInfo: UITableViewCell {
     var message: UILabel = UILabel()
     var nameText = UILabel()
     var profImageView: UIImageView!
+    var iconImageView: UIImageView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -247,6 +324,12 @@ class CustomTableViewCellInfo: UITableViewCell {
         profImageView.clipsToBounds = true
         profImageView.layer.cornerRadius = 25
         contentView.addSubview(profImageView)
+        
+        iconImageView = UIImageView(frame: CGRect(x: 40, y: 40, width: 20, height: 20))
+        iconImageView.image = UIImage(named: "profileyesicon")
+        iconImageView.clipsToBounds = true
+        iconImageView.layer.cornerRadius = 10
+        contentView.addSubview(iconImageView)
         
         nameText = UILabel(frame: CGRect(x: 130, y: 10, width: 100, height: 50))
     
