@@ -15,6 +15,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var items: [String] = [ "Work", "Education", "0 friends on pace", "paces joined", "paces hosted"]
     var runners: [Int] = [18]
     var profImageView: UIImageView!
+    var workstring : String?
+    var educationstring: String?
 
     override func viewDidLoad() {
         tableView.frame         =   CGRectMake(0, 200, view.frame.width, 400);
@@ -169,6 +171,18 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        if indexPath.section == 0 {
+            if indexPath.row == 1 {
+                let vc = InputViewController()
+                vc.pageTitle = "Enter Education"
+                vc.iseducation = true
+                navigationController?.pushViewController(vc, animated: true)
+            } else if indexPath.row == 0 {
+                let vc = InputViewController()
+                vc.pageTitle = "Enter Education"
+                vc.iswork = true
+                navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
 }

@@ -67,55 +67,63 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func reloadinfo() {
-        if let datetime = paceInfo?.time {
+        if let datetime = paceInfo?.time as NSString? {
         
             var printstring = "..."
             let currentDate = NSDate()
             let calendar = NSCalendar.currentCalendar()
             let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
             
-            if let timestring = datetime as NSString? {
-                let arr = timestring.componentsSeparatedByString("T")
+           
+                let arr = datetime.componentsSeparatedByString("T")
                 let date = arr[0].componentsSeparatedByString("-")
                 let time = arr[1].componentsSeparatedByString(":")
                 if let year = date[0] as? String {
                     var val = year.toInt()
                     if val > components.year {
                         printstring = "Next year..."
-                    } else if val == components.year {
+                    } else {
                         if let month = date[1] as? String {
                             var val = month.toInt()
                             if val > components.month {
-                                printstring = "Next month..."
-                            } else if val == components.month {
+                                if printstring == "..." {
+                                  printstring = "Next month..."
+                                }
+                            } else  {
                                 if let day = date[2] as? String {
                                     var val = day.toInt()
-                                    if val < components.day {
-                                        let daysnum = components.day - val!
+                                    if val > components.day {
+                                        let daysnum = val! - components.day
+                                        if printstring == "..." {
                                         if daysnum == 1 {
                                             printstring = "Tomorrow"
                                         } else {
                                             printstring = "In \(daysnum) days"
                                         }
-                                    } else if val == components.day {
+                                        }
+                                    } else  {
                                         if let hour = time[0] as? String {
                                             var val = hour.toInt()
-                                            if val < components.hour {
-                                                let hoursnum = components.hour - val!
+                                            if val > components.hour {
+                                                if printstring == "..." {
+                                                let hoursnum = val! - components.hour
                                                 if hoursnum == 1 {
                                                     printstring = "1 hour"
                                                 } else {
                                                     printstring = "In \(hoursnum) hours"
                                                 }
-                                            } else if val == components.hour {
+                                                }
+                                            } else  {
                                                 if let min = time[1] as? String {
                                                     var val = min.toInt()
-                                                    if val < components.minute {
-                                                        let minnum = components.minute - val!
+                                                    if val > components.minute {
+                                                        let minnum = val! - components.minute
+                                                        if printstring == "..." {
                                                         if minnum == 1 {
                                                             printstring = "1 minute"
                                                         } else {
                                                             printstring = "In \(minnum) minutes"
+                                                        }
                                                         }
                                                     }
                                                 }
@@ -127,7 +135,7 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         }
                     }
                 }
-            }
+            
             
             
             answers[0] = printstring

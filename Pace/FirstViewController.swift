@@ -57,9 +57,9 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
         
         headerView.addSubview(titleButton)
         
-        searchBar = UISearchBar(frame: CGRect(x: 20, y: 100, width: view.frame.width - 40, height: 40))
-        searchBar!.delegate = self
-        mapView.addSubview(searchBar!)
+//        searchBar = UISearchBar(frame: CGRect(x: 20, y: 100, width: view.frame.width - 40, height: 40))
+//        searchBar!.delegate = self
+//        mapView.addSubview(searchBar!)
         
         mapView.addSubview(headerView)
         
@@ -114,16 +114,15 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                         }
                     }
                 
-                println(shoulddrop)
                 
-                if shoulddrop {
-                } else {
+//                if shoulddrop {
+//                } else {
                     var marker = GMSMarker(position: pace.location!)
                     marker.title = "Join Pace"
                     marker.map = self.mapView
                     marker.icon = UIImage(named: "blue-run-small")
                     marker.userData = pace
-                }
+//                }
 
                 
             }

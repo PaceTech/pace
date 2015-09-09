@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D866E79E0A1A9A5D0567DBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF5EC911D50DF4CCE3B89BF1 /* libPods.a */; };
+		DB114B1D1B9FA0D700AA4220 /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB114B1C1B9FA0D700AA4220 /* InputViewController.swift */; };
 		DB15DA641B79877B00FA39AB /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB15DA631B79877B00FA39AB /* NetworkController.swift */; };
 		DB15DA661B79A1AC00FA39AB /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB15DA651B79A1AC00FA39AB /* AccountController.swift */; };
 		DB15DA681B79A83800FA39AB /* PaceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB15DA671B79A83800FA39AB /* PaceDetailViewController.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		7F4EFA226FC05AFE75E2D318 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		DB114B1C1B9FA0D700AA4220 /* InputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
 		DB15DA631B79877B00FA39AB /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		DB15DA651B79A1AC00FA39AB /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountController.swift; sourceTree = "<group>"; };
 		DB15DA671B79A83800FA39AB /* PaceDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaceDetailViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			children = (
 				DBDE95D51B4F56880022D95B /* ThirdViewController.swift */,
 				DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */,
+				DB114B1C1B9FA0D700AA4220 /* InputViewController.swift */,
 				DBEE5F901B8E779A00BD247A /* MyRunsViewController.swift */,
 			);
 			name = "Third View";
@@ -388,6 +391,7 @@
 				DB508F551B4E134D00604F0D /* SecondViewController.swift in Sources */,
 				DB15DA661B79A1AC00FA39AB /* AccountController.swift in Sources */,
 				DB52A2421B99100D00A838CF /* PersistentDataStore.swift in Sources */,
+				DB114B1D1B9FA0D700AA4220 /* InputViewController.swift in Sources */,
 				DB2B14EE1B61DC74002BD161 /* Pace.swift in Sources */,
 				DB52A2461B9D11C300A838CF /* LocationDetailViewController.swift in Sources */,
 				DB508F511B4E134D00604F0D /* AppDelegate.swift in Sources */,
