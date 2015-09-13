@@ -31,6 +31,8 @@ class LocationDetailViewController: UIViewController {
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.mapView.myLocationEnabled = true
+            self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
+            self.mapView.camera = GMSCameraPosition.cameraWithTarget(self.mapView.myLocation.coordinate, zoom: 13)
         })
         
         tabBarController?.tabBar.backgroundColor = UIColor.whiteColor()

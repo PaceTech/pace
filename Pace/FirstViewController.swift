@@ -28,17 +28,16 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
         super.viewDidLoad()
         
         self.locationManager.requestWhenInUseAuthorization()
-        
-        var camera = GMSCameraPosition.cameraWithLatitude(40.7903, longitude: -73.9597, zoom: 12)
+        var camera = GMSCameraPosition()
         mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
         mapView.settings.compassButton = true
         mapView.settings.myLocationButton = true
-        
-        mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
+        self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.mapView.myLocationEnabled = true
         })
+        
         mapView.delegate = self
         
         tabBarController?.tabBar.backgroundColor = UIColor.whiteColor()
@@ -64,10 +63,6 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
         headerView.addSubview(togglebutton)
         
         headerView.addSubview(titleButton)
-        
-        //        searchBar = UISearchBar(frame: CGRect(x: 20, y: 100, width: view.frame.width - 40, height: 40))
-        //        searchBar!.delegate = self
-        //        mapView.addSubview(searchBar!)
         
         mapView.addSubview(headerView)
         
@@ -174,19 +169,18 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
     }
     
     override func viewWillDisappear(animated: Bool) {
-        //        mapView.removeObserver(self, forKeyPath: "myLocation")
+                mapView.removeObserver(self, forKeyPath: "myLocation")
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
         let location = change[NSKeyValueChangeNewKey] as? CLLocation
-        
-        //        mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 14)
+        mapView.camera = GMSCameraPosition.cameraWithTarget(location!.coordinate, zoom: 14)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+
     }
     
     
@@ -201,7 +195,6 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
             marker.title = "Your new pace!"
             marker.map = mapView
             marker.icon = UIImage(named: "blue-run-small")
-            mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
             marker.userData = pace
         }
         //        searchBar?.becomeFirstResponder()

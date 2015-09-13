@@ -25,7 +25,7 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         
         
-        var camera = GMSCameraPosition.cameraWithLatitude(40.7903, longitude: -73.9597, zoom: 12)
+        var camera = GMSCameraPosition()
         mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
         mapView.settings.compassButton = true
         mapView.settings.myLocationButton = true
@@ -100,6 +100,7 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
         let location = change[NSKeyValueChangeNewKey] as? CLLocation
+        mapView.camera = GMSCameraPosition.cameraWithTarget(location!.coordinate, zoom: 14)
     }
     
     override func viewWillDisappear(animated: Bool) {
