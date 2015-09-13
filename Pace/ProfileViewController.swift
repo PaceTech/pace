@@ -173,9 +173,20 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     if let owner = pace.owner {
                         if user.id == owner.toInt() {
                             hostcount = hostcount + 1
-                        } else {
-                            joincount = joincount + 1
                         }
+                        
+                        if let participants = pace.participants {
+                            for runner in participants {
+                                if let id = user.id {
+                                    if "\(runner)" == "\(id)" {
+                                        joincount = joincount + 1
+                                    }
+                                }
+                                
+                            }
+                        }
+                        
+                        
                         self.updaterows(joincount, host: hostcount)
                     }
                     }, failureHandler: {error in
