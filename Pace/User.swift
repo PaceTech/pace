@@ -14,5 +14,9 @@ public class User: NSObject {
     var firstname : String?
     var lastname: String?
     var username: String?
-    var imageurl: String?
+    var work: String?
+    var education: String?
+    var paces_hosted: Int?
+    var paces_joined: Int?
+    var is_late: Int?
 }

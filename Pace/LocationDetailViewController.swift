@@ -44,7 +44,7 @@ class LocationDetailViewController: UIViewController {
         headerView.backgroundColor = darkBlueColor
         
         var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
-        titleButton.text = "Select Pace Location"
+        titleButton.text = "Pace Location"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: titleButton.font.fontName, size: 14)
@@ -56,12 +56,7 @@ class LocationDetailViewController: UIViewController {
         backButton.titleLabel!.font = UIFont(name: backButton.titleLabel!.font.fontName, size: 14)
         headerView.addSubview(backButton)
         
-        var okButton = UIButton(frame: CGRect(x: view.frame.width - 44, y: 20, width: 30, height: 40))
-        okButton.setTitle("OK", forState: .Normal)
-        okButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        okButton.addTarget(self, action: "select", forControlEvents: .TouchUpInside)
-        okButton.titleLabel!.font = UIFont(name: backButton.titleLabel!.font.fontName, size: 14)
-        headerView.addSubview(okButton)
+
         
         headerView.addSubview(titleButton)
         
@@ -90,16 +85,13 @@ class LocationDetailViewController: UIViewController {
     }
     
     func goBack() {
-        navigationController?.popToRootViewControllerAnimated(true)
+        if let vc = navigationController?.viewControllers[1] as? PaceDetailViewController {
+            navigationController?.popToViewController(vc, animated: true)
+        }
+        
     }
     
-    func select() {
-        //send selected location to other view
-        if let vc = navigationController?.viewControllers[0] as? SecondViewController {
-            vc.location = savedLocation
-            navigationController?.popToRootViewControllerAnimated(true)
-        }
-    }
+
     
     func searchCoordinatesForAddress(address: String) {
         var urlString = "https://maps.googleapis.com/maps/api/geocode/json?address=\(address)"

@@ -37,6 +37,12 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         backButton.addTarget(self, action: "goBack", forControlEvents: .TouchUpInside)
         view.addSubview(backButton)
         
+        let shareButton = UIButton(frame: CGRect(x: view.frame.width - 80, y: 20, width: 70, height: 50))
+        shareButton.setTitleColor(tealColor, forState: .Normal)
+        shareButton.setTitle("Invite", forState: .Normal)
+        shareButton.addTarget(self, action: "inviteFriends", forControlEvents: .TouchUpInside)
+        view.addSubview(shareButton)
+        
         let titleLabel = UILabel(frame: CGRect(x: 10, y: 20, width: view.frame.width - 10, height: 50))
         titleLabel.textAlignment = .Center
         titleLabel.text = "Selected Pace"
@@ -155,6 +161,15 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             for runner in myrunners {
                 self.runners.append("\(runner)")
             }
+        }
+
+    }
+    
+    func inviteFriends() {
+        if let id = paceInfo?.id {
+            let sharetext = "Let's run together! Join my pace at http://pace:runs/\(id)"
+            let activityVC = UIActivityViewController(activityItems: [sharetext], applicationActivities: nil)
+            navigationController!.presentViewController(activityVC, animated: true, completion: nil)
         }
 
     }
@@ -304,6 +319,9 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         if indexPath.section == 1 {
             let vc = DetailViewController()
             vc.titleText = items[indexPath.row]
+            if let runner = runners[indexPath.row].toInt() {
+                vc.profileID = runner
+            }
             navigationController!.pushViewController(vc, animated: true)
         } else if indexPath.row == 3 {
             let vc = LocationDetailViewController()
@@ -326,7 +344,7 @@ class CustomTableViewCellInfo: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        var image = UIImage(named:"profile")
+        var image = UIImage(named:"placeholder")
         profImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
         profImageView.image = image
         profImageView.clipsToBounds = true
@@ -339,7 +357,8 @@ class CustomTableViewCellInfo: UITableViewCell {
         iconImageView.layer.cornerRadius = 10
         contentView.addSubview(iconImageView)
         
-        nameText = UILabel(frame: CGRect(x: 130, y: 10, width: 100, height: 50))
+        nameText = UILabel(frame: CGRect(x: 50, y: 0, width: contentView.frame.width - 50, height: 40))
+        nameText.textAlignment = .Center
     
         contentView.addSubview(nameText)
     }

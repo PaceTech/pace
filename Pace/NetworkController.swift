@@ -9,8 +9,8 @@
 import UIKit
 import GoogleMaps
 //
-let ngrok = "http://pace-api.elasticbeanstalk.com"
-let apitoken = "4c6ca03a842670fcb6fdc3712cf582934499a0eb"
+let ngrok = "http://pace-dev.elasticbeanstalk.com"
+let apitoken = "a58d2187a7982f9944a9437f942d41965cf75801"
 
 //let ngrok = "http://localhost:8000"
 //let apitoken = "47fc6bd1421bc8c52fb73d3dc1c5c67957d62e23"
@@ -20,7 +20,7 @@ class NetworkController: NSObject {
     let token = "Token " + apitoken
    
     func getUser(id: Int, successHandler:(User) -> (), failureHandler:NSError -> ()){
-        let urlstring = "http://pace-api.elasticbeanstalk.com/api/v1/accounts/\(id)/"
+        let urlstring = "http://pace-dev.elasticbeanstalk.com/api/v1/accounts/\(id)/"
         if let url = NSURL(string: urlstring){
             var request = NSMutableURLRequest(URL: url)
             request.addValue(token, forHTTPHeaderField: "Authorization")
@@ -34,11 +34,15 @@ class NetworkController: NSObject {
                             let myUser = User()
                             if let jsonDict = json as? NSDictionary {
                                 myUser.firstname = jsonDict["first_name"] as? String
-                                myUser.imageurl = jsonDict["image_url"] as? String
                                 myUser.facebook_id = jsonDict["facebook_id"] as? String
                                 myUser.username = jsonDict["email"] as? String
                                 myUser.lastname = jsonDict["last_name"] as? String
                                 myUser.id = jsonDict["id"] as? Int
+                                myUser.paces_joined = jsonDict["paces_joined"] as? Int
+                                myUser.paces_hosted = jsonDict["paces_hosted"] as? Int
+                                myUser.is_late = jsonDict["is_late"] as? Int
+                                myUser.work = jsonDict["work"] as? String
+                                myUser.education = jsonDict["education"] as? String
                                 successHandler(myUser)
                             }
                         }
@@ -54,35 +58,43 @@ class NetworkController: NSObject {
     }
 
     func getMe(successHandler:(User) -> (), failureHandler:NSError -> ()) {
-        let urlstring = "http://pace-api.elasticbeanstalk.com/api/v1/me"
+        let urlstring = "http://pace-dev.elasticbeanstalk.com/api/v1/me/"
         if let url = NSURL(string: urlstring){
             var request = NSMutableURLRequest(URL: url)
             if let mytoken = PersistentDataStore.sharedInstance.getToken() {
                 let tokenstring = "Token \(mytoken)"
                 request.addValue(tokenstring, forHTTPHeaderField: "Authorization")
+                print(mytoken)
             }
             request.HTTPMethod = "GET"
             NSURLConnection.sendAsynchronousRequest(request, queue:NSOperationQueue.mainQueue()){
                 URLResponse, responsedata, error in
                 if (error == nil) {
-                    if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200){
+                    if ((URLResponse as! NSHTTPURLResponse!).statusCode == 200 || (URLResponse as! NSHTTPURLResponse!).statusCode == 201){
+                        
                         var jsonerror: NSError?
                         if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
                             let myUser = User()
                             if let jsonDict = json as? NSDictionary {
                                 myUser.firstname = jsonDict["first_name"] as? String
-                                myUser.imageurl = jsonDict["image_url"] as? String
                                 myUser.facebook_id = jsonDict["facebook_id"] as? String
                                 myUser.username = jsonDict["email"] as? String
                                 myUser.lastname = jsonDict["last_name"] as? String
                                 myUser.id = jsonDict["id"] as? Int
+                                myUser.paces_joined = jsonDict["paces_joined"] as? Int
+                                myUser.paces_hosted = jsonDict["paces_hosted"] as? Int
+                                myUser.is_late = jsonDict["is_late"] as? Int
+                                myUser.work = jsonDict["work"] as? String
+                                myUser.education = jsonDict["education"] as? String
                                 successHandler(myUser)
                             }
                         }
                     }else{
+                        println((URLResponse as! NSHTTPURLResponse!).statusCode)
                         failureHandler(NSError(domain: "HTTP response not 200", code: (URLResponse as! NSHTTPURLResponse!).statusCode, userInfo: [:]))
                     }
                 }else{
+                    println(error)
                     failureHandler(error!)
                 }
                 
@@ -317,7 +329,8 @@ class NetworkController: NSObject {
                         var jsonerror: NSError?
                         if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
                             if let jsondict = json as? NSDictionary {
-                                if let tok = jsondict["token"] as? Int {
+                                if let tok = jsondict["token"] as? String {
+                                    
                                     PersistentDataStore.sharedInstance.saveToken(tok)
                                 }
                                 successHandler(true)
@@ -361,8 +374,12 @@ class NetworkController: NSObject {
                                 user.firstname = json["first_name"] as? String
                                 user.lastname = json["last_name"] as? String
                                 user.id = json["id"] as? Int
-                                user.imageurl = json["image_url"] as? String
                                 user.facebook_id = json["facebook_id"] as? String
+                                user.paces_hosted = 0
+                                user.paces_joined = 0
+                                user.is_late = 0
+                                user.education = "Education"
+                                user.work = "Work"
                                 successHandler(user)
                             }
                             
@@ -384,54 +401,131 @@ class NetworkController: NSObject {
     
     func updatePace(pace: Pace, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
 
-        
         if let id = pace.id {
     
         if let participants = pace.participants {
             
             if let accountid = AccountController.sharedInstance.getUser()?.id {
                 var participantArray  = ["\(accountid)"]
-            
-            
-            
-            for participant in participants {
-                    participantArray.append("\(participant)")
-            }
-            
-            var session = NSURLSession.sharedSession()
-            if let url = NSURL(string: ngrok + "/api/v1/runs/\(id)/"){
-            var request = NSMutableURLRequest(URL: url)
-            request.HTTPMethod = "PUT"
-            
-            var params = ["participants":[1,2]] as Dictionary<String, NSArray>
-            
-            var err: NSError?
-            request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-                request.addValue(token, forHTTPHeaderField: "Authorization")
-            
-            var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-                println("Response: \(response)")
-                var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-                var err: NSError?
-                var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
-                
-                if(err != nil) {
-                   
+ 
+                for participant in participants {
+                        participantArray.append("\(participant)")
                 }
-                successHandler(true)
+                
+                var session = NSURLSession.sharedSession()
+                if let url = NSURL(string: ngrok + "/api/v1/runs/\(id)/"){
+                var request = NSMutableURLRequest(URL: url)
+                request.HTTPMethod = "PUT"
+                
+                var params = ["participants": participantArray ] as Dictionary<String, NSArray>
+                
+                var err: NSError?
+                request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.addValue("application/json", forHTTPHeaderField: "Accept")
+                    request.addValue(token, forHTTPHeaderField: "Authorization")
+                
+                var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                    println("Response: \(response)")
+                    var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+                    var err: NSError?
+                    var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+                    
+                    if(err != nil) {
+                       
+                    }
+                    successHandler(true)
 
-            })
-            
-            task.resume()
+                })
+                
+                task.resume()
+                }
             }
             }
-        }
         }
     }
     
+
+    
+    func updateUserWork(user: User, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
         
+        
+        if let id = user.id {
+            
+            if let work = user.work {
+                
+                    var session = NSURLSession.sharedSession()
+                    if let url = NSURL(string: ngrok + "/api/v1/accounts/\(id)/"){
+                        var request = NSMutableURLRequest(URL: url)
+                        request.HTTPMethod = "PUT"
+                        
+                        var params = ["work":work] as Dictionary<String, String>
+                        
+                        var err: NSError?
+                        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+                        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                        request.addValue("application/json", forHTTPHeaderField: "Accept")
+                        request.addValue(token, forHTTPHeaderField: "Authorization")
+                        
+                        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                            println("Response: \(response)")
+                            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            var err: NSError?
+                            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+                            
+                            if(err != nil) {
+                                
+                            }
+                            successHandler(true)
+                            
+                        })
+                        
+                        task.resume()
+                }
+            }
+        }
+    }
+    
+    func updateUserEducation(user: User, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
+        
+        
+        if let id = user.id {
+            
+            if let edu = user.education, username = user.username {
+                
+                var session = NSURLSession.sharedSession()
+                if let url = NSURL(string: ngrok + "/api/v1/accounts/\(id)/"){
+                    var request = NSMutableURLRequest(URL: url)
+                    request.HTTPMethod = "PUT"
+                    
+                    var params = ["education":edu, "username":username, "email":username, "password":"password"] as Dictionary<String, String>
+                    
+                    var err: NSError?
+                    request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+                    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                    request.addValue("application/json", forHTTPHeaderField: "Accept")
+                    request.addValue(token, forHTTPHeaderField: "Authorization")
+                    
+                    var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                        println("Response: \(response)")
+                        var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+                        var err: NSError?
+                        var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+                        
+                        if(err != nil) {
+                            
+                        }
+                        successHandler(true)
+                        
+                    })
+                    
+                    task.resume()
+                }
+            }
+        }
+    }
+
+    
 
     
 }

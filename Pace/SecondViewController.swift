@@ -93,7 +93,7 @@ class SecondViewController: UIViewController {
                                     print("worked")
                                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                         self.congratsImg = UIImageView(frame: self.view.frame)
-                                        let image = UIImage(named: "congrats")
+                                        let image = UIImage(named: "hostedcongrats")
                                         self.congratsImg?.image = image
                                         self.view.addSubview(self.congratsImg!)
                                         self.view.bringSubviewToFront(self.congratsImg!)

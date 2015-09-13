@@ -12,15 +12,16 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
     
     var tableView = UITableView()
     var items = ["Current Paces", "My Profile", "Pace Settings", "Activity"]
+    var names = ["paces", "profile", "settings", "activity"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = darkBlueColor
         
-        tableView.frame = CGRectMake(0, 60, view.frame.width, view.frame.height - 60)
+        tableView.frame = CGRectMake(0, 70, view.frame.width, view.frame.height - 60)
         tableView.delegate = self
         tableView.dataSource = self
-        
+        tableView.registerClass(SettingsViewCell.self, forCellReuseIdentifier: "setingscell")
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
@@ -48,14 +49,15 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell!
+        var cell:SettingsViewCell = tableView.dequeueReusableCellWithIdentifier("setingscell") as! SettingsViewCell!
         if indexPath.row > 1  {
             cell.userInteractionEnabled = false
         }
         
-        cell.textLabel?.text = self.items[indexPath.row]
-        cell.textLabel?.textColor = tealColor
-        cell.textLabel?.font = UIFont(name: "helvetica", size: 20)
+        cell.nameText.text = self.items[indexPath.row]
+        cell.nameText.textColor = tealColor
+        cell.nameText.font = UIFont(name: "helvetica", size: 20)
+        cell.iconview.image = UIImage(named: names[indexPath.row])
         return cell
         
     }
@@ -70,6 +72,7 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
         if indexPath.row == 1 {
             let vc = DetailViewController()
             vc.titleText = items[indexPath.row]
+            vc.profileID = AccountController.sharedInstance.getUser()?.id
             navigationController!.pushViewController(vc, animated: true)
         } else if indexPath.row == 0 {
             let vc = MyRunsViewController()
@@ -85,5 +88,34 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
     }
 
 
+    
+}
+
+
+class SettingsViewCell: UITableViewCell {
+    
+    var nameText = UILabel()
+    var iconview: UIImageView!
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        var image = UIImage(named:"profile")
+        iconview = UIImageView(frame: CGRect(x: 10, y: 10, width: 50, height: 50))
+        iconview.contentMode = .ScaleAspectFit
+        contentView.addSubview(iconview)
+        
+        nameText = UILabel(frame: CGRect(x: 100, y: 10, width: 200, height: 50))
+        contentView.addSubview(nameText)
+    }
+    
+    required init(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        
+    }
     
 }

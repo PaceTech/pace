@@ -15,6 +15,13 @@
 		DB15DA6F1B85453E00FA39AB /* profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DB15DA6E1B85453E00FA39AB /* profile.jpg */; };
 		DB15DA711B86AC5B00FA39AB /* congrats.png in Resources */ = {isa = PBXBuildFile; fileRef = DB15DA701B86AC5B00FA39AB /* congrats.png */; };
 		DB15DA731B86AC9A00FA39AB /* profile1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DB15DA721B86AC9A00FA39AB /* profile1.jpg */; };
+		DB23BC431BA4F22B00E7E028 /* profwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB23BC3C1BA4F22B00E7E028 /* profwork@2x.png */; };
+		DB23BC441BA4F22B00E7E028 /* profpacefriends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB23BC3D1BA4F22B00E7E028 /* profpacefriends@2x.png */; };
+		DB23BC451BA4F22B00E7E028 /* profjoin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB23BC3E1BA4F22B00E7E028 /* profjoin@2x.png */; };
+		DB23BC461BA4F22B00E7E028 /* profjoinpace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB23BC3F1BA4F22B00E7E028 /* profjoinpace@2x.png */; };
+		DB23BC471BA4F22B00E7E028 /* profinvite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB23BC401BA4F22B00E7E028 /* profinvite@2x.png */; };
+		DB23BC481BA4F22B00E7E028 /* profhost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB23BC411BA4F22B00E7E028 /* profhost@2x.png */; };
+		DB23BC491BA4F22B00E7E028 /* profeducation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB23BC421BA4F22B00E7E028 /* profeducation@2x.png */; };
 		DB2B14EC1B5F1D27002BD161 /* SelectHostLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2B14EB1B5F1D27002BD161 /* SelectHostLocation.swift */; };
 		DB2B14EE1B61DC74002BD161 /* Pace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2B14ED1B61DC74002BD161 /* Pace.swift */; };
 		DB2B14F11B68F3BF002BD161 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2B14F01B68F3BF002BD161 /* LoginViewController.swift */; };
@@ -37,6 +44,15 @@
 		DBEE5F8F1B8A6CE800BD247A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE5F8E1B8A6CE800BD247A /* User.swift */; };
 		DBEE5F911B8E779A00BD247A /* MyRunsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE5F901B8E779A00BD247A /* MyRunsViewController.swift */; };
 		DBEE5F931B8E7A0300BD247A /* blue-run-small.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEE5F921B8E7A0300BD247A /* blue-run-small.png */; };
+		DBF4ACEC1B9FC86400DF657A /* activity.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF4ACE71B9FC86400DF657A /* activity.png */; };
+		DBF4ACED1B9FC86400DF657A /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF4ACE81B9FC86400DF657A /* settings.png */; };
+		DBF4ACEE1B9FC86400DF657A /* profile.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF4ACE91B9FC86400DF657A /* profile.png */; };
+		DBF4ACEF1B9FC86400DF657A /* paces.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF4ACEA1B9FC86400DF657A /* paces.png */; };
+		DBF4ACF01B9FC86400DF657A /* hostedcongrats.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF4ACEB1B9FC86400DF657A /* hostedcongrats.png */; };
+		DBF4ACF21BA497BA00DF657A /* dropdown1.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF4ACF11BA497BA00DF657A /* dropdown1.png */; };
+		DBF4ACF41BA4997000DF657A /* dropdown2.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF4ACF31BA4997000DF657A /* dropdown2.png */; };
+		DBF4ACF61BA4B4CE00DF657A /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF4ACF51BA4B4CE00DF657A /* CreateUserViewController.swift */; };
+		DBF4ACF81BA4B84400DF657A /* topofpace.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF4ACF71BA4B84400DF657A /* topofpace.png */; };
 		DBF8571B1B55EC3700AD1C23 /* pace.png in Resources */ = {isa = PBXBuildFile; fileRef = DBF8571A1B55EC3700AD1C23 /* pace.png */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +75,13 @@
 		DB15DA6E1B85453E00FA39AB /* profile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profile.jpg; sourceTree = "<group>"; };
 		DB15DA701B86AC5B00FA39AB /* congrats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = congrats.png; sourceTree = "<group>"; };
 		DB15DA721B86AC9A00FA39AB /* profile1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profile1.jpg; sourceTree = "<group>"; };
+		DB23BC3C1BA4F22B00E7E028 /* profwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profwork@2x.png"; sourceTree = "<group>"; };
+		DB23BC3D1BA4F22B00E7E028 /* profpacefriends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profpacefriends@2x.png"; sourceTree = "<group>"; };
+		DB23BC3E1BA4F22B00E7E028 /* profjoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profjoin@2x.png"; sourceTree = "<group>"; };
+		DB23BC3F1BA4F22B00E7E028 /* profjoinpace@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profjoinpace@2x.png"; sourceTree = "<group>"; };
+		DB23BC401BA4F22B00E7E028 /* profinvite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profinvite@2x.png"; sourceTree = "<group>"; };
+		DB23BC411BA4F22B00E7E028 /* profhost@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profhost@2x.png"; sourceTree = "<group>"; };
+		DB23BC421BA4F22B00E7E028 /* profeducation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profeducation@2x.png"; sourceTree = "<group>"; };
 		DB2B14EB1B5F1D27002BD161 /* SelectHostLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectHostLocation.swift; sourceTree = "<group>"; };
 		DB2B14ED1B61DC74002BD161 /* Pace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pace.swift; sourceTree = "<group>"; };
 		DB2B14EF1B68F1F7002BD161 /* Pace-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pace-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -81,11 +104,21 @@
 		DB52A2411B99100D00A838CF /* PersistentDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentDataStore.swift; sourceTree = "<group>"; };
 		DB52A2431B9D107000A838CF /* profileyesicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profileyesicon.png; sourceTree = "<group>"; };
 		DB52A2451B9D11C300A838CF /* LocationDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDetailViewController.swift; sourceTree = "<group>"; };
+		DBAD28B91BA4CCA6000D9EA3 /* Pace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Pace.entitlements; sourceTree = "<group>"; };
 		DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DBDE95D51B4F56880022D95B /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		DBEE5F8E1B8A6CE800BD247A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DBEE5F901B8E779A00BD247A /* MyRunsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyRunsViewController.swift; sourceTree = "<group>"; };
 		DBEE5F921B8E7A0300BD247A /* blue-run-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue-run-small.png"; sourceTree = "<group>"; };
+		DBF4ACE71B9FC86400DF657A /* activity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = activity.png; sourceTree = "<group>"; };
+		DBF4ACE81B9FC86400DF657A /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		DBF4ACE91B9FC86400DF657A /* profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile.png; sourceTree = "<group>"; };
+		DBF4ACEA1B9FC86400DF657A /* paces.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paces.png; sourceTree = "<group>"; };
+		DBF4ACEB1B9FC86400DF657A /* hostedcongrats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hostedcongrats.png; sourceTree = "<group>"; };
+		DBF4ACF11BA497BA00DF657A /* dropdown1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropdown1.png; sourceTree = "<group>"; };
+		DBF4ACF31BA4997000DF657A /* dropdown2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropdown2.png; sourceTree = "<group>"; };
+		DBF4ACF51BA4B4CE00DF657A /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
+		DBF4ACF71BA4B84400DF657A /* topofpace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topofpace.png; sourceTree = "<group>"; };
 		DBF8571A1B55EC3700AD1C23 /* pace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pace.png; sourceTree = "<group>"; };
 		DF5EC911D50DF4CCE3B89BF1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E649EAB90611584E492DDD9A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -161,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				DB2B14F01B68F3BF002BD161 /* LoginViewController.swift */,
+				DBF4ACF51BA4B4CE00DF657A /* CreateUserViewController.swift */,
 				DB15DA651B79A1AC00FA39AB /* AccountController.swift */,
 				DB52A2411B99100D00A838CF /* PersistentDataStore.swift */,
 				DB15DA631B79877B00FA39AB /* NetworkController.swift */,
@@ -193,6 +227,7 @@
 		DB508F4D1B4E134D00604F0D /* Pace */ = {
 			isa = PBXGroup;
 			children = (
+				DBAD28B91BA4CCA6000D9EA3 /* Pace.entitlements */,
 				DB508F501B4E134D00604F0D /* AppDelegate.swift */,
 				DB15DA6D1B7ACEB600FA39AB /* Controllers */,
 				DB15DA6A1B7ACEA200FA39AB /* First View */,
@@ -210,6 +245,21 @@
 		DB508F4E1B4E134D00604F0D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DB23BC3C1BA4F22B00E7E028 /* profwork@2x.png */,
+				DB23BC3D1BA4F22B00E7E028 /* profpacefriends@2x.png */,
+				DB23BC3E1BA4F22B00E7E028 /* profjoin@2x.png */,
+				DB23BC3F1BA4F22B00E7E028 /* profjoinpace@2x.png */,
+				DB23BC401BA4F22B00E7E028 /* profinvite@2x.png */,
+				DB23BC411BA4F22B00E7E028 /* profhost@2x.png */,
+				DB23BC421BA4F22B00E7E028 /* profeducation@2x.png */,
+				DBF4ACE71B9FC86400DF657A /* activity.png */,
+				DBF4ACF71BA4B84400DF657A /* topofpace.png */,
+				DBF4ACF31BA4997000DF657A /* dropdown2.png */,
+				DBF4ACF11BA497BA00DF657A /* dropdown1.png */,
+				DBF4ACE81B9FC86400DF657A /* settings.png */,
+				DBF4ACE91B9FC86400DF657A /* profile.png */,
+				DBF4ACEA1B9FC86400DF657A /* paces.png */,
+				DBF4ACEB1B9FC86400DF657A /* hostedcongrats.png */,
 				DB15DA6E1B85453E00FA39AB /* profile.jpg */,
 				DB52A2431B9D107000A838CF /* profileyesicon.png */,
 				DB2E6A8F1B86AE0800953D36 /* placeholder.png */,
@@ -294,6 +344,11 @@
 					DB508F4A1B4E134D00604F0D = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = T8F23BFN6Q;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 0;
+							};
+						};
 					};
 					DB508F611B4E134E00604F0D = {
 						CreatedOnToolsVersion = 6.3;
@@ -325,19 +380,34 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB23BC431BA4F22B00E7E028 /* profwork@2x.png in Resources */,
+				DBF4ACF21BA497BA00DF657A /* dropdown1.png in Resources */,
 				DB2B14F31B699709002BD161 /* home@2x.png in Resources */,
+				DB23BC451BA4F22B00E7E028 /* profjoin@2x.png in Resources */,
+				DB23BC491BA4F22B00E7E028 /* profeducation@2x.png in Resources */,
+				DB23BC441BA4F22B00E7E028 /* profpacefriends@2x.png in Resources */,
 				DBF8571B1B55EC3700AD1C23 /* pace.png in Resources */,
 				DB508F581B4E134D00604F0D /* Main.storyboard in Resources */,
+				DBF4ACF01B9FC86400DF657A /* hostedcongrats.png in Resources */,
 				DB52A2441B9D107000A838CF /* profileyesicon.png in Resources */,
 				DB15DA731B86AC9A00FA39AB /* profile1.jpg in Resources */,
+				DBF4ACF41BA4997000DF657A /* dropdown2.png in Resources */,
 				DB15DA6F1B85453E00FA39AB /* profile.jpg in Resources */,
+				DBF4ACED1B9FC86400DF657A /* settings.png in Resources */,
 				DB2B14F51B69970F002BD161 /* location-host@2x.png in Resources */,
 				DB508F5D1B4E134D00604F0D /* LaunchScreen.xib in Resources */,
 				DB15DA711B86AC5B00FA39AB /* congrats.png in Resources */,
 				DB2B14F71B699726002BD161 /* location-join@2x.png in Resources */,
+				DBF4ACEF1B9FC86400DF657A /* paces.png in Resources */,
+				DB23BC471BA4F22B00E7E028 /* profinvite@2x.png in Resources */,
 				DBEE5F931B8E7A0300BD247A /* blue-run-small.png in Resources */,
+				DBF4ACF81BA4B84400DF657A /* topofpace.png in Resources */,
 				DB2E6A901B86AE0800953D36 /* placeholder.png in Resources */,
+				DB23BC481BA4F22B00E7E028 /* profhost@2x.png in Resources */,
+				DBF4ACEC1B9FC86400DF657A /* activity.png in Resources */,
+				DB23BC461BA4F22B00E7E028 /* profjoinpace@2x.png in Resources */,
 				DB508F5A1B4E134D00604F0D /* Images.xcassets in Resources */,
+				DBF4ACEE1B9FC86400DF657A /* profile.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +468,7 @@
 				DBBADEEA1B5F03350009EAD8 /* ProfileViewController.swift in Sources */,
 				DB15DA681B79A83800FA39AB /* PaceDetailViewController.swift in Sources */,
 				DB2B14F11B68F3BF002BD161 /* LoginViewController.swift in Sources */,
+				DBF4ACF61BA4B4CE00DF657A /* CreateUserViewController.swift in Sources */,
 				DBDE95D61B4F56880022D95B /* ThirdViewController.swift in Sources */,
 				DBEE5F8F1B8A6CE800BD247A /* User.swift in Sources */,
 				DB2B14EC1B5F1D27002BD161 /* SelectHostLocation.swift in Sources */,
@@ -532,10 +603,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Pace/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Pace/Pace-Bridging-Header.h";
 			};
@@ -547,10 +620,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Pace/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Pace/Pace-Bridging-Header.h";
 			};

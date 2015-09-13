@@ -35,14 +35,20 @@ public class PersistentDataStore: NSObject {
         fb = userDefaults.valueForKey("facebook_id") as? String,
         last = userDefaults.valueForKey("lastname") as? String,
         username = userDefaults.valueForKey("username") as? String,
-        image = userDefaults.valueForKey("imageurl") as? String {
+        is_late = userDefaults.valueForKey("is_late") as? Int,
+        work = userDefaults.valueForKey("work") as? String,
+        education = userDefaults.valueForKey("education") as? String {
             let returnUser = User()
             returnUser.firstname = first
             returnUser.id = id
             returnUser.facebook_id = fb
             returnUser.lastname = last
             returnUser.username = username
-            returnUser.imageurl = image
+            returnUser.paces_hosted = 0
+            returnUser.paces_joined = 0
+            returnUser.is_late = is_late
+            returnUser.work = work
+            returnUser.education = education
             return returnUser
         }
         
@@ -50,23 +56,33 @@ public class PersistentDataStore: NSObject {
     }
     
     public func saveUser(user:User) {
+        println(user)
         let userDefaults = NSUserDefaults.standardUserDefaults()
         userDefaults.setObject(user.firstname, forKey: "firstname")
         userDefaults.setObject(user.id, forKey: "id")
         userDefaults.setObject(user.facebook_id, forKey: "facebook_id")
         userDefaults.setObject(user.lastname, forKey: "lastname")
         userDefaults.setObject(user.username, forKey: "username")
-        userDefaults.setObject(user.imageurl, forKey: "imageurl")
+        
+        if user.is_late == nil {
+            userDefaults.setObject(0, forKey: "is_late")
+        } else {
+            userDefaults.setObject(user.is_late, forKey: "is_late")
+        }
+        
+        userDefaults.setObject(user.work, forKey: "work")
+        userDefaults.setObject(user.education, forKey: "education")
     }
     
-    public func saveToken(token: Int) {
+    public func saveToken(token: String) {
         let userDefaults = NSUserDefaults.standardUserDefaults()
+        print(token)
         userDefaults.setObject(token, forKey: "token")
     }
     
-    public func getToken() -> Int? {
+    public func getToken() -> String? {
         let userDefaults = NSUserDefaults.standardUserDefaults()
-        if let token = userDefaults.valueForKey("token") as? Int {
+        if let token = userDefaults.valueForKey("token") as? String {
             return token
         }
         return nil

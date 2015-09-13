@@ -14,18 +14,20 @@ let tealColor = UIColor(red: 54/255, green: 179/255, blue: 168/255, alpha: 1)
 
 
 class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDelegate {
-
+    
     var firstLocationUpdate: Bool?
     let locationManager=CLLocationManager()
     var mapView: GMSMapView!
     var searchActive : Bool = false
     var searchBar : UISearchBar?
     var newPace : Pace?
+    var togglebutton: UIButton!
+    var pacetoggle = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-         self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
         
         var camera = GMSCameraPosition.cameraWithLatitude(40.7903, longitude: -73.9597, zoom: 12)
         mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
@@ -55,18 +57,38 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: titleButton.font.fontName, size: 14)
         
+        togglebutton = UIButton(frame: CGRectMake(view.frame.width - 80, 24, 80, 30))
+        togglebutton.setTitle("Soon", forState: .Normal)
+        togglebutton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        togglebutton.addTarget(self, action: "toggle", forControlEvents: .TouchUpInside)
+        headerView.addSubview(togglebutton)
+        
         headerView.addSubview(titleButton)
         
-//        searchBar = UISearchBar(frame: CGRect(x: 20, y: 100, width: view.frame.width - 40, height: 40))
-//        searchBar!.delegate = self
-//        mapView.addSubview(searchBar!)
+        //        searchBar = UISearchBar(frame: CGRect(x: 20, y: 100, width: view.frame.width - 40, height: 40))
+        //        searchBar!.delegate = self
+        //        mapView.addSubview(searchBar!)
         
         mapView.addSubview(headerView)
         
         self.view = mapView
         
     }
-
+    
+    func toggle() {
+        if togglebutton.titleLabel?.text == "Soon" {
+            pacetoggle = true
+            togglebutton.setTitle("Always", forState: .Normal)
+            mapView.clear()
+            getPaces()
+        } else {
+            pacetoggle = false
+            togglebutton.setTitle("Soon", forState: .Normal)
+            mapView.clear()
+            getPaces()
+        }
+    }
+    
     func getPaces() {
         NetworkController().getPaces({paces in
             for pace in paces {
@@ -74,6 +96,8 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                 let currentDate = NSDate()
                 let calendar = NSCalendar.currentCalendar()
                 let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
+                
+                var isgreen = false
                 
                 if let timestring = pace.time as NSString? {
                     let arr = timestring.componentsSeparatedByString("T")
@@ -95,6 +119,9 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                                             shoulddrop = true
                                         } else if val == components.day {
                                             if let hour = time[0] as? String {
+                                                if (components.hour - val!) < 12 {
+                                                    isgreen = true
+                                                }
                                                 var val = hour.toInt()
                                                 if val < components.hour {
                                                     shoulddrop = true
@@ -113,19 +140,30 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                             }
                         }
                     }
-                
-                
-//                if shoulddrop {
-//                } else {
-                    var marker = GMSMarker(position: pace.location!)
-                    marker.title = "Join Pace"
-                    marker.map = self.mapView
-                    marker.icon = UIImage(named: "blue-run-small")
-                    marker.userData = pace
-//                }
-
-                
-            }
+                    
+                    
+                    if shoulddrop {
+                    } else {
+                        if self.pacetoggle {
+                            if isgreen {
+                                var marker = GMSMarker(position: pace.location!)
+                                marker.title = "Join Pace"
+                                marker.map = self.mapView
+                                marker.userData = pace
+                                marker.icon = UIImage(named: "blue-run-small")
+                            }
+                        } else {
+                            var marker = GMSMarker(position: pace.location!)
+                            marker.title = "Join Pace"
+                            marker.map = self.mapView
+                            marker.userData = pace
+                            marker.icon = UIImage(named: "blue-run-small")
+                        }
+                        
+                    }
+                    
+                    
+                }
             }
             
             }, failureHandler: {
@@ -136,16 +174,16 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
     }
     
     override func viewWillDisappear(animated: Bool) {
-//        mapView.removeObserver(self, forKeyPath: "myLocation")
+        //        mapView.removeObserver(self, forKeyPath: "myLocation")
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
         let location = change[NSKeyValueChangeNewKey] as? CLLocation
         
-//        mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 14)
+        //        mapView.camera = GMSCameraPosition.cameraWithTarget(location.coordinate, zoom: 14)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -166,7 +204,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
             mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 13)
             marker.userData = pace
         }
-//        searchBar?.becomeFirstResponder()
+        //        searchBar?.becomeFirstResponder()
         
     }
     
@@ -196,8 +234,8 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
         return true
     }
     
-
-
-
+    
+    
+    
 }
 
