@@ -357,6 +357,7 @@ class NetworkController: NSObject {
             let requestBodyData = (pace as NSString).dataUsingEncoding(NSUTF8StringEncoding)
             request.HTTPBody = requestBodyData
             request.HTTPMethod = "POST"
+            print(pace)
             
             let boundaryConstant = "----WebKitFormBoundaryE19zNvXGzXaLvS5C";
             let contentType = "multipart/form-data; boundary=" + boundaryConstant
@@ -378,8 +379,8 @@ class NetworkController: NSObject {
                                 user.paces_hosted = 0
                                 user.paces_joined = 0
                                 user.is_late = 0
-                                user.education = "Education"
-                                user.work = "Work"
+                                user.education = json["education"] as? String
+                                user.work = json["work"] as? String
                                 successHandler(user)
                             }
                             
@@ -446,86 +447,6 @@ class NetworkController: NSObject {
     }
     
 
-    
-    func updateUserWork(user: User, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
-        
-        
-        if let id = user.id {
-            
-            if let work = user.work {
-                
-                    var session = NSURLSession.sharedSession()
-                    if let url = NSURL(string: ngrok + "/api/v1/accounts/\(id)/"){
-                        var request = NSMutableURLRequest(URL: url)
-                        request.HTTPMethod = "PUT"
-                        
-                        var params = ["work":work] as Dictionary<String, String>
-                        
-                        var err: NSError?
-                        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
-                        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                        request.addValue("application/json", forHTTPHeaderField: "Accept")
-                        request.addValue(token, forHTTPHeaderField: "Authorization")
-                        
-                        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-                            println("Response: \(response)")
-                            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-                            var err: NSError?
-                            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
-                            
-                            if(err != nil) {
-                                
-                            }
-                            successHandler(true)
-                            
-                        })
-                        
-                        task.resume()
-                }
-            }
-        }
-    }
-    
-    func updateUserEducation(user: User, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
-        
-        
-        if let id = user.id {
-            
-            if let edu = user.education, username = user.username {
-                
-                var session = NSURLSession.sharedSession()
-                if let url = NSURL(string: ngrok + "/api/v1/accounts/\(id)/"){
-                    var request = NSMutableURLRequest(URL: url)
-                    request.HTTPMethod = "PUT"
-                    
-                    var params = ["education":edu, "username":username, "email":username, "password":"password"] as Dictionary<String, String>
-                    
-                    var err: NSError?
-                    request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
-                    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                    request.addValue("application/json", forHTTPHeaderField: "Accept")
-                    request.addValue(token, forHTTPHeaderField: "Authorization")
-                    
-                    var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-                        println("Response: \(response)")
-                        var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-                        var err: NSError?
-                        var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
-                        
-                        if(err != nil) {
-                            
-                        }
-                        successHandler(true)
-                        
-                    })
-                    
-                    task.resume()
-                }
-            }
-        }
-    }
-
-    
 
     
 }

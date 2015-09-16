@@ -15,6 +15,8 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     var passwordtextfield: UITextField!
     var firstnametext: UITextField!
     var lastnametext: UITextField!
+    var worktext: UITextField!
+    var educationtext: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +42,29 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         topImage.image = UIImage(named: "topofpace")
         view.addSubview(topImage)
         
-        usernametextfield = UITextField(frame: CGRect(x: 50, y: view.frame.height/2 + 40, width: view.frame.width - 60, height: 50))
+        usernametextfield = UITextField(frame: CGRect(x: 40, y: view.frame.height/2 + 20, width: view.frame.width - 60, height: 50))
         usernametextfield.text = email
         usernametextfield.textColor = UIColor.blackColor()
         usernametextfield.delegate = self
         view.addSubview(usernametextfield)
         
-        passwordtextfield = UITextField(frame: CGRect(x: 40, y: view.frame.height - 90, width: view.frame.width - 80, height: 50))
+        worktext = UITextField(frame: CGRect(x: 40, y: view.frame.height - 100, width: view.frame.width/2 - 50, height: 50))
+        worktext.textColor = UIColor.lightGrayColor()
+        worktext.text = "   Work"
+        worktext.delegate = self
+        worktext.layer.borderWidth = 2
+        worktext.layer.borderColor = UIColor.lightGrayColor().CGColor
+        view.addSubview(worktext)
+        
+        educationtext = UITextField(frame: CGRect(x: view.frame.width/2 + 20, y: view.frame.height - 100, width: view.frame.width/2 - 50, height: 50))
+        educationtext.textColor = UIColor.lightGrayColor()
+        educationtext.text = "   Education"
+        educationtext.delegate = self
+        educationtext.layer.borderWidth = 2
+        educationtext.layer.borderColor = UIColor.lightGrayColor().CGColor
+        view.addSubview(educationtext)
+        
+        passwordtextfield = UITextField(frame: CGRect(x: 40, y: view.frame.height - 175, width: view.frame.width - 80, height: 50))
         passwordtextfield.textColor = UIColor.lightGrayColor()
         passwordtextfield.text = "   Password"
         passwordtextfield.delegate = self
@@ -54,7 +72,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         passwordtextfield.layer.borderColor = UIColor.lightGrayColor().CGColor
         view.addSubview(passwordtextfield)
         
-        firstnametext = UITextField(frame: CGRect(x: 40, y: view.frame.height - 200, width: view.frame.width/2 - 80, height: 50))
+        firstnametext = UITextField(frame: CGRect(x: 40, y: view.frame.height - 250, width: view.frame.width/2 - 50, height: 50))
         firstnametext.textColor = UIColor.lightGrayColor()
         firstnametext.text = "  First Name"
         firstnametext.delegate = self
@@ -62,7 +80,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         firstnametext.layer.borderColor = UIColor.lightGrayColor().CGColor
         view.addSubview(firstnametext)
         
-        lastnametext = UITextField(frame: CGRect(x: view.frame.width/2 + 40, y: view.frame.height - 200, width: view.frame.width/2 - 80, height: 50))
+        lastnametext = UITextField(frame: CGRect(x: view.frame.width/2 + 20, y: view.frame.height - 250, width: view.frame.width/2 - 50, height: 50))
         lastnametext.textColor = UIColor.lightGrayColor()
         lastnametext.text = "  Last Name"
         lastnametext.delegate = self

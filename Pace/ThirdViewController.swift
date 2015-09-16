@@ -31,7 +31,20 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
         titleButton.font = UIFont(name: titleButton.font.fontName, size: 14)
         view.addSubview(titleButton)
         
+        let logoutbutton = UIButton(frame: CGRect(x: view.frame.width - 100, y: 20, width: 100, height: 50))
+        logoutbutton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        logoutbutton.setTitle("Sign Out", forState: .Normal)
+        logoutbutton.addTarget(self, action: "logout", forControlEvents: .TouchUpInside)
+        view.addSubview(logoutbutton)
+        
         self.view.addSubview(tableView)
+    }
+    
+    func logout() {
+        let loginManager = FBSDKLoginManager()
+        loginManager.logOut()
+        let loginVC = LoginViewController()
+        navigationController?.presentViewController(loginVC, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

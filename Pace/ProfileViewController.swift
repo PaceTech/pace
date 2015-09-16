@@ -132,30 +132,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewDidAppear(animated: Bool) {
-        if (workstring != nil) {
-            NetworkController().getUser(profileID, successHandler: { user in
-
-                
-                user.work = self.workstring
-                NetworkController().updateUserWork(user, successHandler: {bool in
-                    PersistentDataStore.sharedInstance.saveUser(user)
-                    }, failureHandler: {error in
-                })
-                }, failureHandler: {error in
-                    
-            })
-        }
-        if (educationstring != nil) {
-            NetworkController().getUser(profileID, successHandler: { user in
-                user.work = self.educationstring
-                NetworkController().updateUserEducation(user, successHandler: {bool in
-                    PersistentDataStore.sharedInstance.saveUser(user)
-                    }, failureHandler: {error in
-                })
-                }, failureHandler: {error in
-                    
-            })
-        }
+        
         updateItems()
         updateNumbers()
     }
@@ -247,12 +224,14 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.nameText.text = self.items[indexPath.row]
             cell.iconview.image = UIImage(named: self.iconnames[indexPath.row])
             if indexPath.row == 0 {
-                if self.items[indexPath.row] == "Work" {
+                if self.items[indexPath.row] == "" {
+                    cell.textLabel?.text = "Work"
                     cell.textLabel?.enabled = false
                 }
             }
             if indexPath.row == 1 {
-                if self.items[indexPath.row] == "Education" {
+                if self.items[indexPath.row] == "" {
+                    cell.textLabel?.text = "Education"
                     cell.textLabel?.enabled = false
                 }
             }
@@ -288,19 +267,19 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0 {
-            if indexPath.row == 1 {
-                let vc = InputViewController()
-                vc.pageTitle = "Enter Education"
-                vc.iseducation = true
-                navigationController?.pushViewController(vc, animated: true)
-            } else if indexPath.row == 0 {
-                let vc = InputViewController()
-                vc.pageTitle = "Enter Education"
-                vc.iswork = true
-                navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//        if indexPath.section == 0 {
+//            if indexPath.row == 1 {
+//                let vc = InputViewController()
+//                vc.pageTitle = "Enter Education"
+//                vc.iseducation = true
+//                navigationController?.pushViewController(vc, animated: true)
+//            } else if indexPath.row == 0 {
+//                let vc = InputViewController()
+//                vc.pageTitle = "Enter Education"
+//                vc.iswork = true
+//                navigationController?.pushViewController(vc, animated: true)
+//            }
+//        }
     }
 }
 

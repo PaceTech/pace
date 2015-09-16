@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
 
         view.backgroundColor = UIColor.whiteColor()
         loginButton = FBSDKLoginButton()
-        loginButton?.readPermissions = ["public_profile", "email", "user_friends"]
+        loginButton?.readPermissions = ["public_profile", "email", "user_friends", "user_education_history", "user_work_history"]
         loginButton?.delegate = self
         loginButton?.frame = CGRect(x: 50, y: view.frame.height - 300, width: view.frame.width - 100, height: 50)
         view.addSubview(loginButton!)
@@ -164,7 +164,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
 
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email, education"])
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email, education, work"])
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             if ((error) != nil){
                  println(error)           }
@@ -180,14 +180,43 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
                                     if let first = result.valueForKey("first_name") as? String {
                                         if let last = result.valueForKey("last_name") as? String {
                                             
+                                            var myeducation = ""
+                                            if let education = result.valueForKey("education") as? NSArray {
+                                                for school in education {
+                                                    if let sch = school as? NSDictionary {
+                                                        if sch.valueForKey("type") as! String == "College" {
+                                                            if let schoolname = sch.valueForKey("school") as? NSDictionary {
+                                                                myeducation = schoolname.valueForKey("name") as! String
+                                                                println(myeducation)
+                                                            }
+                                                        }
+                                                        if sch.valueForKey("type") as! String == "Graduate School" {
+                                                            if let schoolname = sch.valueForKey("school") as? NSDictionary {
+                                                                myeducation = schoolname.valueForKey("name") as! String
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
+                                            var mywork = ""
+                                            if let work = result.valueForKey("work") as? NSArray {
+                                                for job in work {
+                                                    if let workjob = job as? NSDictionary {
+                                                        if let employer = workjob.valueForKey("employer") as? NSDictionary {
+                                                            mywork = employer.valueForKey("name") as! String
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
                                             
                                             var joined = "0"
                                             var hosted = "0"
                                             var isreply = "0"
-                                            var work = "Work"
-                                            var education = "Education"
+                                            println(myeducation)
                                             
-                                            var dataString = "password=password&username=\(email)&email=\(email)&first_name=\(first)&last_name=\(last)&facebook_id=\(id)&image_url=\(url)&paces_joined=\(joined)&paces_hosted=\(hosted)&work=\(work)&education=\(education)&is_late=\(isreply)"
+                                            var dataString = "password=password&username=\(email)&email=\(email)&first_name=\(first)&last_name=\(last)&facebook_id=\(id)&image_url=\(url)&paces_joined=\(joined)&paces_hosted=\(hosted)&work=\(mywork)&education=\(myeducation)&is_late=\(isreply)"
                                             
                                             NetworkController().getToken(email, sentPassword: "password", successHandler: {success in
                                                 
