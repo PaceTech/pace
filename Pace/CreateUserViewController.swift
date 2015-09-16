@@ -89,22 +89,79 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
+    func pressGo() {
+      
+            
+      
+                if let email = email {
+                    let url = ""
+                    
+                    
+                            if let first = firstnametext.text {
+                                if let last = lastnametext.text {
+                                    if let password = passwordtextfield.text {
+                                    
+                                    var id = -1
+                                    var joined = "0"
+                                    var hosted = "0"
+                                    var isreply = "0"
+                                    var work = "Work"
+                                    var education = "Education"
+                                    
+                                    var dataString = "password=\(password)&username=\(email)&email=\(email)&first_name=\(first)&last_name=\(last)&facebook_id=\(id)&image_url=\(url)&paces_joined=\(joined)&paces_hosted=\(hosted)&work=\(work)&education=\(education)&is_late=\(isreply)"
+                                    
+                                    
+                                    
+                                            
+                                            NetworkController().createAccount(dataString, successHandler: {user in
+                                                println("didn't fail step one")
+                                                
+                                                
+                                                NetworkController().getToken(email, sentPassword: "password", successHandler: {success in
+                                                    
+                                                    NetworkController().getMe({user in
+                                                        PersistentDataStore.sharedInstance.saveUser(user)
+                                                        AccountController.sharedInstance.currentuser = user
+                                                        self.dismissViewControllerAnimated(true, completion: nil)
+                                                        }, failureHandler: {error in
+                                                    })
+
+                                                }, failureHandler: {error in
+                                                    println(error)
+                                                })
+                                                
+                                                }, failureHandler: {error in
+                                                    println(error)
+                                            })
+                                    }
+                                }
+                    }
+        }
+             
+
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        textField.text = ""
+    }
 
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-    
+
     func keyboardWillShow(sender: NSNotification) {
         self.view.frame.origin.y -= 210
     }
-    
+
     func keyboardWillHide(sender: NSNotification) {
         self.view.frame.origin.y += 210
     }
-    
+
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
     }
+    
 
 }

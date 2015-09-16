@@ -23,6 +23,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
     var newPace : Pace?
     var togglebutton: UIButton!
     var pacetoggle = false
+    var once = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,13 +170,17 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
     }
     
     override func viewWillDisappear(animated: Bool) {
-                mapView.removeObserver(self, forKeyPath: "myLocation")
+//            mapView.removeObserver(self, forKeyPath: "myLocation")
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
         let location = change[NSKeyValueChangeNewKey] as? CLLocation
-        mapView.camera = GMSCameraPosition.cameraWithTarget(location!.coordinate, zoom: 14)
+        if once == false {
+            once = true
+            mapView.camera = GMSCameraPosition.cameraWithTarget(location!.coordinate, zoom: 14)
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
