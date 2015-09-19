@@ -156,7 +156,7 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         
-        
+        self.runners = []
         if let myrunners = paceInfo?.participants {
             for runner in myrunners {
                 self.runners.append("\(runner)")
@@ -167,7 +167,7 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func inviteFriends() {
         if let id = paceInfo?.id {
-            let sharetext = "Let's run together! Join my pace at http://pace:runs/\(id)"
+            let sharetext = "Let's run together! Join my pace at paceapp://\(id)"
             let activityVC = UIActivityViewController(activityItems: [sharetext], applicationActivities: nil)
             navigationController!.presentViewController(activityVC, animated: true, completion: nil)
         }
@@ -285,6 +285,11 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                         if fbid != "" {
                             cell.profImageView.sd_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(fbid)/picture?type=large"))
                         }
+                    }
+                    
+                    if "\(userid)" == self.paceInfo?.owner {
+                        cell.iconImageView.image = UIImage(named: "profhost")
+                        cell.iconImageView.backgroundColor = UIColor.whiteColor()
                     }
                     
                     }, failureHandler: {

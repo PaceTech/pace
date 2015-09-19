@@ -23,6 +23,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>paceapp</string>
 				<string>fb702750639831283</string>
 			</array>
 		</dict>

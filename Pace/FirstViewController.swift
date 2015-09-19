@@ -69,6 +69,12 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
         
         self.view = mapView
         
+        var foregroundNotification = NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillEnterForegroundNotification, object: nil, queue: NSOperationQueue.mainQueue()) {
+            [unowned self] notification in
+            
+            
+        }
+        
     }
     
     func toggle() {
@@ -138,25 +144,25 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                     }
                     
                     
-                    if shoulddrop {
-                    } else {
-                        if self.pacetoggle {
-                            if isgreen {
+//                    if shoulddrop {
+//                    } else {
+//                        if self.pacetoggle {
+//                            if isgreen {
                                 var marker = GMSMarker(position: pace.location!)
                                 marker.title = "Join Pace"
                                 marker.map = self.mapView
                                 marker.userData = pace
                                 marker.icon = UIImage(named: "blue-run-small")
-                            }
-                        } else {
-                            var marker = GMSMarker(position: pace.location!)
-                            marker.title = "Join Pace"
-                            marker.map = self.mapView
-                            marker.userData = pace
-                            marker.icon = UIImage(named: "blue-run-small")
-                        }
-                        
-                    }
+//                            }
+//                        } else {
+//                            var marker = GMSMarker(position: pace.location!)
+//                            marker.title = "Join Pace"
+//                            marker.map = self.mapView
+//                            marker.userData = pace
+//                            marker.icon = UIImage(named: "blue-run-small")
+//                        }
+                
+//                    }
                     
                     
                 }
@@ -202,8 +208,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
             marker.icon = UIImage(named: "blue-run-small")
             marker.userData = pace
         }
-        //        searchBar?.becomeFirstResponder()
-        
+
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {

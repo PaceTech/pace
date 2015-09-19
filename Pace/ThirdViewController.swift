@@ -11,14 +11,17 @@ import UIKit
 class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     var tableView = UITableView()
-    var items = ["Current Paces", "My Profile", "Pace Settings", "Activity"]
+    var items = ["Current Paces", "My Profile", "Pace Settings\n(coming soon!)", "Activity\n(coming soon!)"]
     var names = ["paces", "profile", "settings", "activity"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = darkBlueColor
+        view.backgroundColor = UIColor.whiteColor()
+        var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 70))
+        headerView.backgroundColor = darkBlueColor
+        view.addSubview(headerView)
         
-        tableView.frame = CGRectMake(0, 70, view.frame.width, view.frame.height - 60)
+        tableView.frame = CGRectMake(0, 70, view.frame.width, 320)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(SettingsViewCell.self, forCellReuseIdentifier: "setingscell")
@@ -31,13 +34,41 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
         titleButton.font = UIFont(name: titleButton.font.fontName, size: 14)
         view.addSubview(titleButton)
         
-        let logoutbutton = UIButton(frame: CGRect(x: view.frame.width - 100, y: 20, width: 100, height: 50))
-        logoutbutton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        logoutbutton.setTitle("Sign Out", forState: .Normal)
+        var attrs = [
+            NSFontAttributeName : UIFont.systemFontOfSize(13.0),
+            NSForegroundColorAttributeName : UIColor.grayColor(),
+            NSUnderlineStyleAttributeName : 1]
+        
+        var attributedString = NSMutableAttributedString(string:"Log Out", attributes: attrs)
+        var attributedString1 = NSMutableAttributedString(string:"Privacy Policy", attributes: attrs)
+        var attributedString2 = NSMutableAttributedString(string:"Terms of Service", attributes: attrs)
+        
+        let logoutbutton = UIButton(frame: CGRect(x: 80, y: 530, width: view.frame.width - 160, height: 50))
+        logoutbutton.setAttributedTitle(attributedString, forState: .Normal)
         logoutbutton.addTarget(self, action: "logout", forControlEvents: .TouchUpInside)
-        view.addSubview(logoutbutton)
+        
+        let privacybutton = UIButton(frame: CGRect(x: 40, y: 560, width: view.frame.width/2 - 20, height: 50))
+        privacybutton.setAttributedTitle(attributedString1, forState: .Normal)
+        privacybutton.addTarget(self, action: "showprivacy", forControlEvents: .TouchUpInside)
+        
+        let termsofservice = UIButton(frame: CGRect(x: view.frame.width/2, y: 560, width: view.frame.width/2 - 40, height: 50))
+        termsofservice.setAttributedTitle(attributedString2, forState: .Normal)
+        termsofservice.addTarget(self, action: "showtos", forControlEvents: .TouchUpInside)
         
         self.view.addSubview(tableView)
+        
+        view.addSubview(logoutbutton)
+        view.addSubview(termsofservice)
+        view.addSubview(privacybutton)
+        
+    }
+    
+    func showtos() {
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://joinapace.quip.com/MmdsAuIrYmXo")!)
+    }
+    
+    func showprivacy() {
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://joinapace.quip.com/5CXzA77jHOX9")!)
     }
     
     func logout() {
@@ -63,17 +94,30 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell:SettingsViewCell = tableView.dequeueReusableCellWithIdentifier("setingscell") as! SettingsViewCell!
-        if indexPath.row > 1  {
-            cell.userInteractionEnabled = false
-        }
+        
         
         cell.nameText.text = self.items[indexPath.row]
         cell.nameText.textColor = tealColor
         cell.nameText.font = UIFont(name: "helvetica", size: 20)
         cell.iconview.image = UIImage(named: names[indexPath.row])
+        
+        if indexPath.row > 1  {
+            cell.userInteractionEnabled = false
+            cell.nameText.textColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
+        }
+        
         return cell
         
     }
+    
+//    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 10
+//    }
+//    
+//    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+//        return ""
+//    }
+    
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 80
@@ -117,7 +161,8 @@ class SettingsViewCell: UITableViewCell {
         iconview.contentMode = .ScaleAspectFit
         contentView.addSubview(iconview)
         
-        nameText = UILabel(frame: CGRect(x: 100, y: 10, width: 200, height: 50))
+        nameText = UILabel(frame: CGRect(x: 100, y: 0, width: 200, height: 80))
+        nameText.numberOfLines = 0
         contentView.addSubview(nameText)
     }
     

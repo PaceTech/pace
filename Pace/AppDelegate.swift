@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         GMSServices.provideAPIKey("AIzaSyA1XSNBmrqi1wfP94xDLQklUY-P4GAnN7M")
         self.window?.makeKeyAndVisible()
@@ -46,6 +45,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        if let urlstring = url.absoluteString {
+            let urls = urlstring.componentsSeparatedByString("://")
+            if urls[0] == "paceapp" {
+                if urls.count > 0 {
+                    if let num = urls[1].toInt() {
+                        let pace = Pace()
+                        pace.id = "\(num)"
+                        let vc = PaceDetailViewController()
+                        vc.paceInfo = pace
+                        self.window?.rootViewController?.presentViewController(vc, animated: true, completion: nil)
+                       
+                        
+                    }
+                }
+            }
+            
+        }
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
