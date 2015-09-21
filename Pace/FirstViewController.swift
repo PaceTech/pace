@@ -13,7 +13,7 @@ let darkBlueColor = UIColor(red: 27/255, green: 78/255, blue: 93/255, alpha: 1)
 let tealColor = UIColor(red: 54/255, green: 179/255, blue: 168/255, alpha: 1)
 
 
-class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDelegate {
+class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMapViewDelegate {
     
     var firstLocationUpdate: Bool?
     let locationManager=CLLocationManager()
@@ -22,12 +22,12 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
     var searchBar : UISearchBar?
     var newPace : Pace?
     var togglebutton: UIButton!
-    var pacetoggle = false
+    var pacetoggle = 2
     var once = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         self.locationManager.requestWhenInUseAuthorization()
         var camera = GMSCameraPosition()
         mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
@@ -56,42 +56,48 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: titleButton.font.fontName, size: 14)
-        
-        togglebutton = UIButton(frame: CGRectMake(view.frame.width - 80, 24, 80, 30))
-        togglebutton.setTitle("Soon", forState: .Normal)
-        togglebutton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        togglebutton.addTarget(self, action: "toggle", forControlEvents: .TouchUpInside)
-        headerView.addSubview(togglebutton)
+    
         
         headerView.addSubview(titleButton)
         
         mapView.addSubview(headerView)
         
+        
+        let items = ["2 Hours", "Today", "All"]
+        let segmentedControl = UISegmentedControl(items: items)
+        segmentedControl.selectedSegmentIndex = 2
+        segmentedControl.frame =  CGRect(x: 30, y: 90, width: view.frame.width - 60, height: 30)
+        segmentedControl.backgroundColor = UIColor.whiteColor()
+        segmentedControl.tintColor = darkBlueColor
+        segmentedControl.addTarget(self, action: "toggle:", forControlEvents: .ValueChanged)
+        mapView.addSubview(segmentedControl)
+        
         self.view = mapView
         
-        var foregroundNotification = NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillEnterForegroundNotification, object: nil, queue: NSOperationQueue.mainQueue()) {
-            [unowned self] notification in
-            
-            
-        }
         
     }
     
-    func toggle() {
-        if togglebutton.titleLabel?.text == "Soon" {
-            pacetoggle = true
-            togglebutton.setTitle("Always", forState: .Normal)
+    func toggle(control: UISegmentedControl) {
+        if control.selectedSegmentIndex == 0 {
+            pacetoggle = 0
+            mapView.clear()
+            getPaces()
+        } else if control.selectedSegmentIndex == 1 {
+            pacetoggle = 1
             mapView.clear()
             getPaces()
         } else {
-            pacetoggle = false
-            togglebutton.setTitle("Soon", forState: .Normal)
+            pacetoggle = 2
             mapView.clear()
             getPaces()
         }
+       
     }
     
     func getPaces() {
+        let activityind = UIActivityIndicatorView(frame: CGRect(x: view.frame.width/2 - 20, y: view.frame.height/2 - 20, width: 40, height: 40))
+        activityind.tintColor = darkBlueColor
+        mapView.addSubview(activityind)
         NetworkController().getPaces({paces in
             for pace in paces {
                 var shoulddrop = false
@@ -99,8 +105,9 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                 let calendar = NSCalendar.currentCalendar()
                 let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
                 
-                var isgreen = false
-                
+                var isthishour = false
+                var istoday = false
+                activityind.stopAnimating()
                 if let timestring = pace.time as NSString? {
                     let arr = timestring.componentsSeparatedByString("T")
                     let date = arr[0].componentsSeparatedByString("-")
@@ -121,8 +128,10 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                                             shoulddrop = true
                                         } else if val == components.day {
                                             if let hour = time[0] as? String {
-                                                if (components.hour - val!) < 12 {
-                                                    isgreen = true
+                                                if (components.hour - val!) < 2 {
+                                                    isthishour = true
+                                                } else if (components.hour - val!) < 12 {
+                                                    istoday = true
                                                 }
                                                 var val = hour.toInt()
                                                 if val < components.hour {
@@ -143,26 +152,36 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
                         }
                     }
                     
+                   
                     
-//                    if shoulddrop {
-//                    } else {
-//                        if self.pacetoggle {
-//                            if isgreen {
+                    if shoulddrop {
+                    } else {
+                        if self.pacetoggle == 0 {
+                            if isthishour {
                                 var marker = GMSMarker(position: pace.location!)
                                 marker.title = "Join Pace"
                                 marker.map = self.mapView
                                 marker.userData = pace
                                 marker.icon = UIImage(named: "blue-run-small")
-//                            }
-//                        } else {
-//                            var marker = GMSMarker(position: pace.location!)
-//                            marker.title = "Join Pace"
-//                            marker.map = self.mapView
-//                            marker.userData = pace
-//                            marker.icon = UIImage(named: "blue-run-small")
-//                        }
+                            }
+                        }
+                        else if self.pacetoggle == 1 {
+                            if istoday || isthishour {
+                                var marker = GMSMarker(position: pace.location!)
+                                marker.title = "Join Pace"
+                                marker.map = self.mapView
+                                marker.userData = pace
+                                marker.icon = UIImage(named: "blue-run-small")
+                            }
+                        } else if self.pacetoggle == 2 {
+                            var marker = GMSMarker(position: pace.location!)
+                            marker.title = "Join Pace"
+                            marker.map = self.mapView
+                            marker.userData = pace
+                            marker.icon = UIImage(named: "blue-run-small")
+                        }
                 
-//                    }
+                    }
                     
                     
                 }
@@ -170,7 +189,14 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
             
             }, failureHandler: {
                 error in
-                println(error)
+                
+                let alertController = UIAlertController(title: NSLocalizedString("Uh oh!", comment: ""), message: NSLocalizedString("Something went wrong loading the paces.", comment: ""), preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: NSLocalizedString("I'll check back later.", comment: ""), style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    
+                }
+                alertController.addAction(okAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
                 
         })
     }
@@ -194,7 +220,6 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
 
     }
     
-    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent;
     }
@@ -208,7 +233,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, GMSMapViewDele
             marker.icon = UIImage(named: "blue-run-small")
             marker.userData = pace
         }
-
+        self.screenName = "FirstMapView"
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {

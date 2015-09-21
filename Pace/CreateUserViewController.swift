@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateUserViewController: UIViewController, UITextFieldDelegate {
+class CreateUserViewController: GAITrackedViewController, UITextFieldDelegate {
     
     var email: String?
     var usernametextfield: UITextField!
@@ -181,5 +181,8 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.screenName = "CreateUserView"
+    }
 
 }

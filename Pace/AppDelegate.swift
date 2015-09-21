@@ -9,17 +9,27 @@
 import UIKit
 import GoogleMaps
 
+let analyticsid = "UA-67794662-1"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var googleAnalyticsTracker: GAITracker?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         GMSServices.provideAPIKey("AIzaSyA1XSNBmrqi1wfP94xDLQklUY-P4GAnN7M")
         self.window?.makeKeyAndVisible()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        GAI.sharedInstance().trackUncaughtExceptions = true
+        GAI.sharedInstance().dispatchInterval = 20
+        GAI.sharedInstance().logger.logLevel = GAILogLevel.None
+        googleAnalyticsTracker = GAI.sharedInstance().trackerWithTrackingId(analyticsid)
+        
+        
         return true
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {

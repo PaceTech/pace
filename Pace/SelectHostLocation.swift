@@ -94,7 +94,7 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        
+        self.screenName = "PaceHostLocationView"
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {

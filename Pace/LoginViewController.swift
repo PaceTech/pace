@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate {
+class LoginViewController: GAITrackedViewController, FBSDKLoginButtonDelegate, UITextFieldDelegate {
 
     var loginButton: FBSDKLoginButton?
     var myloginbutton: UIButton!
@@ -22,7 +22,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         view.backgroundColor = UIColor.whiteColor()
         loginButton = FBSDKLoginButton()
         loginButton?.readPermissions = ["public_profile", "email", "user_friends", "user_education_history", "user_work_history"]
@@ -261,7 +260,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UITextFie
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
     }
 
-
+    override func viewDidAppear(animated: Bool) {
+        self.screenName = "LoginView"
+    }
     
 
 

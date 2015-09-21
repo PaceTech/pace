@@ -12,5 +12,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImageView+WebCache.h"
-
+#import "GAI.h"
+#import "GAIFields.h"
+#import "GAIDictionaryBuilder.h"
 #endif

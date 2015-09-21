@@ -51,7 +51,7 @@ class SecondViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        println(location)
+        self.screenName = "PaceHostView"
     }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {

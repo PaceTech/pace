@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 
 
-class LocationDetailViewController: UIViewController {
+class LocationDetailViewController: GAITrackedViewController {
     
     var firstLocationUpdate: Bool?
     let locationManager=CLLocationManager()
@@ -73,6 +73,7 @@ class LocationDetailViewController: UIViewController {
         marker.map = self.mapView
         marker.icon = UIImage(named: "blue-run-small")
         mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 14)
+        self.screenName = "PaceDetailLocationView"
     }
 
     

@@ -132,7 +132,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewDidAppear(animated: Bool) {
-        
+        if let id = profileID {
+            self.screenName = "ProfileView \(id)"
+        }
         updateItems()
         updateNumbers()
     }
@@ -256,7 +258,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
-    
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {

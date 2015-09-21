@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
+class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tableView = UITableView()
     var items = ["Current Paces", "My Profile", "Pace Settings\n(coming soon!)", "Activity\n(coming soon!)"]
@@ -78,6 +78,10 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
         navigationController?.presentViewController(loginVC, animated: true, completion: nil)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.screenName = "HomeView"
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -109,15 +113,6 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
         return cell
         
     }
-    
-//    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 10
-//    }
-//    
-//    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-//        return ""
-//    }
-    
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 80

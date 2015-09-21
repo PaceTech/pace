@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, UITableViewDataSource  {
 
     var paceInfo : Pace?
     var tableView: UITableView  =   UITableView()
@@ -175,6 +175,10 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func getPace() {
+        let activityind = UIActivityIndicatorView(frame: CGRect(x: view.frame.width/2 - 20, y: view.frame.height/2 - 20, width: 40, height: 40))
+        activityind.tintColor = darkBlueColor
+        view.addSubview(activityind)
+        activityind.startAnimating()
         if let paceinfoid = paceInfo?.id {
             NetworkController().getAPace(paceinfoid.toInt()!, successHandler: {paces in
             
@@ -182,11 +186,19 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                     self.paceInfo = pace
                 
                     self.reloadinfo()
+                    activityind.stopAnimating()
                     self.tableView.reloadData()
                 }
                 }, failureHandler: {
                     error in
                     println("error")
+                    let alertController = UIAlertController(title: NSLocalizedString("Uh oh!", comment: ""), message: NSLocalizedString("Something went wrong loading this pace.", comment: ""), preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: NSLocalizedString("I'll check back later.", comment: ""), style: UIAlertActionStyle.Default) {
+                        UIAlertAction in
+                        
+                    }
+                    alertController.addAction(okAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
                     
             })
         }
@@ -195,6 +207,7 @@ class PaceDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewDidAppear(animated: Bool) {
         tableView.reloadData()
+        self.screenName = "PaceDetailView"
     }
     
     override func didReceiveMemoryWarning() {

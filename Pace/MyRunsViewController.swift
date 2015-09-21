@@ -66,10 +66,21 @@ class MyRunsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let calendar = NSCalendar.currentCalendar()
                 let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
                 
+                var startstring = "Attending a "
+                
+                if let id = AccountController.sharedInstance.getUser()?.id {
+                    if pace.owner == "\(id)" {
+                        startstring = "Hosting a"
+                    }
+                }
+                
+                
+                var date = []
+                var time = []
                 if let timestring = pace.time as NSString? {
                     let arr = timestring.componentsSeparatedByString("T")
-                    let date = arr[0].componentsSeparatedByString("-")
-                    let time = arr[1].componentsSeparatedByString(":")
+                    date = arr[0].componentsSeparatedByString("-")
+                    time = arr[1].componentsSeparatedByString(":")
                     if let year = date[0] as? String {
                         var val = year.toInt()
                         if val < components.year {
@@ -111,7 +122,9 @@ class MyRunsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                                     
                                     if shoulddrop {}
                                     else {
-                                        self.items.append("\(pace.time!)")
+                                     
+                                        
+                                        self.items.append("\(startstring) run on \(date[1])/\(date[2]) at \(time[0]):\(time[1])")
                                         self.paces.append(pace)
                                         self.tableView.reloadData()
                                     }
@@ -129,12 +142,13 @@ class MyRunsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.screenName = "MyRunsView"
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-    
-  
-
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
   
@@ -161,8 +175,6 @@ class MyRunsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 70
     }
-    
-
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let vc = PaceDetailViewController()
