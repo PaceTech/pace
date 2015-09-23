@@ -130,6 +130,31 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
                         
                     })
 
+                } else {
+                    self.friendsnames = []
+                    self.friendsids = []
+                    let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me/friends", parameters: nil)
+                    graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+                        if ((error) != nil){
+                            println(error)
+                        }
+                        else {
+                            if let res = result["data"] as? NSArray {
+                                if let dc = res[0] as? NSDictionary {
+                                    if let name: AnyObject = dc["name"] {
+                                        if let id : AnyObject = dc["id"] {
+                                            self.friendsnames.append(name as! String)
+                                            self.friendsids.append(id as! String)
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            
+                            
+                        }
+                        
+                    })
                 }
             }
             if let first = user.firstname, last = user.lastname {
@@ -257,7 +282,11 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
                 }
             }
             if indexPath.row == 2 {
-                cell.textLabel?.text = "\(friendscount) friends on Pace"
+                if friendscount == 0 && friendsids.count > 0 {
+                    cell.textLabel?.text = "\(friendsids.count) friends on Pace"
+                } else {
+                    cell.textLabel?.text = "\(friendscount) friends on Pace"
+                }
             }
             cell.textLabel?.textAlignment = .Center
             return cell
