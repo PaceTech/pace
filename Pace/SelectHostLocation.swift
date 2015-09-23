@@ -11,7 +11,7 @@ import GoogleMaps
 
 let MapAPIKey = "AIzaSyB-gLLCMZgNJ736X2sgKYgULICXKanc23w"
 
-class SelectHostLocation: UIViewController, UISearchBarDelegate {
+class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
     
     var firstLocationUpdate: Bool?
     let locationManager=CLLocationManager()
@@ -20,6 +20,7 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
     var searchBar : UISearchBar?
     var searchbutton: UIButton?
     var savedLocation : CLLocationCoordinate2D?
+    var once = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,7 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
         titleButton.text = "Select Pace Location"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
-        titleButton.font = UIFont(name: titleButton.font.fontName, size: 14)
+        titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
         
         var backButton = UIButton(frame: CGRect(x: 14, y: 20, width: 50, height: 40))
         backButton.setTitle("Back", forState: .Normal)
@@ -85,6 +86,13 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
         }
         
         
+        let joinButton = UIButton(frame: CGRect(x: 20, y: view.frame.height - 120, width: view.frame.width - 40, height: 50))
+        joinButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        joinButton.backgroundColor = tealColor
+        joinButton.setTitle("Select", forState: .Normal)
+        joinButton.addTarget(self, action: "join", forControlEvents: .TouchUpInside)
+        mapView.addSubview(joinButton)
+        
         self.view = mapView
     }
     
@@ -100,7 +108,10 @@ class SelectHostLocation: UIViewController, UISearchBarDelegate {
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
         let location = change[NSKeyValueChangeNewKey] as? CLLocation
-        mapView.camera = GMSCameraPosition.cameraWithTarget(location!.coordinate, zoom: 14)
+        if once == false {
+            once = true
+            mapView.camera = GMSCameraPosition.cameraWithTarget(location!.coordinate, zoom: 14)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {

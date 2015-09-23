@@ -28,6 +28,21 @@
 		DB2B14F51B69970F002BD161 /* location-host@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB2B14F41B69970F002BD161 /* location-host@2x.png */; };
 		DB2B14F71B699726002BD161 /* location-join@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB2B14F61B699726002BD161 /* location-join@2x.png */; };
 		DB2E6A901B86AE0800953D36 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = DB2E6A8F1B86AE0800953D36 /* placeholder.png */; };
+		DB45E7181BB21D1A000E2AF0 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7081BB21D1A000E2AF0 /* OFL.txt */; };
+		DB45E7191BB21D1A000E2AF0 /* Oswald-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7091BB21D1A000E2AF0 /* Oswald-Bold.ttf */; };
+		DB45E71A1BB21D1A000E2AF0 /* Oswald-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E70A1BB21D1A000E2AF0 /* Oswald-Light.ttf */; };
+		DB45E71B1BB21D1A000E2AF0 /* Oswald-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E70B1BB21D1A000E2AF0 /* Oswald-Regular.ttf */; };
+		DB45E71C1BB21D1A000E2AF0 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E70D1BB21D1A000E2AF0 /* Lato-Black.ttf */; };
+		DB45E71D1BB21D1A000E2AF0 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E70E1BB21D1A000E2AF0 /* Lato-BlackItalic.ttf */; };
+		DB45E71E1BB21D1A000E2AF0 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E70F1BB21D1A000E2AF0 /* Lato-Bold.ttf */; };
+		DB45E71F1BB21D1A000E2AF0 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7101BB21D1A000E2AF0 /* Lato-BoldItalic.ttf */; };
+		DB45E7201BB21D1A000E2AF0 /* Lato-Hairline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7111BB21D1A000E2AF0 /* Lato-Hairline.ttf */; };
+		DB45E7211BB21D1A000E2AF0 /* Lato-HairlineItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7121BB21D1A000E2AF0 /* Lato-HairlineItalic.ttf */; };
+		DB45E7221BB21D1A000E2AF0 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7131BB21D1A000E2AF0 /* Lato-Italic.ttf */; };
+		DB45E7231BB21D1A000E2AF0 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7141BB21D1A000E2AF0 /* Lato-Light.ttf */; };
+		DB45E7241BB21D1A000E2AF0 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7151BB21D1A000E2AF0 /* Lato-LightItalic.ttf */; };
+		DB45E7251BB21D1A000E2AF0 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7161BB21D1A000E2AF0 /* Lato-Regular.ttf */; };
+		DB45E7261BB21D1A000E2AF0 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7171BB21D1A000E2AF0 /* OFL.txt */; };
 		DB508F511B4E134D00604F0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F501B4E134D00604F0D /* AppDelegate.swift */; };
 		DB508F531B4E134D00604F0D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F521B4E134D00604F0D /* FirstViewController.swift */; };
 		DB508F551B4E134D00604F0D /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB508F541B4E134D00604F0D /* SecondViewController.swift */; };
@@ -88,6 +103,21 @@
 		DB2B14F41B69970F002BD161 /* location-host@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location-host@2x.png"; sourceTree = "<group>"; };
 		DB2B14F61B699726002BD161 /* location-join@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location-join@2x.png"; sourceTree = "<group>"; };
 		DB2E6A8F1B86AE0800953D36 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		DB45E7081BB21D1A000E2AF0 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		DB45E7091BB21D1A000E2AF0 /* Oswald-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Bold.ttf"; sourceTree = "<group>"; };
+		DB45E70A1BB21D1A000E2AF0 /* Oswald-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Light.ttf"; sourceTree = "<group>"; };
+		DB45E70B1BB21D1A000E2AF0 /* Oswald-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.ttf"; sourceTree = "<group>"; };
+		DB45E70D1BB21D1A000E2AF0 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		DB45E70E1BB21D1A000E2AF0 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
+		DB45E70F1BB21D1A000E2AF0 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		DB45E7101BB21D1A000E2AF0 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
+		DB45E7111BB21D1A000E2AF0 /* Lato-Hairline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Hairline.ttf"; sourceTree = "<group>"; };
+		DB45E7121BB21D1A000E2AF0 /* Lato-HairlineItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-HairlineItalic.ttf"; sourceTree = "<group>"; };
+		DB45E7131BB21D1A000E2AF0 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
+		DB45E7141BB21D1A000E2AF0 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		DB45E7151BB21D1A000E2AF0 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
+		DB45E7161BB21D1A000E2AF0 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		DB45E7171BB21D1A000E2AF0 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		DB508F4B1B4E134D00604F0D /* Pace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB508F4F1B4E134D00604F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB508F501B4E134D00604F0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -201,6 +231,35 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		DB45E7071BB21D1A000E2AF0 /* Oswald */ = {
+			isa = PBXGroup;
+			children = (
+				DB45E7081BB21D1A000E2AF0 /* OFL.txt */,
+				DB45E7091BB21D1A000E2AF0 /* Oswald-Bold.ttf */,
+				DB45E70A1BB21D1A000E2AF0 /* Oswald-Light.ttf */,
+				DB45E70B1BB21D1A000E2AF0 /* Oswald-Regular.ttf */,
+			);
+			path = Oswald;
+			sourceTree = "<group>";
+		};
+		DB45E70C1BB21D1A000E2AF0 /* Lato */ = {
+			isa = PBXGroup;
+			children = (
+				DB45E70D1BB21D1A000E2AF0 /* Lato-Black.ttf */,
+				DB45E70E1BB21D1A000E2AF0 /* Lato-BlackItalic.ttf */,
+				DB45E70F1BB21D1A000E2AF0 /* Lato-Bold.ttf */,
+				DB45E7101BB21D1A000E2AF0 /* Lato-BoldItalic.ttf */,
+				DB45E7111BB21D1A000E2AF0 /* Lato-Hairline.ttf */,
+				DB45E7121BB21D1A000E2AF0 /* Lato-HairlineItalic.ttf */,
+				DB45E7131BB21D1A000E2AF0 /* Lato-Italic.ttf */,
+				DB45E7141BB21D1A000E2AF0 /* Lato-Light.ttf */,
+				DB45E7151BB21D1A000E2AF0 /* Lato-LightItalic.ttf */,
+				DB45E7161BB21D1A000E2AF0 /* Lato-Regular.ttf */,
+				DB45E7171BB21D1A000E2AF0 /* OFL.txt */,
+			);
+			path = Lato;
+			sourceTree = "<group>";
+		};
 		DB508F421B4E134D00604F0D = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +301,8 @@
 		DB508F4E1B4E134D00604F0D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DB45E7071BB21D1A000E2AF0 /* Oswald */,
+				DB45E70C1BB21D1A000E2AF0 /* Lato */,
 				DB23BC3C1BA4F22B00E7E028 /* profwork@2x.png */,
 				DB23BC3D1BA4F22B00E7E028 /* profpacefriends@2x.png */,
 				DB23BC3E1BA4F22B00E7E028 /* profjoin@2x.png */,
@@ -377,30 +438,45 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB45E7261BB21D1A000E2AF0 /* OFL.txt in Resources */,
+				DB45E7241BB21D1A000E2AF0 /* Lato-LightItalic.ttf in Resources */,
 				DB23BC431BA4F22B00E7E028 /* profwork@2x.png in Resources */,
 				DBF4ACF21BA497BA00DF657A /* dropdown1.png in Resources */,
 				DB2B14F31B699709002BD161 /* home@2x.png in Resources */,
+				DB45E71F1BB21D1A000E2AF0 /* Lato-BoldItalic.ttf in Resources */,
 				DB23BC451BA4F22B00E7E028 /* profjoin@2x.png in Resources */,
 				DB23BC491BA4F22B00E7E028 /* profeducation@2x.png in Resources */,
 				DB23BC441BA4F22B00E7E028 /* profpacefriends@2x.png in Resources */,
 				DBF8571B1B55EC3700AD1C23 /* pace.png in Resources */,
 				DB508F581B4E134D00604F0D /* Main.storyboard in Resources */,
 				DBF4ACF01B9FC86400DF657A /* hostedcongrats.png in Resources */,
+				DB45E7211BB21D1A000E2AF0 /* Lato-HairlineItalic.ttf in Resources */,
+				DB45E71A1BB21D1A000E2AF0 /* Oswald-Light.ttf in Resources */,
+				DB45E71D1BB21D1A000E2AF0 /* Lato-BlackItalic.ttf in Resources */,
 				DB52A2441B9D107000A838CF /* profileyesicon.png in Resources */,
 				DB15DA731B86AC9A00FA39AB /* profile1.jpg in Resources */,
+				DB45E7231BB21D1A000E2AF0 /* Lato-Light.ttf in Resources */,
+				DB45E7191BB21D1A000E2AF0 /* Oswald-Bold.ttf in Resources */,
 				DBF4ACF41BA4997000DF657A /* dropdown2.png in Resources */,
 				DB15DA6F1B85453E00FA39AB /* profile.jpg in Resources */,
 				DBF4ACED1B9FC86400DF657A /* settings.png in Resources */,
 				DB2B14F51B69970F002BD161 /* location-host@2x.png in Resources */,
 				DB508F5D1B4E134D00604F0D /* LaunchScreen.xib in Resources */,
+				DB45E7201BB21D1A000E2AF0 /* Lato-Hairline.ttf in Resources */,
 				DB15DA711B86AC5B00FA39AB /* congrats.png in Resources */,
+				DB45E7251BB21D1A000E2AF0 /* Lato-Regular.ttf in Resources */,
 				DB2B14F71B699726002BD161 /* location-join@2x.png in Resources */,
+				DB45E71E1BB21D1A000E2AF0 /* Lato-Bold.ttf in Resources */,
+				DB45E7181BB21D1A000E2AF0 /* OFL.txt in Resources */,
 				DBF4ACEF1B9FC86400DF657A /* paces.png in Resources */,
 				DB23BC471BA4F22B00E7E028 /* profinvite@2x.png in Resources */,
+				DB45E7221BB21D1A000E2AF0 /* Lato-Italic.ttf in Resources */,
+				DB45E71B1BB21D1A000E2AF0 /* Oswald-Regular.ttf in Resources */,
 				DBEE5F931B8E7A0300BD247A /* blue-run-small.png in Resources */,
 				DBF4ACF81BA4B84400DF657A /* topofpace.png in Resources */,
 				DB2E6A901B86AE0800953D36 /* placeholder.png in Resources */,
 				DB23BC481BA4F22B00E7E028 /* profhost@2x.png in Resources */,
+				DB45E71C1BB21D1A000E2AF0 /* Lato-Black.ttf in Resources */,
 				DBF4ACEC1B9FC86400DF657A /* activity.png in Resources */,
 				DB23BC461BA4F22B00E7E028 /* profjoinpace@2x.png in Resources */,
 				DB508F5A1B4E134D00604F0D /* Images.xcassets in Resources */,

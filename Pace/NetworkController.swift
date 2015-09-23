@@ -11,9 +11,7 @@ import GoogleMaps
 //
 let ngrok = "http://pace-dev.elasticbeanstalk.com"
 let apitoken = "a58d2187a7982f9944a9437f942d41965cf75801"
-
-//let ngrok = "http://localhost:8000"
-//let apitoken = "47fc6bd1421bc8c52fb73d3dc1c5c67957d62e23"
+let deleteID = "18"
 
 class NetworkController: NSObject {
     
@@ -445,7 +443,145 @@ class NetworkController: NSObject {
             }
         }
     }
+
     
+    func leavePace(pace: Pace, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
+        
+        if let id = pace.id {
+            
+            if let participants = pace.participants {
+                
+                if let accountid = AccountController.sharedInstance.getUser()?.id {
+                    var participantArray: [String]  = []
+                    
+                    
+                        for runner in participants {
+                            
+                                if "\(runner)" == "\(accountid)" {
+                                    
+                                } else {
+                                    participantArray.append("\(runner)")
+                            }
+                            
+                            
+                        }
+                    
+                    
+                    var session = NSURLSession.sharedSession()
+                    if let url = NSURL(string: ngrok + "/api/v1/runs/\(id)/"){
+                        var request = NSMutableURLRequest(URL: url)
+                        request.HTTPMethod = "PUT"
+                        
+                        var params = ["participants": participantArray ] as Dictionary<String, NSArray>
+                        
+                        var err: NSError?
+                        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+                        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                        request.addValue("application/json", forHTTPHeaderField: "Accept")
+                        request.addValue(token, forHTTPHeaderField: "Authorization")
+                        
+                        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                            println("Response: \(response)")
+                            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            var err: NSError?
+                            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+                            
+                            if(err != nil) {
+                                
+                            }
+                            successHandler(true)
+                            
+                        })
+                        
+                        task.resume()
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    func deletePace(pace: Pace, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
+        
+        if let id = pace.id {
+            
+            if let participants = pace.participants {
+                
+                if let accountid = AccountController.sharedInstance.getUser()?.id {
+                    var participantArray  = ["18"]
+                    
+                    var session = NSURLSession.sharedSession()
+                    if let url = NSURL(string: ngrok + "/api/v1/runs/\(id)/"){
+                        var request = NSMutableURLRequest(URL: url)
+                        request.HTTPMethod = "PUT"
+                        
+                        var params = ["participants": participantArray ] as Dictionary<String, NSArray>
+                        
+                        var err: NSError?
+                        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+                        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                        request.addValue("application/json", forHTTPHeaderField: "Accept")
+                        request.addValue(token, forHTTPHeaderField: "Authorization")
+                        
+                        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                            println("Response: \(response)")
+                            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            var err: NSError?
+                            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+                            
+                            if(err != nil) {
+                                
+                            }
+                            successHandler(true)
+                            
+                        })
+                        
+                        task.resume()
+                    }
+                }
+            }
+        }
+    }
+
+    func updateLate(paceID: Int, successHandler:(Bool) -> (), failureHandler:NSError -> ()){
+        
+                if let account = AccountController.sharedInstance.getUser() {
+                    
+                    if let id = account.id {
+                    
+                    var session = NSURLSession.sharedSession()
+                    if let url = NSURL(string: ngrok + "/api/v1/runs/\(id)/"){
+                        var request = NSMutableURLRequest(URL: url)
+                        request.HTTPMethod = "PUT"
+                        
+                        var params = ["is_late": paceID] as Dictionary<String, Int>
+                        
+                        var err: NSError?
+                        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+                        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                        request.addValue("application/json", forHTTPHeaderField: "Accept")
+                        request.addValue(token, forHTTPHeaderField: "Authorization")
+                        
+                        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                            println("Response: \(response)")
+                            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            var err: NSError?
+                            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+                            
+                            if(err != nil) {
+                                print(err)
+                            }
+                            successHandler(true)
+                            
+                        })
+                        
+                        task.resume()
+                    }
+                    }
+        }
+        
+    }
+
 
 
     

@@ -9,41 +9,103 @@
 import UIKit
 import GoogleMaps
 
-class SecondViewController: UIViewController {
+let backgroundgray = UIColor(red: 245/265, green: 245/265, blue: 245/265, alpha: 1)
+
+class SecondViewController: GAITrackedViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var selectButton: UIButton!
     @IBOutlet weak var datePicker: UIDatePicker!
-    @IBOutlet weak var pacePicker: UISegmentedControl!
-    @IBOutlet weak var distancePicker: UISegmentedControl!
     
-    let distance = [3, 4, 5, 6, 7]
-    let pace = [7.5, 8, 8.5, 9, 9.5]
+    var scrollViewpace: UIScrollView!
+    var containerViewpace: UIView!
+    
+    var scrollViewdist: UIScrollView!
+    var containerViewdist: UIView!
+    
+    var pacesegmentedControl : UISegmentedControl!
+    var distancesegmentedControl : UISegmentedControl!
+    
+    let distanceitems = ["6", "6:30", "7", "7:30", "8", "8:30", "9", "9:30", "10", "10:30", "11+"]
+    let paceitems = ["3", "4", "5", "6", "7", "8", "9", "10", "11 - 15", "15+"]
     var location : CLLocationCoordinate2D?
+    
     
     var congratsImg : UIImageView?
     var myTimer : NSTimer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = backgroundgray
 
         tabBarController?.tabBar.hidden = false
         
-        var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 60))
+        var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 70))
         headerView.backgroundColor = darkBlueColor
         
         var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
         titleButton.text = "Host a pace!"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
-        titleButton.font = UIFont(name: titleButton.font.fontName, size: 14)
+        titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
         
         selectButton.titleLabel?.numberOfLines = 0
         selectButton.titleLabel?.lineBreakMode = .ByWordWrapping
         
         headerView.addSubview(titleButton)
         view.addSubview(headerView)
+        
+        self.scrollViewpace = UIScrollView()
+        self.scrollViewpace.delegate = self
+        self.scrollViewpace.contentSize = CGSizeMake(860, 30)
+        containerViewpace = UIView()
+        scrollViewpace.addSubview(containerViewpace)
+        view.addSubview(scrollViewpace)
+        
+        self.scrollViewdist = UIScrollView()
+        self.scrollViewdist.delegate = self
+        self.scrollViewdist.contentSize = CGSizeMake(860, 30)
+        containerViewdist = UIView()
+        scrollViewdist.addSubview(containerViewdist)
+        view.addSubview(scrollViewdist)
+        
+        distancesegmentedControl = UISegmentedControl(items: distanceitems)
+        distancesegmentedControl.selectedSegmentIndex = 2
+        distancesegmentedControl.frame =  CGRect(x: 0, y: 0, width: 600, height: 30)
+        distancesegmentedControl.backgroundColor = UIColor.whiteColor()
+        distancesegmentedControl.tintColor = tealColor
+        containerViewdist.addSubview(distancesegmentedControl)
+        
+        pacesegmentedControl = UISegmentedControl(items: paceitems)
+        pacesegmentedControl.selectedSegmentIndex = 2
+        pacesegmentedControl.frame =  CGRect(x: 0, y: 0, width: 600, height: 30)
+        pacesegmentedControl.backgroundColor = UIColor.whiteColor()
+        pacesegmentedControl.tintColor = tealColor
+        containerViewpace.addSubview(pacesegmentedControl)
+        
+        let view1 = UIView(frame: CGRect(x: 0, y: 440, width: view.frame.width, height: 50))
+        view1.backgroundColor = UIColor.whiteColor()
+        view.addSubview(view1)
+        view.sendSubviewToBack(view1)
+        
+        let view2 = UIView(frame: CGRect(x: 0, y: 520, width: view.frame.width, height: 50))
+        view2.backgroundColor = UIColor.whiteColor()
+        view.addSubview(view2)
+        view.sendSubviewToBack(view2)
+        
     }
-
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        scrollViewpace.frame = CGRectMake(10, 450, 600, 30)
+        scrollViewpace.backgroundColor = UIColor.whiteColor()
+        containerViewpace.frame = CGRectMake(0, 0, scrollViewpace.contentSize.width, 30)
+        
+        scrollViewdist.frame = CGRectMake(10, 530, 600, 30)
+        scrollViewdist.backgroundColor = UIColor.whiteColor()
+        containerViewdist.frame = CGRectMake(0, 0, scrollViewdist.contentSize.width, 30)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -68,8 +130,8 @@ class SecondViewController: UIViewController {
             
 
         let myPace = Pace()
-        myPace.distance = String(distance[distancePicker.selectedSegmentIndex])
-        myPace.pace = "\(pace[pacePicker.selectedSegmentIndex])"
+        myPace.distance = distanceitems[distancesegmentedControl.selectedSegmentIndex]
+        myPace.pace = paceitems[pacesegmentedControl.selectedSegmentIndex]
         myPace.location = location
         
         var dateFormatter = NSDateFormatter()

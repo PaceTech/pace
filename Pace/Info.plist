@@ -34,6 +34,14 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Oswald-Bold.ttf</string>
+		<string>Oswald-Regular.ttf</string>
+		<string>Oswald-Light.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-LightItalic.ttf</string>
+	</array>
 	<key>FacebookAppID</key>
 	<string>702750639831283</string>
 	<key>FacebookDisplayName</key>

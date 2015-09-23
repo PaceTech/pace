@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 
 let darkBlueColor = UIColor(red: 27/255, green: 78/255, blue: 93/255, alpha: 1)
-let tealColor = UIColor(red: 54/255, green: 179/255, blue: 168/255, alpha: 1)
+let tealColor = UIColor(red: 80/255, green: 227/255, blue: 194/255, alpha: 1)
 
 
 class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMapViewDelegate {
@@ -20,6 +20,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
     var mapView: GMSMapView!
     var searchActive : Bool = false
     var searchBar : UISearchBar?
+    var searchbutton: UIButton?
     var newPace : Pace?
     var togglebutton: UIButton!
     var pacetoggle = 2
@@ -31,7 +32,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         self.locationManager.requestWhenInUseAuthorization()
         var camera = GMSCameraPosition()
         mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
-        mapView.settings.compassButton = true
+//        mapView.settings.compassButton = true
         mapView.settings.myLocationButton = true
         self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
         
@@ -40,6 +41,10 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         })
         
         mapView.delegate = self
+        
+        searchBar = UISearchBar(frame: CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40))
+        searchBar!.delegate = self
+        mapView.addSubview(searchBar!)
         
         tabBarController?.tabBar.backgroundColor = UIColor.whiteColor()
         tabBarController?.tabBar.backgroundImage = UIImage()
@@ -51,11 +56,11 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 70))
         headerView.backgroundColor = darkBlueColor
         
-        var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
-        titleButton.text = "CLICK DROP PIN TO JOIN A PACE"
+        var titleButton = UILabel(frame: CGRectMake(20, 28, view.frame.width - 40, 30))
+        titleButton.text = "Select Pin to Join A Pace"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
-        titleButton.font = UIFont(name: titleButton.font.fontName, size: 14)
+        titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
     
         
         headerView.addSubview(titleButton)
@@ -66,7 +71,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         let items = ["2 Hours", "Today", "All"]
         let segmentedControl = UISegmentedControl(items: items)
         segmentedControl.selectedSegmentIndex = 2
-        segmentedControl.frame =  CGRect(x: 30, y: 90, width: view.frame.width - 60, height: 30)
+        segmentedControl.frame =  CGRect(x: 30, y: view.frame.height - 90, width: view.frame.width - 60, height: 30)
         segmentedControl.backgroundColor = UIColor.whiteColor()
         segmentedControl.tintColor = darkBlueColor
         segmentedControl.addTarget(self, action: "toggle:", forControlEvents: .ValueChanged)
@@ -152,7 +157,13 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
                         }
                     }
                     
-                   
+                    if let runners = pace.participants {
+                        for runner in runners {
+                            if "\(runner)" == "18" {
+                                shoulddrop = true
+                            }
+                        }
+                    }
                     
                     if shoulddrop {
                     } else {
@@ -202,7 +213,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
     }
     
     override func viewWillDisappear(animated: Bool) {
-//            mapView.removeObserver(self, forKeyPath: "myLocation")
+        mapView.removeObserver(self, forKeyPath: "myLocation")
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
@@ -234,6 +245,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
             marker.userData = pace
         }
         self.screenName = "FirstMapView"
+        self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
@@ -242,7 +254,13 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
     
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         searchActive = false
-        searchBar.resignFirstResponder()
+        searchbutton = UIButton(frame: CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40))
+        if let sb = searchbutton {
+            sb.backgroundColor = UIColor.clearColor()
+            sb.addTarget(self, action: "startsearch", forControlEvents: .TouchUpInside)
+            mapView.addSubview(sb)
+            mapView.bringSubviewToFront(sb)
+        }
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -252,7 +270,52 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchActive = false
-        searchBar.resignFirstResponder()
+        mapView.clear()
+        searchCoordinatesForAddress(searchBar.text)
+        searchBar.text = nil
+        searchbutton = UIButton(frame: CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40))
+        if let sb = searchbutton {
+            sb.backgroundColor = UIColor.clearColor()
+            sb.addTarget(self, action: "startsearch", forControlEvents: .TouchUpInside)
+            mapView.addSubview(sb)
+            mapView.bringSubviewToFront(sb)
+        }
+    }
+    
+    func searchCoordinatesForAddress(address: String) {
+        var urlString = "https://maps.googleapis.com/maps/api/geocode/json?address=\(address)"
+        var newUrlString = urlString.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
+        
+        let urlPath: String = newUrlString
+        var url: NSURL = NSURL(string: urlPath)!
+        var request1: NSURLRequest = NSURLRequest(URL: url)
+        var response: AutoreleasingUnsafeMutablePointer<NSURLResponse?>=nil
+        var dataVal: NSData =  NSURLConnection.sendSynchronousRequest(request1, returningResponse: response, error:nil)!
+        if let  jsonResult = NSJSONSerialization.JSONObjectWithData(dataVal, options: .MutableContainers, error: nil) as? NSDictionary {
+            
+            
+            if let results: AnyObject = jsonResult["results"] {
+                if let geometry = results[0]["geometry"] as? NSDictionary {
+                    if let location = geometry["location"] as? NSDictionary {
+                        var latitude = location["lat"] as? Double
+                        var longitude = location["lng"] as? Double
+                        mapView.camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!), zoom: 12)
+                        var position = CLLocationCoordinate2DMake(latitude!, longitude!)
+                        var marker = GMSMarker(position: position)
+                        marker.title = "Start A Pace"
+                        marker.map = mapView
+                    }
+                }
+            }
+        }
+        
+        
+        
+    }
+    
+    func startsearch() {
+        searchbutton?.removeFromSuperview()
+        searchBar?.becomeFirstResponder()
     }
     
     func mapView(mapView: GMSMapView!, didTapMarker marker: GMSMarker!) -> Bool {

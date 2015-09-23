@@ -8,11 +8,11 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITableViewDataSource  {
     
     var titleText: String?
     var tableView: UITableView  =   UITableView()
-    var items: [String] = [ "Work", "Education", "0 friends on pace", "0 paces joined", "0 paces hosted"]
+    var items: [String] = [ "Work", "Education", "", "0 paces joined", "0 paces hosted"]
     var iconnames: [String] = ["profwork", "profeducation", "profpacefriends", "profjoin", "profhost"]
     var profileID: Int!
     var profImageView: UIImageView!
@@ -23,14 +23,16 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var friendsnames: [String] = []
     var friendsids: [String] = []
     var titleLabel: UILabel!
+    var friendscount = 0
     
     override func viewDidLoad() {
         
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = backgroundgray
         
-        titleLabel = UILabel(frame: CGRect(x: 40, y: 30, width: view.frame.width - 80, height: 40))
+        titleLabel = UILabel(frame: CGRect(x: 40, y: 25, width: view.frame.width - 80, height: 40))
         
         titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = UIFont(name: "Oswald-Regular", size: 20)
         titleLabel.textAlignment = .Center
         view.addSubview(titleLabel)
         
@@ -83,36 +85,53 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         view.addSubview(profImageView)
         addprofimage()
         
-
         
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me/friends", parameters: nil)
-        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-            if ((error) != nil){
-            println(error)
-            }
-            else {
-                if let res = result["data"] as? NSArray {
-                    if let dc = res[0] as? NSDictionary {
-                        if let name: AnyObject = dc["name"] {
-                           if let id : AnyObject = dc["id"] {
-                                self.friendsnames.append(name as! String)
-                                self.friendsids.append(id as! String)
-                            }
-                        }
-                    }
-                }
-                
-               
-                
-                }
-
-        })
+        
         updateNumbers()
 
     }
     
     func updateItems() {
         NetworkController().getUser(profileID, successHandler: { user in
+            if let userid = AccountController.sharedInstance.getUser()?.facebook_id {
+                if let fbid = user.facebook_id where fbid != userid {
+                    let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/\(fbid)", parameters: ["fields": "context.fields(mutual_friends)"])
+                    graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+                        if ((error) != nil){
+                            println(error)
+                        }
+                        else {
+                            self.friendsnames = []
+                            self.friendsids = []
+                            print(result)
+                            if let context = result["context"] as? NSDictionary {
+                                if let mutualfriends = context["mutual_friends"] as? NSDictionary {
+                                    if let count = mutualfriends["summary"] as? NSDictionary {
+                                        if let newcount = count["total_count"] as? Int {
+                                            self.friendscount = newcount
+                                        }
+                                    }
+                                    if let res = mutualfriends["data"] as? NSArray {
+                                        if res.count > 0 {
+                                            if let dc = res[0] as? NSDictionary {
+                                                if let name: AnyObject = dc["name"] {
+                                                    if let id : AnyObject = dc["id"] {
+                                                        self.friendsnames.append(name as! String)
+                                                        self.friendsids.append(id as! String)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                        
+                    })
+
+                }
+            }
             if let first = user.firstname, last = user.lastname {
                 self.namelabel.text = "\(first) \(last)"
                 self.titleLabel.text = "\(first) \(last)"
@@ -236,6 +255,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     cell.textLabel?.text = "Education"
                     cell.textLabel?.enabled = false
                 }
+            }
+            if indexPath.row == 2 {
+                cell.textLabel?.text = "\(friendscount) friends on Pace"
             }
             cell.textLabel?.textAlignment = .Center
             return cell

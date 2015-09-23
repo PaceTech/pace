@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyRunsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITableViewDataSource  {
     
     var titleText: String?
     var tableView: UITableView  =   UITableView()
@@ -30,10 +30,11 @@ class MyRunsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         backButton.addTarget(self, action: "goBack", forControlEvents: .TouchUpInside)
         view.addSubview(backButton)
         
-        let titleLabel = UILabel(frame: CGRect(x: 40, y: 20, width: view.frame.width - 80, height: 40))
+        let titleLabel = UILabel(frame: CGRect(x: 40, y: 25, width: view.frame.width - 80, height: 40))
         titleLabel.text = titleText
         titleLabel.textColor = UIColor.whiteColor()
         titleLabel.textAlignment = .Center
+        titleLabel.font = UIFont(name: "Oswald-Regular", size: 20)
         view.addSubview(titleLabel)
         
         var image = UIImage(named:"placeholder")
@@ -66,7 +67,7 @@ class MyRunsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let calendar = NSCalendar.currentCalendar()
                 let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
                 
-                var startstring = "Attending a "
+                var startstring = "Attending a"
                 
                 if let id = AccountController.sharedInstance.getUser()?.id {
                     if pace.owner == "\(id)" {
@@ -179,6 +180,7 @@ class MyRunsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let vc = PaceDetailViewController()
         vc.paceInfo = paces[indexPath.row]
+        vc.ismycurrentrundetail = true
         navigationController?.pushViewController(vc, animated: true)
 
     }

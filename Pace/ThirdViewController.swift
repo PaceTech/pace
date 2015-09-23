@@ -27,11 +27,11 @@ class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITabl
         tableView.registerClass(SettingsViewCell.self, forCellReuseIdentifier: "setingscell")
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
-        titleButton.text = "HOME"
+        var titleButton = UILabel(frame: CGRectMake(20, 26, view.frame.width - 40, 30))
+        titleButton.text = "Home"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
-        titleButton.font = UIFont(name: titleButton.font.fontName, size: 14)
+        titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
         view.addSubview(titleButton)
         
         var attrs = [
@@ -64,11 +64,11 @@ class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITabl
     }
     
     func showtos() {
-        UIApplication.sharedApplication().openURL(NSURL(string: "https://joinapace.quip.com/MmdsAuIrYmXo")!)
+        UIApplication.sharedApplication().openURL(NSURL(string: "http://www.joinapace.com/terms")!)
     }
     
     func showprivacy() {
-        UIApplication.sharedApplication().openURL(NSURL(string: "https://joinapace.quip.com/5CXzA77jHOX9")!)
+        UIApplication.sharedApplication().openURL(NSURL(string: "http://www.joinapace.com/privacy")!)
     }
     
     func logout() {
@@ -136,8 +136,12 @@ class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITabl
             let loginVC = LoginViewController()
             navigationController?.presentViewController(loginVC, animated: true, completion: nil)
             }
+        var cellToDeSelect:SettingsViewCell = tableView.cellForRowAtIndexPath(indexPath) as! SettingsViewCell
+        cellToDeSelect.contentView.backgroundColor = UIColor.whiteColor()
+    
     
     }
+
 
 
     
