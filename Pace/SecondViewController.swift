@@ -44,7 +44,7 @@ class SecondViewController: GAITrackedViewController, UIScrollViewDelegate {
         headerView.backgroundColor = darkBlueColor
         
         var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
-        titleButton.text = "Host a pace!"
+        titleButton.text = "Host a Run!"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
@@ -83,6 +83,12 @@ class SecondViewController: GAITrackedViewController, UIScrollViewDelegate {
         pacesegmentedControl.tintColor = tealColor
         containerViewpace.addSubview(pacesegmentedControl)
         
+        let goButton = UIButton(frame: CGRect(x: view.frame.width - 30, y: 355, width: 20, height: 50))
+        goButton.setTitleColor(tealColor, forState: .Normal)
+        goButton.setTitle(">", forState: .Normal)
+        goButton.titleLabel?.font = UIFont(name: "Oswald-Bold", size: 25)
+        view.addSubview(goButton)
+        
         let view1 = UIView(frame: CGRect(x: 0, y: 440, width: view.frame.width, height: 50))
         view1.backgroundColor = UIColor.whiteColor()
         view.addSubview(view1)
@@ -102,9 +108,12 @@ class SecondViewController: GAITrackedViewController, UIScrollViewDelegate {
         scrollViewpace.backgroundColor = UIColor.whiteColor()
         containerViewpace.frame = CGRectMake(0, 0, scrollViewpace.contentSize.width, 30)
         
+        scrollViewpace.contentOffset = CGPoint(x: 45, y: 0)
+        
         scrollViewdist.frame = CGRectMake(10, 530, 600, 30)
         scrollViewdist.backgroundColor = UIColor.whiteColor()
         containerViewdist.frame = CGRectMake(0, 0, scrollViewdist.contentSize.width, 30)
+        scrollViewdist.contentOffset = CGPoint(x: 45, y: 0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -126,6 +135,15 @@ class SecondViewController: GAITrackedViewController, UIScrollViewDelegate {
     }
     
     @IBAction func createPace(sender: UIButton) {
+        if location == nil {
+            let alertController = UIAlertController(title: NSLocalizedString("Oops!", comment: ""), message: NSLocalizedString("You have not entered all of the required information. Add a location!", comment: ""), preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "sign out of facebook"), style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+            }
+            alertController.addAction(okAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
         if AccountController.sharedInstance.getUser() != nil {
             
 

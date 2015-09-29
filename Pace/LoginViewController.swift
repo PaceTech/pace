@@ -26,13 +26,13 @@ class LoginViewController: GAITrackedViewController, FBSDKLoginButtonDelegate, U
         loginButton = FBSDKLoginButton()
         loginButton?.readPermissions = ["public_profile", "email", "user_friends", "user_education_history", "user_work_history"]
         loginButton?.delegate = self
-        loginButton?.frame = CGRect(x: 50, y: view.frame.height - 300, width: view.frame.width - 100, height: 50)
+        loginButton?.frame = CGRect(x: 50, y: view.frame.height - 200, width: view.frame.width - 100, height: 50)
         view.addSubview(loginButton!)
 
         backgroundimg = UIImageView(frame: CGRect(x: 0, y: view.frame.height/2, width: view.frame.width, height: view.frame.height/2))
         backgroundimg.image = UIImage(named: "dropdown1")
-        view.addSubview(backgroundimg)
-        view.sendSubviewToBack(backgroundimg)
+//        view.addSubview(backgroundimg)
+//        view.sendSubviewToBack(backgroundimg)
         
         let blueview = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2 + 20))
         blueview.backgroundColor = darkBlueColor
@@ -43,13 +43,13 @@ class LoginViewController: GAITrackedViewController, FBSDKLoginButtonDelegate, U
         myloginbutton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         myloginbutton.setTitle("Log in", forState: .Normal)
         myloginbutton.addTarget(self, action: "switchtologin", forControlEvents: .TouchUpInside)
-        view.addSubview(myloginbutton)
+//        view.addSubview(myloginbutton)
         
         signupButton = UIButton(frame: CGRect(x: 20, y: view.frame.height/2 - 50, width: view.frame.width/2 - 40, height: 50))
         signupButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         signupButton.setTitle("Sign up", forState: .Normal)
         signupButton.addTarget(self, action: "switchtoSingup", forControlEvents: .TouchUpInside)
-        view.addSubview(signupButton)
+//        view.addSubview(signupButton)
         
         let paceimgview = UIImageView(frame: CGRect(x: 75, y: 100, width: view.frame.width - 150, height: 150))
         paceimgview.image = UIImage(named: "pace")
@@ -66,13 +66,13 @@ class LoginViewController: GAITrackedViewController, FBSDKLoginButtonDelegate, U
         usernametextfield.text = "Username"
         usernametextfield.textColor = UIColor.lightGrayColor()
         usernametextfield.delegate = self
-        view.addSubview(usernametextfield)
+//        view.addSubview(usernametextfield)
         
         passwordtextfield = UITextField(frame: CGRect(x: 50, y: view.frame.height - 80, width: view.frame.width - 60, height: 50))
         passwordtextfield.textColor = UIColor.lightGrayColor()
         passwordtextfield.text = "Password"
         passwordtextfield.delegate = self
-        view.addSubview(passwordtextfield)
+//        view.addSubview(passwordtextfield)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);

@@ -20,6 +20,11 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
     var myTimer : NSTimer?
     var ismycurrentrundetail = false
     var isowner = false
+    var isparticipant = false
+    var popupview: UIView!
+    var joinButton: UIButton!
+    var titleLabel: UILabel!
+    var backview: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +39,10 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
         tabBarController?.navigationController?.navigationBarHidden = false
         
         view.backgroundColor = UIColor.whiteColor()
-        let backButton = UIButton(frame: CGRect(x: 10, y: 20, width: 70, height: 50))
+        let backButton = UIButton(frame: CGRect(x: 15, y: 20, width: 20, height: 50))
         backButton.setTitleColor(tealColor, forState: .Normal)
-        backButton.setTitle("Close", forState: .Normal)
+        backButton.setTitle("<", forState: .Normal)
+        backButton.titleLabel?.font = UIFont(name: "Oswald-Bold", size: 25)
         backButton.addTarget(self, action: "goBack", forControlEvents: .TouchUpInside)
         view.addSubview(backButton)
         
@@ -47,17 +53,13 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
             shareButton.addTarget(self, action: "updateAvailability", forControlEvents: .TouchUpInside)
             view.addSubview(shareButton)
         } else {
-            let shareButton = UIButton(frame: CGRect(x: view.frame.width - 80, y: 20, width: 70, height: 50))
-            shareButton.setTitleColor(tealColor, forState: .Normal)
-            shareButton.setTitle("Invite", forState: .Normal)
-            shareButton.addTarget(self, action: "inviteFriends", forControlEvents: .TouchUpInside)
-            view.addSubview(shareButton)
+            
         }
         
         
-        let titleLabel = UILabel(frame: CGRect(x: 10, y: 20, width: view.frame.width - 10, height: 50))
+        titleLabel = UILabel(frame: CGRect(x: 10, y: 20, width: view.frame.width - 10, height: 50))
         titleLabel.textAlignment = .Center
-        titleLabel.text = "Selected Pace"
+        titleLabel.text = "Selected Run"
         titleLabel.textColor = UIColor.whiteColor()
         titleLabel.font = UIFont(name: "Oswald-Regular", size: 20)
         view.addSubview(titleLabel)
@@ -75,7 +77,7 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
         
         
         
-        let joinButton = UIButton(frame: CGRect(x: 20, y: view.frame.height - 120, width: view.frame.width - 40, height: 50))
+        joinButton = UIButton(frame: CGRect(x: 20, y: view.frame.height - 120, width: view.frame.width - 40, height: 50))
         joinButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         joinButton.backgroundColor = tealColor
         joinButton.setTitle("JOIN", forState: .Normal)
@@ -84,27 +86,35 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
         
     }
     
-    var popupview: UIView!
-    
     func updateAvailability() {
-        popupview = UIView(frame: CGRect(x: 0, y: view.frame.height - 50, width: view.frame.width, height: 100))
-        popupview.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
+        backview = UIView(frame: view.frame)
+        backview.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.4)
+        view.addSubview(backview)
         
-        let title = UIButton(frame: CGRect(x: 10, y: 0, width: view.frame.width - 20, height: 40))
+        popupview = UIView(frame: CGRect(x: 0, y: view.frame.height - 50, width: view.frame.width, height: 250))
+        
+        let instructions = UIButton(frame: CGRect(x: 10, y: 0, width: view.frame.width - 40, height: 40))
+        instructions.backgroundColor = UIColor.clearColor()
+        instructions.setTitle("Select an Option", forState: .Normal)
+        instructions.setTitleColor(tealColor, forState: .Normal)
+        instructions.titleLabel?.font = UIFont(name: "Lato-Bold", size: 16)
+        popupview.addSubview(instructions)
+        
+        let title = UIButton(frame: CGRect(x: 10, y: 45, width: view.frame.width - 40, height: 40))
         title.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
         title.setTitle("Cannot Attend", forState: .Normal)
         title.addTarget(self, action: "leaveupdate", forControlEvents: .TouchUpInside)
         title.setTitleColor(UIColor.blackColor(), forState: .Normal)
         popupview.addSubview(title)
         
-        let detail = UIButton(frame: CGRect(x: 10, y: 45, width: view.frame.width - 20, height: 40))
+        let detail = UIButton(frame: CGRect(x: 10, y: 90, width: view.frame.width - 40, height: 40))
         detail.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
         detail.setTitle("5 Minutes Late", forState: .Normal)
         detail.addTarget(self, action: "lateUpdate", forControlEvents: .TouchUpInside)
         detail.setTitleColor(UIColor.blackColor(), forState: .Normal)
         popupview.addSubview(detail)
         
-        let delete = UIButton(frame: CGRect(x: 10, y: 90, width: view.frame.width - 20, height: 40))
+        let delete = UIButton(frame: CGRect(x: 10, y: 135, width: view.frame.width - 40, height: 40))
         delete.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
         delete.setTitle("Delete", forState: .Normal)
         delete.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
@@ -115,21 +125,24 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
         
         popupview.addSubview(delete)
         
-        let cancel = UIButton(frame: CGRect(x: 10, y: 140, width: view.frame.width - 20, height: 40))
-        cancel.backgroundColor = UIColor.whiteColor()
+        let cancel = UIButton(frame: CGRect(x: 10, y: 180, width: view.frame.width - 40, height: 40))
+        cancel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
         cancel.setTitle("Cancel", forState: .Normal)
         cancel.addTarget(self, action: "cancelupdate", forControlEvents: .TouchUpInside)
         cancel.setTitleColor(UIColor.blackColor(), forState: .Normal)
         popupview.addSubview(cancel)
-        view.addSubview(popupview)
+        popupview.bringSubviewToFront(cancel)
         
+        view.addSubview(popupview)
+        view.bringSubviewToFront(popupview)
         UIView.animateWithDuration(0.5, animations: {
-            self.popupview.frame = CGRect(x: 10, y: self.view.frame.height - 250, width: self.view.frame.width - 20, height: 180)
+            self.popupview.frame = CGRect(x: 10, y: self.view.frame.height - 290, width: self.view.frame.width - 20, height: 250)
         })
 
     }
     
     func lateUpdate() {
+        backview.removeFromSuperview()
         if let id = paceInfo?.id?.toInt() {
             NetworkController().updateLate(id, successHandler: { success in
                 print("worked!! late")
@@ -144,6 +157,7 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
     }
     
     func leaveupdate() {
+        backview.removeFromSuperview()
         if let pace = paceInfo {
             NetworkController().leavePace(pace, successHandler: { variable in
                 "Alert left pace"
@@ -159,6 +173,7 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
     }
     
     func deleteupdate() {
+        backview.removeFromSuperview()
         if let pace = paceInfo {
             NetworkController().deletePace(pace, successHandler: { variable in
                 self.goBack()
@@ -174,6 +189,8 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
     }
     
     func cancelupdate() {
+        print("cancel")
+        backview.removeFromSuperview()
         UIView.animateWithDuration(0.2, animations: {
             self.popupview.frame = CGRect(x: 0, y: self.view.frame.height + 50, width: self.view.frame.width, height: 180)
         })
@@ -255,22 +272,39 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
             answers[0] = printstring
         }
         
-        if let info = paceInfo?.distance {
+        if let info = paceInfo?.pace {
             answers[1] = "\(info) miles"
         }
         
-        if let speedinfo = paceInfo?.pace {
-            answers[2] = "\(speedinfo) min / miles"
+        if let speedinfo = paceInfo?.distance {
+            answers[2] = "\(speedinfo) mins / mile"
         }
         
         
         self.runners = []
         if let myrunners = paceInfo?.participants {
             for runner in myrunners {
+                if let id = AccountController.sharedInstance.getUser()?.id {
+                    if "\(runner)" == "\(id)" {
+                        self.canInvite()
+                    }
+                }
+                
                 self.runners.append("\(runner)")
             }
         }
 
+    }
+    
+    func canInvite() {
+        if !ismycurrentrundetail {
+            let shareButton = UIButton(frame: CGRect(x: view.frame.width - 80, y: 20, width: 70, height: 50))
+            shareButton.setTitleColor(tealColor, forState: .Normal)
+            shareButton.setTitle("Invite", forState: .Normal)
+            shareButton.addTarget(self, action: "inviteFriends", forControlEvents: .TouchUpInside)
+            view.addSubview(shareButton)
+        }
+        joinButton.removeFromSuperview()
     }
     
     func inviteFriends() {
@@ -341,7 +375,7 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
         
         NetworkController().updatePace(paceInfo!, successHandler: {
             boolval in
-      
+            self.titleLabel.text = "Current Run"
             self.getPace()
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.congratsImg = UIImageView(frame: self.view.frame)
@@ -390,10 +424,13 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
             var cell:CustomTableViewCellDetails = tableView.dequeueReusableCellWithIdentifier("detailsCell") as! CustomTableViewCellDetails!
 
             cell.typeLabel.text = self.items[indexPath.row]
+            cell.typeLabel.font = UIFont(name: "Lato-Bold", size: 15)
             cell.detailLabel.text = self.answers[indexPath.row]
+            cell.detailLabel.font = UIFont(name: "Lato-Bold", size: 15)
             
             if indexPath.row == 0 {
                 cell.extratypeLabel.text = "This pace will depart at"
+                cell.extratypeLabel.font = UIFont(name: "Lato-LightItalic", size: 15)
                 cell.extradetailLabel.text = customTime
             }
             
@@ -407,7 +444,13 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
                     
                     if let frst = user.firstname {
                         if let lst = user.lastname {
-                            cell.nameText.text = "\(frst) \(lst)  >"
+                            
+                         
+                            let idx = advance(lst.startIndex, 0)
+                            let lastletter = lst[idx]
+                            let name = "\(frst) \(lastletter).   >"
+                            cell.nameText.text = name
+                            cell.nameText.font = UIFont(name: "Lato-Bold", size: 15)
                             cell.profImageView.image = UIImage(named: "placeholder")
                         }
                     }
@@ -515,7 +558,7 @@ class CustomTableViewCellInfo: UITableViewCell {
         
         nameText = UILabel(frame: CGRect(x: 50, y: 0, width: contentView.frame.width - 20, height: 65))
         nameText.textAlignment = .Right
-        hostText = UILabel(frame: CGRect(x: 50, y: 20, width: contentView.frame.width - 20, height: 65))
+        hostText = UILabel(frame: CGRect(x: 30, y: 20, width: contentView.frame.width - 20, height: 65))
         hostText.textAlignment = .Right
         hostText.textColor = UIColor.lightGrayColor()
     

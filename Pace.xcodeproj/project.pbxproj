@@ -28,6 +28,8 @@
 		DB2B14F51B69970F002BD161 /* location-host@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB2B14F41B69970F002BD161 /* location-host@2x.png */; };
 		DB2B14F71B699726002BD161 /* location-join@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB2B14F61B699726002BD161 /* location-join@2x.png */; };
 		DB2E6A901B86AE0800953D36 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = DB2E6A8F1B86AE0800953D36 /* placeholder.png */; };
+		DB45602F1BB732C70043502C /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB45602E1BB732C70043502C /* logo@2x.png */; };
+		DB4560311BB9F2510043502C /* paceDropPin.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4560301BB9F2510043502C /* paceDropPin.png */; };
 		DB45E7181BB21D1A000E2AF0 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7081BB21D1A000E2AF0 /* OFL.txt */; };
 		DB45E7191BB21D1A000E2AF0 /* Oswald-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E7091BB21D1A000E2AF0 /* Oswald-Bold.ttf */; };
 		DB45E71A1BB21D1A000E2AF0 /* Oswald-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB45E70A1BB21D1A000E2AF0 /* Oswald-Light.ttf */; };
@@ -103,6 +105,8 @@
 		DB2B14F41B69970F002BD161 /* location-host@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location-host@2x.png"; sourceTree = "<group>"; };
 		DB2B14F61B699726002BD161 /* location-join@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location-join@2x.png"; sourceTree = "<group>"; };
 		DB2E6A8F1B86AE0800953D36 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		DB45602E1BB732C70043502C /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "Lato/logo@2x.png"; sourceTree = "<group>"; };
+		DB4560301BB9F2510043502C /* paceDropPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paceDropPin.png; sourceTree = "<group>"; };
 		DB45E7081BB21D1A000E2AF0 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		DB45E7091BB21D1A000E2AF0 /* Oswald-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Bold.ttf"; sourceTree = "<group>"; };
 		DB45E70A1BB21D1A000E2AF0 /* Oswald-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Light.ttf"; sourceTree = "<group>"; };
@@ -301,6 +305,8 @@
 		DB508F4E1B4E134D00604F0D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DB4560301BB9F2510043502C /* paceDropPin.png */,
+				DB45602E1BB732C70043502C /* logo@2x.png */,
 				DB45E7071BB21D1A000E2AF0 /* Oswald */,
 				DB45E70C1BB21D1A000E2AF0 /* Lato */,
 				DB23BC3C1BA4F22B00E7E028 /* profwork@2x.png */,
@@ -396,6 +402,7 @@
 		DB508F431B4E134D00604F0D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = twil;
 				TargetAttributes = {
@@ -439,10 +446,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB45E7261BB21D1A000E2AF0 /* OFL.txt in Resources */,
+				DB45602F1BB732C70043502C /* logo@2x.png in Resources */,
 				DB45E7241BB21D1A000E2AF0 /* Lato-LightItalic.ttf in Resources */,
 				DB23BC431BA4F22B00E7E028 /* profwork@2x.png in Resources */,
 				DBF4ACF21BA497BA00DF657A /* dropdown1.png in Resources */,
 				DB2B14F31B699709002BD161 /* home@2x.png in Resources */,
+				DB4560311BB9F2510043502C /* paceDropPin.png in Resources */,
 				DB45E71F1BB21D1A000E2AF0 /* Lato-BoldItalic.ttf in Resources */,
 				DB23BC451BA4F22B00E7E028 /* profjoin@2x.png in Resources */,
 				DB23BC491BA4F22B00E7E028 /* profeducation@2x.png in Resources */,

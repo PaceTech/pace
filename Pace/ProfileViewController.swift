@@ -12,7 +12,7 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
     
     var titleText: String?
     var tableView: UITableView  =   UITableView()
-    var items: [String] = [ "Work", "Education", "", "0 paces joined", "0 paces hosted"]
+    var items: [String] = [ "Work", "Education", "", "0 runs joined", "0 runs hosted"]
     var iconnames: [String] = ["profwork", "profeducation", "profpacefriends", "profjoin", "profhost"]
     var profileID: Int!
     var profImageView: UIImageView!
@@ -36,7 +36,7 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         titleLabel.textAlignment = .Center
         view.addSubview(titleLabel)
         
-        let nameview = UIView(frame: CGRect(x: 0, y: 225, width: view.frame.width, height: 80))
+        let nameview = UIView(frame: CGRect(x: 0, y: 225, width: view.frame.width, height: 40))
         nameview.backgroundColor = UIColor.whiteColor()
         
         namelabel = UILabel(frame: CGRect(x: 0, y: 220, width: view.frame.width, height: 50))
@@ -46,7 +46,7 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         locationlabel = UILabel(frame: CGRect(x: 0, y: 250, width: view.frame.width, height: 50))
         locationlabel.textColor = UIColor.blackColor()
         locationlabel.textAlignment = .Center
-        locationlabel.text = "25, New York, NY"
+        locationlabel.text = ""
         
         view.addSubview(nameview)
         view.addSubview(namelabel)
@@ -73,9 +73,10 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         view.addSubview(headerView)
 
 
-        let backButton = UIButton(frame: CGRect(x: 10, y: 20, width: 70, height: 50))
-        backButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        backButton.setTitle("Back", forState: .Normal)
+        let backButton = UIButton(frame: CGRect(x: 15, y: 20, width: 20, height: 50))
+        backButton.setTitleColor(tealColor, forState: .Normal)
+        backButton.setTitle("<", forState: .Normal)
+        backButton.titleLabel?.font = UIFont(name: "Oswald-Bold", size: 25)
         backButton.addTarget(self, action: "goBack", forControlEvents: .TouchUpInside)
         view.addSubview(backButton)
         
@@ -225,8 +226,8 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
     
     func updaterows(join: Int, host: Int) {
     
-        items[3] = "\(join) paces joined"
-        items[4] = "\(host) paces hosted"
+        items[3] = "\(join) runs joined"
+        items[4] = "\(host) runs hosted"
         
         tableView.reloadData()
     }
@@ -283,9 +284,23 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
             }
             if indexPath.row == 2 {
                 if friendscount == 0 && friendsids.count > 0 {
-                    cell.textLabel?.text = "\(friendsids.count) friends on Pace"
+                    if let userid = AccountController.sharedInstance.getUser()?.id {
+                        if profileID == userid {
+                            cell.textLabel?.text = "\(friendsids.count) friends on Pace"
+                        }
+                    } else {
+                        cell.textLabel?.text = "\(friendsids.count) mutual friends"
+                    }
+                    
                 } else {
-                    cell.textLabel?.text = "\(friendscount) friends on Pace"
+                    if let userid = AccountController.sharedInstance.getUser()?.id {
+                        if profileID == userid {
+                            cell.textLabel?.text = "\(friendscount) friends on Pace"
+                        }
+                    } else {
+                        cell.textLabel?.text = "\(friendscount) mutual friends"
+                    }
+                    
                 }
             }
             cell.textLabel?.textAlignment = .Center
@@ -293,8 +308,10 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         } else {
             var cell:CustomTableViewCellInfo = tableView.dequeueReusableCellWithIdentifier("infoCell") as! CustomTableViewCellInfo!
             
-            
-            let name = friendsnames[indexPath.row]
+            let namesarray = friendsnames[indexPath.row].componentsSeparatedByString(" ")
+            let idx = advance(namesarray[1].startIndex, 0)
+            let lastletter = namesarray[1][idx]
+            let name = "\(namesarray[0]) \(lastletter)."
             
             cell.nameText.text = name
             cell.profImageView.sd_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(friendsids[indexPath.row])/picture?type=large"))
@@ -312,27 +329,19 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Member Since January 2015"
+            return ""
         } else {
-            return "Friends"
+            if let userid = AccountController.sharedInstance.getUser()?.id {
+                if profileID == userid {
+                    return "Friends"
+                }
+            }
+            
+            return "Mutual Friends"
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        if indexPath.section == 0 {
-//            if indexPath.row == 1 {
-//                let vc = InputViewController()
-//                vc.pageTitle = "Enter Education"
-//                vc.iseducation = true
-//                navigationController?.pushViewController(vc, animated: true)
-//            } else if indexPath.row == 0 {
-//                let vc = InputViewController()
-//                vc.pageTitle = "Enter Education"
-//                vc.iswork = true
-//                navigationController?.pushViewController(vc, animated: true)
-//            }
-//        }
-    }
+
 }
 
 

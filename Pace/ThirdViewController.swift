@@ -11,7 +11,7 @@ import UIKit
 class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tableView = UITableView()
-    var items = ["Current Paces", "My Profile", "Pace Settings\n(coming soon!)", "Activity\n(coming soon!)"]
+    var items = ["Current Runs", "My Profile", "Pace Settings", "Activity"]
     var names = ["paces", "profile", "settings", "activity"]
     
     override func viewDidLoad() {
@@ -42,25 +42,35 @@ class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITabl
         var attributedString = NSMutableAttributedString(string:"Log Out", attributes: attrs)
         var attributedString1 = NSMutableAttributedString(string:"Privacy Policy", attributes: attrs)
         var attributedString2 = NSMutableAttributedString(string:"Terms of Service", attributes: attrs)
+        var attributedString3 = NSMutableAttributedString(string:"Feedback", attributes: attrs)
         
         let logoutbutton = UIButton(frame: CGRect(x: 80, y: 530, width: view.frame.width - 160, height: 50))
         logoutbutton.setAttributedTitle(attributedString, forState: .Normal)
         logoutbutton.addTarget(self, action: "logout", forControlEvents: .TouchUpInside)
         
-        let privacybutton = UIButton(frame: CGRect(x: 40, y: 560, width: view.frame.width/2 - 20, height: 50))
+        let privacybutton = UIButton(frame: CGRect(x: 10, y: 560, width: view.frame.width/3, height: 50))
         privacybutton.setAttributedTitle(attributedString1, forState: .Normal)
         privacybutton.addTarget(self, action: "showprivacy", forControlEvents: .TouchUpInside)
         
-        let termsofservice = UIButton(frame: CGRect(x: view.frame.width/2, y: 560, width: view.frame.width/2 - 40, height: 50))
+        let termsofservice = UIButton(frame: CGRect(x: view.frame.width/3 + 10, y: 560, width: view.frame.width/3, height: 50))
         termsofservice.setAttributedTitle(attributedString2, forState: .Normal)
         termsofservice.addTarget(self, action: "showtos", forControlEvents: .TouchUpInside)
+        
+        let feedback = UIButton(frame: CGRect(x: view.frame.width * 2/3 + 10, y: 560, width: view.frame.width/3, height: 50))
+        feedback.setAttributedTitle(attributedString3, forState: .Normal)
+        feedback.addTarget(self, action: "showFeedback", forControlEvents: .TouchUpInside)
         
         self.view.addSubview(tableView)
         
         view.addSubview(logoutbutton)
         view.addSubview(termsofservice)
+        view.addSubview(feedback)
         view.addSubview(privacybutton)
         
+    }
+    
+    func showFeedback() {
+        UIApplication.sharedApplication().openURL(NSURL(string: "http://www.joinapace.com/contact/")!)
     }
     
     func showtos() {
@@ -99,7 +109,7 @@ class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITabl
         
         var cell:SettingsViewCell = tableView.dequeueReusableCellWithIdentifier("setingscell") as! SettingsViewCell!
         
-        
+        cell.arrowText.textColor = tealColor
         cell.nameText.text = self.items[indexPath.row]
         cell.nameText.textColor = tealColor
         cell.nameText.font = UIFont(name: "helvetica", size: 20)
@@ -107,7 +117,9 @@ class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITabl
         
         if indexPath.row > 1  {
             cell.userInteractionEnabled = false
+            cell.arrowText.textColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
             cell.nameText.textColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
+            cell.comingSoonText.text = "Coming soon!"
         }
         
         return cell
@@ -152,6 +164,8 @@ class SettingsViewCell: UITableViewCell {
     
     var nameText = UILabel()
     var iconview: UIImageView!
+    var arrowText: UILabel!
+    var comingSoonText: UILabel!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -160,9 +174,18 @@ class SettingsViewCell: UITableViewCell {
         iconview.contentMode = .ScaleAspectFit
         contentView.addSubview(iconview)
         
+        arrowText = UILabel(frame: CGRect(x: contentView.frame.width, y: contentView.frame.height/2 + 5, width: 30, height: 30))
+        arrowText.text = ">"
+        contentView.addSubview(arrowText)
+        
         nameText = UILabel(frame: CGRect(x: 100, y: 0, width: 200, height: 80))
         nameText.numberOfLines = 0
         contentView.addSubview(nameText)
+        
+        comingSoonText = UILabel(frame: CGRect(x: 100, y: 20, width: 200, height: 80))
+        comingSoonText.font = UIFont(name: "Lato-LightItalic", size: 13)
+        comingSoonText.textColor = UIColor.lightGrayColor()
+        contentView.addSubview(comingSoonText)
     }
     
     required init(coder decoder: NSCoder) {

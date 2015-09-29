@@ -22,10 +22,15 @@ class LocationDetailViewController: GAITrackedViewController {
         super.viewDidLoad()
         
         
-        var camera = GMSCameraPosition.cameraWithLatitude(40.7903, longitude: -73.9597, zoom: 12)
+        var camera = GMSCameraPosition()
         mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
-//        mapView.settings.compassButton = true
         mapView.settings.myLocationButton = true
+        
+        self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.mapView.myLocationEnabled = true
+        })
         
         tabBarController?.tabBar.backgroundColor = UIColor.whiteColor()
         tabBarController?.tabBar.backgroundImage = UIImage()
@@ -44,8 +49,9 @@ class LocationDetailViewController: GAITrackedViewController {
         titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
         
         var backButton = UIButton(frame: CGRect(x: 14, y: 20, width: 50, height: 40))
-        backButton.setTitle("Back", forState: .Normal)
-        backButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        backButton.setTitleColor(tealColor, forState: .Normal)
+        backButton.setTitle("<", forState: .Normal)
+        backButton.titleLabel?.font = UIFont(name: "Oswald-Bold", size: 25)
         backButton.addTarget(self, action: "goBack", forControlEvents: .TouchUpInside)
         backButton.titleLabel!.font = UIFont(name: backButton.titleLabel!.font.fontName, size: 14)
         headerView.addSubview(backButton)
@@ -64,12 +70,13 @@ class LocationDetailViewController: GAITrackedViewController {
         marker.title = "Join Pace"
         marker.map = self.mapView
         marker.icon = UIImage(named: "blue-run-small")
-//        mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 14)
+        mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 14)
         self.screenName = "PaceDetailLocationView"
     }
     
     override func viewWillDisappear(animated: Bool) {
         tabBarController?.tabBar.hidden = false
+        mapView.removeObserver(self, forKeyPath: "myLocation")
     }
     
     func goBack() {
@@ -79,6 +86,17 @@ class LocationDetailViewController: GAITrackedViewController {
         
     }
     
+    var once = false
+    
+    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        firstLocationUpdate = true
+        let location = change[NSKeyValueChangeNewKey] as? CLLocation
+        if once == false {
+            once = true
+            mapView.camera = GMSCameraPosition.cameraWithTarget(location!.coordinate, zoom: 14)
+        }
+        
+    }
 
     
     func searchCoordinatesForAddress(address: String) {

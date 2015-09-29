@@ -21,6 +21,7 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
     var searchbutton: UIButton?
     var savedLocation : CLLocationCoordinate2D?
     var once = false
+    var joinButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,24 +49,24 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
         headerView.backgroundColor = darkBlueColor
         
         var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
-        titleButton.text = "Select Pace Location"
+        titleButton.text = "Select Run Location"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
         
-        var backButton = UIButton(frame: CGRect(x: 14, y: 20, width: 50, height: 40))
-        backButton.setTitle("Back", forState: .Normal)
-        backButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        let backButton = UIButton(frame: CGRect(x: 15, y: 20, width: 20, height: 50))
+        backButton.setTitleColor(tealColor, forState: .Normal)
+        backButton.setTitle("<", forState: .Normal)
+        backButton.titleLabel?.font = UIFont(name: "Oswald-Bold", size: 25)
         backButton.addTarget(self, action: "goBack", forControlEvents: .TouchUpInside)
-        backButton.titleLabel!.font = UIFont(name: backButton.titleLabel!.font.fontName, size: 14)
         headerView.addSubview(backButton)
         
-        var okButton = UIButton(frame: CGRect(x: view.frame.width - 44, y: 20, width: 30, height: 40))
-        okButton.setTitle("OK", forState: .Normal)
-        okButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        okButton.addTarget(self, action: "select", forControlEvents: .TouchUpInside)
-        okButton.titleLabel!.font = UIFont(name: backButton.titleLabel!.font.fontName, size: 14)
-        headerView.addSubview(okButton)
+//        var okButton = UIButton(frame: CGRect(x: view.frame.width - 44, y: 20, width: 30, height: 40))
+//        okButton.setTitle("OK", forState: .Normal)
+//        okButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+//        okButton.addTarget(self, action: "select", forControlEvents: .TouchUpInside)
+//        okButton.titleLabel!.font = UIFont(name: backButton.titleLabel!.font.fontName, size: 14)
+//        headerView.addSubview(okButton)
         
         headerView.addSubview(titleButton)
         
@@ -86,11 +87,11 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
         }
         
         
-        let joinButton = UIButton(frame: CGRect(x: 20, y: view.frame.height - 120, width: view.frame.width - 40, height: 50))
+        joinButton = UIButton(frame: CGRect(x: 20, y: view.frame.height - 120, width: view.frame.width - 40, height: 50))
         joinButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        joinButton.backgroundColor = tealColor
-        joinButton.setTitle("Select", forState: .Normal)
-        joinButton.addTarget(self, action: "join", forControlEvents: .TouchUpInside)
+        joinButton.backgroundColor = UIColor.grayColor()
+        joinButton.setTitle("Select Location", forState: .Normal)
+        joinButton.addTarget(self, action: "select", forControlEvents: .TouchUpInside)
         mapView.addSubview(joinButton)
         
         self.view = mapView
@@ -144,6 +145,7 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
             mapView.addSubview(sb)
             mapView.bringSubviewToFront(sb)
         }
+        searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -163,6 +165,7 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
             mapView.addSubview(sb)
             mapView.bringSubviewToFront(sb)
         }
+        searchBar.resignFirstResponder()
     }
     
     func searchCoordinatesForAddress(address: String) {
@@ -178,6 +181,9 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
         
         
         if let results: AnyObject = jsonResult["results"] {
+            
+            self.joinButton.backgroundColor = tealColor
+            
             if let geometry = results[0]["geometry"] as? NSDictionary {
                 if let location = geometry["location"] as? NSDictionary {
                     var latitude = location["lat"] as? Double

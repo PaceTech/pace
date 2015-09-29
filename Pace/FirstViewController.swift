@@ -28,7 +28,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         self.locationManager.requestWhenInUseAuthorization()
         var camera = GMSCameraPosition()
         mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
@@ -46,6 +46,14 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         searchBar!.delegate = self
         mapView.addSubview(searchBar!)
         
+        searchbutton = UIButton(frame: CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40))
+        if let sb = searchbutton {
+            sb.backgroundColor = UIColor.clearColor()
+            sb.addTarget(self, action: "startsearch", forControlEvents: .TouchUpInside)
+            mapView.addSubview(sb)
+            mapView.bringSubviewToFront(sb)
+        }
+        
         tabBarController?.tabBar.backgroundColor = UIColor.whiteColor()
         tabBarController?.tabBar.backgroundImage = UIImage()
         tabBarController?.tabBar.clipsToBounds = true
@@ -57,7 +65,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         headerView.backgroundColor = darkBlueColor
         
         var titleButton = UILabel(frame: CGRectMake(20, 28, view.frame.width - 40, 30))
-        titleButton.text = "Select Pin to Join A Pace"
+        titleButton.text = "Join A Run"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
@@ -73,7 +81,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         segmentedControl.selectedSegmentIndex = 2
         segmentedControl.frame =  CGRect(x: 30, y: view.frame.height - 90, width: view.frame.width - 60, height: 30)
         segmentedControl.backgroundColor = UIColor.whiteColor()
-        segmentedControl.tintColor = darkBlueColor
+        segmentedControl.tintColor = tealColor
         segmentedControl.addTarget(self, action: "toggle:", forControlEvents: .ValueChanged)
         mapView.addSubview(segmentedControl)
         
@@ -133,19 +141,22 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
                                             shoulddrop = true
                                         } else if val == components.day {
                                             if let hour = time[0] as? String {
+                                                
+                                                var val = hour.toInt()
+                                                print(val)
+                                                print(components.hour)
                                                 if (components.hour - val!) < 2 {
                                                     isthishour = true
                                                 } else if (components.hour - val!) < 12 {
                                                     istoday = true
                                                 }
-                                                var val = hour.toInt()
-                                                if val < components.hour {
+                                                else if val < components.hour {
                                                     shoulddrop = true
                                                 } else if val == components.hour {
                                                     if let min = time[1] as? String {
                                                         var val = min.toInt()
                                                         if val < components.minute {
-                                                            shoulddrop = true
+//                                                            shoulddrop = true
                                                         }
                                                     }
                                                 }
@@ -173,7 +184,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
                                 marker.title = "Join Pace"
                                 marker.map = self.mapView
                                 marker.userData = pace
-                                marker.icon = UIImage(named: "blue-run-small")
+                                marker.icon = UIImage(named: "paceDropPin")
                             }
                         }
                         else if self.pacetoggle == 1 {
@@ -182,18 +193,18 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
                                 marker.title = "Join Pace"
                                 marker.map = self.mapView
                                 marker.userData = pace
-                                marker.icon = UIImage(named: "blue-run-small")
+                                marker.icon = UIImage(named: "paceDropPin")
                             }
                         } else if self.pacetoggle == 2 {
                             var marker = GMSMarker(position: pace.location!)
                             marker.title = "Join Pace"
                             marker.map = self.mapView
                             marker.userData = pace
-                            marker.icon = UIImage(named: "blue-run-small")
+                            marker.icon = UIImage(named: "paceDropPin")
                         }
                 
                     }
-                    
+                
                     
                 }
             }
@@ -261,11 +272,13 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
             mapView.addSubview(sb)
             mapView.bringSubviewToFront(sb)
         }
+        searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchActive = false
         searchBar.resignFirstResponder()
+    
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -280,6 +293,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
             mapView.addSubview(sb)
             mapView.bringSubviewToFront(sb)
         }
+        searchBar.resignFirstResponder()
     }
     
     func searchCoordinatesForAddress(address: String) {
@@ -299,11 +313,10 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
                     if let location = geometry["location"] as? NSDictionary {
                         var latitude = location["lat"] as? Double
                         var longitude = location["lng"] as? Double
-                        mapView.camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!), zoom: 12)
+                        mapView.camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!), zoom: 11)
                         var position = CLLocationCoordinate2DMake(latitude!, longitude!)
-                        var marker = GMSMarker(position: position)
-                        marker.title = "Start A Pace"
-                        marker.map = mapView
+                        
+                        getPaces()
                     }
                 }
             }

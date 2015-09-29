@@ -24,9 +24,10 @@ class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITab
         
         view.backgroundColor = UIColor.whiteColor()
         
-        let backButton = UIButton(frame: CGRect(x: 10, y: 20, width: 70, height: 50))
-        backButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        backButton.setTitle("Back", forState: .Normal)
+        let backButton = UIButton(frame: CGRect(x: 15, y: 20, width: 20, height: 50))
+        backButton.setTitleColor(tealColor, forState: .Normal)
+        backButton.setTitle("<", forState: .Normal)
+        backButton.titleLabel?.font = UIFont(name: "Oswald-Bold", size: 25)
         backButton.addTarget(self, action: "goBack", forControlEvents: .TouchUpInside)
         view.addSubview(backButton)
         
@@ -36,22 +37,9 @@ class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITab
         titleLabel.textAlignment = .Center
         titleLabel.font = UIFont(name: "Oswald-Regular", size: 20)
         view.addSubview(titleLabel)
-        
-        var image = UIImage(named:"placeholder")
-        var profImageView = UIImageView(frame: CGRect(x: view.frame.width/2 - 50, y: 100, width: 100, height: 100))
-        profImageView.image = image
-        profImageView.clipsToBounds = true
-        profImageView.layer.cornerRadius = 50
-        view.addSubview(profImageView)
-        
-        if let fbid =  AccountController.sharedInstance.getUser()?.facebook_id {
-        profImageView.sd_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(fbid)/picture?type=large"))
-
-            
-        }
 
         
-        tableView.frame         =   CGRectMake(0, 280, view.frame.width, 400);
+        tableView.frame         =   CGRectMake(0, 100, view.frame.width, view.frame.height - 100);
         tableView.delegate      =   self
         tableView.dataSource    =   self
         
@@ -119,8 +107,15 @@ class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITab
                             }
                         }
                     } }
-                    
-                                    
+                if let runners = pace.participants {
+                    for runner in runners {
+                        if "\(runner)" == "18" {
+                            shoulddrop = true
+                        }
+                    }
+                }
+                
+                
                                     if shoulddrop {}
                                     else {
                                      

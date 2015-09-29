@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 //
 let ngrok = "http://pace-dev.elasticbeanstalk.com"
-let apitoken = "a58d2187a7982f9944a9437f942d41965cf75801"
+let apitoken = "ebfdcabbe34201a2d48c160250d2c78f3c8572cb"
 let deleteID = "18"
 
 class NetworkController: NSObject {
@@ -328,7 +328,7 @@ class NetworkController: NSObject {
                         if let json: AnyObject! = NSJSONSerialization.JSONObjectWithData(responsedata, options: NSJSONReadingOptions.MutableContainers, error : &jsonerror) {
                             if let jsondict = json as? NSDictionary {
                                 if let tok = jsondict["token"] as? String {
-                                    
+                                    print(tok)
                                     PersistentDataStore.sharedInstance.saveToken(tok)
                                 }
                                 successHandler(true)
