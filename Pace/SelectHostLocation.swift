@@ -54,7 +54,7 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
         
-        let backButton = UIButton(frame: CGRect(x: 15, y: 20, width: 20, height: 50))
+        let backButton = UIButton(frame: CGRect(x: 15, y: 20, width: 20, height: 30))
         backButton.setTitleColor(tealColor, forState: .Normal)
         backButton.setTitle("<", forState: .Normal)
         backButton.titleLabel?.font = UIFont(name: "Oswald-Bold", size: 25)
@@ -128,7 +128,9 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
         //send selected location to other view
         if let vc = navigationController?.viewControllers[0] as? SecondViewController {
             vc.location = savedLocation
-            navigationController?.popToRootViewControllerAnimated(true)
+            if savedLocation != nil {
+                navigationController?.popToRootViewControllerAnimated(true)
+            }
         }
     }
     
@@ -193,6 +195,7 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
                     savedLocation = position
                     var marker = GMSMarker(position: position)
                     marker.title = "Start A Pace"
+                    marker.icon = UIImage(named: "paceDropPin")
                     marker.map = mapView
                 }
             }

@@ -32,14 +32,11 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         self.locationManager.requestWhenInUseAuthorization()
         var camera = GMSCameraPosition()
         mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
-//        mapView.settings.compassButton = true
         mapView.settings.myLocationButton = true
         self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
-        
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.mapView.myLocationEnabled = true
         })
-        
         mapView.delegate = self
         
         searchBar = UISearchBar(frame: CGRect(x: 20, y: 80, width: view.frame.width - 40, height: 40))
@@ -60,21 +57,15 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         tabBarController?.tabBar.hidden = false
         tabBarController?.tabBar.tintColor = tealColor
         
-        
         var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 70))
         headerView.backgroundColor = darkBlueColor
-        
         var titleButton = UILabel(frame: CGRectMake(20, 28, view.frame.width - 40, 30))
         titleButton.text = "Join A Run"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
-    
-        
         headerView.addSubview(titleButton)
-        
         mapView.addSubview(headerView)
-        
         
         let items = ["2 Hours", "Today", "All"]
         let segmentedControl = UISegmentedControl(items: items)
@@ -87,86 +78,64 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         
         self.view = mapView
         
-        
     }
     
     func toggle(control: UISegmentedControl) {
         if control.selectedSegmentIndex == 0 {
             pacetoggle = 0
-            mapView.clear()
-            getPaces()
         } else if control.selectedSegmentIndex == 1 {
             pacetoggle = 1
-            mapView.clear()
-            getPaces()
         } else {
             pacetoggle = 2
-            mapView.clear()
-            getPaces()
         }
-       
+        mapView.clear()
+        getPaces()
     }
     
     func getPaces() {
-        let activityind = UIActivityIndicatorView(frame: CGRect(x: view.frame.width/2 - 20, y: view.frame.height/2 - 20, width: 40, height: 40))
-        activityind.tintColor = darkBlueColor
-        mapView.addSubview(activityind)
         NetworkController().getPaces({paces in
+            print("paces received")
             for pace in paces {
                 var shoulddrop = false
-                let currentDate = NSDate()
-                let calendar = NSCalendar.currentCalendar()
-                let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
+                
                 
                 var isthishour = false
                 var istoday = false
-                activityind.stopAnimating()
                 if let timestring = pace.time as NSString? {
                     let arr = timestring.componentsSeparatedByString("T")
                     let date = arr[0].componentsSeparatedByString("-")
                     let time = arr[1].componentsSeparatedByString(":")
-                    if let year = date[0] as? String {
-                        var val = year.toInt()
-                        if val < components.year {
+                    
+                    var yeardifference = self.yearDiff(date[0] as? String)
+                    var monthdifference = self.monthDiff(date[1] as? String)
+                    var daydifference = self.dayDiff(date[2] as? String)
+                    var hourdifference = self.hourDiff(time[0] as? String)
+                    var mindifference = self.minDiff(time[1] as? String)
+                    
+                    if yeardifference < 0 {
+                        shoulddrop = true
+                    } else if yeardifference == 0 {
+                        if monthdifference < 0 {
                             shoulddrop = true
-                        } else if val == components.year {
-                            if let month = date[1] as? String {
-                                var val = month.toInt()
-                                if val < components.month {
-                                    shoulddrop = true
-                                } else if val == components.month {
-                                    if let day = date[2] as? String {
-                                        var val = day.toInt()
-                                        if val < components.day {
-                                            shoulddrop = true
-                                        } else if val == components.day {
-                                            if let hour = time[0] as? String {
-                                                
-                                                var val = hour.toInt()
-                                                print(val)
-                                                print(components.hour)
-                                                if (components.hour - val!) < 2 {
-                                                    isthishour = true
-                                                } else if (components.hour - val!) < 12 {
-                                                    istoday = true
-                                                }
-                                                else if val < components.hour {
-                                                    shoulddrop = true
-                                                } else if val == components.hour {
-                                                    if let min = time[1] as? String {
-                                                        var val = min.toInt()
-                                                        if val < components.minute {
-//                                                            shoulddrop = true
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+                        } else if monthdifference == 0 {
+                            if daydifference < 0 {
+                                shoulddrop = true
+                            } else if daydifference == 0 {
+                                istoday = true
+                                if hourdifference < 2 && mindifference > 0 {
+                                    isthishour = true
+                                }
+                                if hourdifference < 0 {
+//                                    shoulddrop == true
+                                } else if hourdifference == 0 {
+                                    if mindifference < 0 {
+//                                        shoulddrop == true
                                     }
                                 }
                             }
                         }
                     }
+                    
                     
                     if let runners = pace.participants {
                         for runner in runners {
@@ -223,6 +192,41 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         })
     }
     
+    func yearDiff(year: String?) -> Int {
+        let currentDate = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
+        return (year!.toInt()! - components.year)
+    }
+    
+    func monthDiff(month: String?) -> Int {
+        let currentDate = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
+        return (month!.toInt()! - components.month)
+    }
+    
+    func dayDiff(day: String?) -> Int {
+        let currentDate = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
+        return (day!.toInt()! - components.day)
+    }
+    
+    func hourDiff(hour: String?) -> Int {
+        let currentDate = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
+        return (hour!.toInt()! - components.hour)
+    }
+    
+    func minDiff(min: String?) -> Int {
+        let currentDate = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate:  NSDate())
+        return (min!.toInt()! - components.minute)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         mapView.removeObserver(self, forKeyPath: "myLocation")
     }
@@ -248,13 +252,6 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
     
     override func viewDidAppear(animated: Bool) {
         getPaces()
-        if let pace = newPace {
-            var marker = GMSMarker(position: pace.location!)
-            marker.title = "Your new pace!"
-            marker.map = mapView
-            marker.icon = UIImage(named: "blue-run-small")
-            marker.userData = pace
-        }
         self.screenName = "FirstMapView"
         self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
     }

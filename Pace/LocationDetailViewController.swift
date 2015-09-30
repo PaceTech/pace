@@ -26,7 +26,6 @@ class LocationDetailViewController: GAITrackedViewController {
         mapView = GMSMapView.mapWithFrame(CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - 50), camera: camera)
         mapView.settings.myLocationButton = true
         
-        self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
         
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.mapView.myLocationEnabled = true
@@ -66,10 +65,11 @@ class LocationDetailViewController: GAITrackedViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
         var marker = GMSMarker(position: savedLocation!)
         marker.title = "Join Pace"
         marker.map = self.mapView
-        marker.icon = UIImage(named: "blue-run-small")
+        marker.icon = UIImage(named: "paceDropPin")
         mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 14)
         self.screenName = "PaceDetailLocationView"
     }
@@ -86,15 +86,11 @@ class LocationDetailViewController: GAITrackedViewController {
         
     }
     
-    var once = false
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         firstLocationUpdate = true
         let location = change[NSKeyValueChangeNewKey] as? CLLocation
-        if once == false {
-            once = true
-            mapView.camera = GMSCameraPosition.cameraWithTarget(location!.coordinate, zoom: 14)
-        }
+
         
     }
 

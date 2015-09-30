@@ -52,11 +52,11 @@ class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITabl
         privacybutton.setAttributedTitle(attributedString1, forState: .Normal)
         privacybutton.addTarget(self, action: "showprivacy", forControlEvents: .TouchUpInside)
         
-        let termsofservice = UIButton(frame: CGRect(x: view.frame.width/3 + 10, y: 560, width: view.frame.width/3, height: 50))
+        let termsofservice = UIButton(frame: CGRect(x: view.frame.width/3 - 2, y: 560, width: view.frame.width/3, height: 50))
         termsofservice.setAttributedTitle(attributedString2, forState: .Normal)
         termsofservice.addTarget(self, action: "showtos", forControlEvents: .TouchUpInside)
         
-        let feedback = UIButton(frame: CGRect(x: view.frame.width * 2/3 + 10, y: 560, width: view.frame.width/3, height: 50))
+        let feedback = UIButton(frame: CGRect(x: view.frame.width * 2/3 - 30, y: 560, width: view.frame.width/3, height: 50))
         feedback.setAttributedTitle(attributedString3, forState: .Normal)
         feedback.addTarget(self, action: "showFeedback", forControlEvents: .TouchUpInside)
         
@@ -117,7 +117,7 @@ class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITabl
         
         if indexPath.row > 1  {
             cell.userInteractionEnabled = false
-            cell.arrowText.textColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
+            cell.arrowText.text = ""
             cell.nameText.textColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.6)
             cell.comingSoonText.text = "Coming soon!"
         }

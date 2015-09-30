@@ -55,6 +55,7 @@
 		DB52A2421B99100D00A838CF /* PersistentDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB52A2411B99100D00A838CF /* PersistentDataStore.swift */; };
 		DB52A2441B9D107000A838CF /* profileyesicon.png in Resources */ = {isa = PBXBuildFile; fileRef = DB52A2431B9D107000A838CF /* profileyesicon.png */; };
 		DB52A2461B9D11C300A838CF /* LocationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB52A2451B9D11C300A838CF /* LocationDetailViewController.swift */; };
+		DB7083131BBC9A310002E61C /* message.png in Resources */ = {isa = PBXBuildFile; fileRef = DB7083121BBC9A310002E61C /* message.png */; };
 		DBBADEEA1B5F03350009EAD8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */; };
 		DBDE95D61B4F56880022D95B /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE95D51B4F56880022D95B /* ThirdViewController.swift */; };
 		DBEE5F8F1B8A6CE800BD247A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE5F8E1B8A6CE800BD247A /* User.swift */; };
@@ -136,6 +137,7 @@
 		DB52A2411B99100D00A838CF /* PersistentDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentDataStore.swift; sourceTree = "<group>"; };
 		DB52A2431B9D107000A838CF /* profileyesicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profileyesicon.png; sourceTree = "<group>"; };
 		DB52A2451B9D11C300A838CF /* LocationDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDetailViewController.swift; sourceTree = "<group>"; };
+		DB7083121BBC9A310002E61C /* message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message.png; sourceTree = "<group>"; };
 		DBAD28B91BA4CCA6000D9EA3 /* Pace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Pace.entitlements; sourceTree = "<group>"; };
 		DBBADEE91B5F03350009EAD8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		DBDE95D51B4F56880022D95B /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				DB4560301BB9F2510043502C /* paceDropPin.png */,
+				DB7083121BBC9A310002E61C /* message.png */,
 				DB45602E1BB732C70043502C /* logo@2x.png */,
 				DB45E7071BB21D1A000E2AF0 /* Oswald */,
 				DB45E70C1BB21D1A000E2AF0 /* Lato */,
@@ -478,6 +481,7 @@
 				DB45E71E1BB21D1A000E2AF0 /* Lato-Bold.ttf in Resources */,
 				DB45E7181BB21D1A000E2AF0 /* OFL.txt in Resources */,
 				DBF4ACEF1B9FC86400DF657A /* paces.png in Resources */,
+				DB7083131BBC9A310002E61C /* message.png in Resources */,
 				DB23BC471BA4F22B00E7E028 /* profinvite@2x.png in Resources */,
 				DB45E7221BB21D1A000E2AF0 /* Lato-Italic.ttf in Resources */,
 				DB45E71B1BB21D1A000E2AF0 /* Oswald-Regular.ttf in Resources */,

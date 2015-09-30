@@ -18,18 +18,13 @@ class SecondViewController: GAITrackedViewController, UIScrollViewDelegate {
     
     var scrollViewpace: UIScrollView!
     var containerViewpace: UIView!
-    
     var scrollViewdist: UIScrollView!
     var containerViewdist: UIView!
-    
     var pacesegmentedControl : UISegmentedControl!
     var distancesegmentedControl : UISegmentedControl!
-    
     let distanceitems = ["6", "6:30", "7", "7:30", "8", "8:30", "9", "9:30", "10", "10:30", "11+"]
     let paceitems = ["3", "4", "5", "6", "7", "8", "9", "10", "11 - 15", "15+"]
     var location : CLLocationCoordinate2D?
-    
-    
     var congratsImg : UIImageView?
     var myTimer : NSTimer?
     
@@ -37,14 +32,13 @@ class SecondViewController: GAITrackedViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         
         view.backgroundColor = backgroundgray
-
         tabBarController?.tabBar.hidden = false
         
         var headerView = UIView(frame: CGRectMake(0, 0, view.frame.width, 70))
         headerView.backgroundColor = darkBlueColor
         
         var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
-        titleButton.text = "Host a Run!"
+        titleButton.text = "Host a Run"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: "Oswald-Regular", size: 20)

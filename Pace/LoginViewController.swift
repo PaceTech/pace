@@ -26,7 +26,7 @@ class LoginViewController: GAITrackedViewController, FBSDKLoginButtonDelegate, U
         loginButton = FBSDKLoginButton()
         loginButton?.readPermissions = ["public_profile", "email", "user_friends", "user_education_history", "user_work_history"]
         loginButton?.delegate = self
-        loginButton?.frame = CGRect(x: 50, y: view.frame.height - 200, width: view.frame.width - 100, height: 50)
+        loginButton?.frame = CGRect(x: 50, y: view.frame.height - 300, width: view.frame.width - 100, height: 50)
         view.addSubview(loginButton!)
 
         backgroundimg = UIImageView(frame: CGRect(x: 0, y: view.frame.height/2, width: view.frame.width, height: view.frame.height/2))
@@ -34,12 +34,12 @@ class LoginViewController: GAITrackedViewController, FBSDKLoginButtonDelegate, U
 //        view.addSubview(backgroundimg)
 //        view.sendSubviewToBack(backgroundimg)
         
-        let blueview = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2 + 20))
+        let blueview = UIView(frame: view.frame)
         blueview.backgroundColor = darkBlueColor
         view.addSubview(blueview)
         view.sendSubviewToBack(blueview)
         
-        myloginbutton = UIButton(frame: CGRect(x: view.frame.width/2 + 20, y: view.frame.height/2 - 50, width: view.frame.width/2 - 40, height: 50))
+        myloginbutton = UIButton(frame: CGRect(x: view.frame.width/2 + 20, y: view.frame.height/2 - 90, width: view.frame.width/2 - 40, height: 50))
         myloginbutton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         myloginbutton.setTitle("Log in", forState: .Normal)
         myloginbutton.addTarget(self, action: "switchtologin", forControlEvents: .TouchUpInside)
@@ -52,13 +52,14 @@ class LoginViewController: GAITrackedViewController, FBSDKLoginButtonDelegate, U
 //        view.addSubview(signupButton)
         
         let paceimgview = UIImageView(frame: CGRect(x: 75, y: 100, width: view.frame.width - 150, height: 150))
-        paceimgview.image = UIImage(named: "pace")
+        paceimgview.image = UIImage(named: "logo")
         paceimgview.contentMode = .ScaleAspectFit
         view.addSubview(paceimgview)
         
         let pacestring = UILabel(frame: CGRect(x: 0, y: 210, width: view.frame.width, height: 100))
         pacestring.text = "Running is social. Pace Connects."
         pacestring.textColor = tealColor
+        pacestring.font = UIFont(name: "Lato-Bold", size: 16)
         pacestring.textAlignment = .Center
         view.addSubview(pacestring)
         

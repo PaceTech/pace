@@ -39,7 +39,7 @@ class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITab
         view.addSubview(titleLabel)
 
         
-        tableView.frame         =   CGRectMake(0, 100, view.frame.width, view.frame.height - 100);
+        tableView.frame         =   CGRectMake(0, 70, view.frame.width, view.frame.height - 100);
         tableView.delegate      =   self
         tableView.dataSource    =   self
         

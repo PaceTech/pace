@@ -39,8 +39,9 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         let nameview = UIView(frame: CGRect(x: 0, y: 225, width: view.frame.width, height: 40))
         nameview.backgroundColor = UIColor.whiteColor()
         
-        namelabel = UILabel(frame: CGRect(x: 0, y: 220, width: view.frame.width, height: 50))
+        namelabel = UILabel(frame: CGRect(x: 0, y: 250, width: view.frame.width, height: 50))
         namelabel.textColor = tealColor
+        namelabel.font = UIFont(name: "Lato-Bold", size: 20)
         namelabel.textAlignment = .Center
         
         locationlabel = UILabel(frame: CGRect(x: 0, y: 250, width: view.frame.width, height: 50))
@@ -48,7 +49,7 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         locationlabel.textAlignment = .Center
         locationlabel.text = ""
         
-        view.addSubview(nameview)
+//        view.addSubview(nameview)
         view.addSubview(namelabel)
         view.addSubview(locationlabel)
         
@@ -80,9 +81,9 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         backButton.addTarget(self, action: "goBack", forControlEvents: .TouchUpInside)
         view.addSubview(backButton)
         
-        profImageView = UIImageView(frame: CGRect(x: view.frame.width/2 - 50, y: 100, width: 100, height: 100))
+        profImageView = UIImageView(frame: CGRect(x: view.frame.width/2 - 80, y: 90, width: 160, height: 160))
         profImageView.clipsToBounds = true
-        profImageView.layer.cornerRadius = 50
+        profImageView.layer.cornerRadius = 80
         view.addSubview(profImageView)
         addprofimage()
         
@@ -288,8 +289,9 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
                         if profileID == userid {
                             cell.textLabel?.text = "\(friendsids.count) friends on Pace"
                         }
-                    } else {
-                        cell.textLabel?.text = "\(friendsids.count) mutual friends"
+                        else {
+                            cell.textLabel?.text = "\(friendsids.count) mutual friends"
+                        }
                     }
                     
                 } else {
@@ -297,8 +299,9 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
                         if profileID == userid {
                             cell.textLabel?.text = "\(friendscount) friends on Pace"
                         }
-                    } else {
-                        cell.textLabel?.text = "\(friendscount) mutual friends"
+                        else {
+                            cell.textLabel?.text = "\(friendscount) mutual friends"
+                        }
                     }
                     
                 }
@@ -333,11 +336,11 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         } else {
             if let userid = AccountController.sharedInstance.getUser()?.id {
                 if profileID == userid {
-                    return "Friends"
+                    return "Friends on Pace"
                 }
             }
             
-            return "Mutual Friends"
+            return "Mutual Friends on Pace"
         }
     }
     
