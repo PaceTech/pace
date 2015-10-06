@@ -103,7 +103,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="8l8-XI-ong"/>
                                 </constraints>
-                                <state key="normal" title="HOST A PACE">
+                                <state key="normal" title="HOST A RUN">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -111,12 +111,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nNo-IW-mAR">
-                                <rect key="frame" x="-4" y="294" width="608" height="65"/>
+                                <rect key="frame" x="-4" y="293" width="608" height="65"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="380" id="Fxg-UY-oSR"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="144" id="RjV-lj-1vn"/>
-                                    <constraint firstAttribute="height" constant="65" id="g1e-Gu-xbd"/>
+                                    <constraint firstAttribute="height" constant="72" id="g1e-Gu-xbd"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="15"/>
                                 <state key="normal" title="Click arrow to select start location on map">
@@ -136,14 +136,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1rX-Lb-l4G" firstAttribute="top" secondItem="K7p-mh-UAx" secondAttribute="bottom" constant="10" id="7YS-cn-EHe"/>
+                            <constraint firstItem="1rX-Lb-l4G" firstAttribute="top" secondItem="K7p-mh-UAx" secondAttribute="bottom" constant="4" id="7YS-cn-EHe"/>
                             <constraint firstItem="K7p-mh-UAx" firstAttribute="top" secondItem="2vL-dU-wtG" secondAttribute="bottom" constant="10" id="829-XX-g4D"/>
                             <constraint firstItem="2vL-dU-wtG" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="53" id="DhY-o8-diL"/>
                             <constraint firstItem="1rX-Lb-l4G" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="-5" id="Ijx-TB-PPH"/>
                             <constraint firstAttribute="centerX" secondItem="K7p-mh-UAx" secondAttribute="centerX" constant="-0.5" id="IpD-0o-YuN"/>
                             <constraint firstItem="PBF-Tv-ADD" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="-5" id="KEk-J7-Dqg"/>
-                            <constraint firstItem="PBF-Tv-ADD" firstAttribute="top" secondItem="kIT-IX-nYO" secondAttribute="bottom" constant="58" id="S7X-fF-SbV"/>
-                            <constraint firstItem="kIT-IX-nYO" firstAttribute="top" secondItem="1rX-Lb-l4G" secondAttribute="bottom" constant="75" id="Ycg-Qs-31G"/>
+                            <constraint firstItem="PBF-Tv-ADD" firstAttribute="top" secondItem="kIT-IX-nYO" secondAttribute="bottom" constant="62" id="S7X-fF-SbV"/>
+                            <constraint firstItem="kIT-IX-nYO" firstAttribute="top" secondItem="1rX-Lb-l4G" secondAttribute="bottom" constant="78" id="Ycg-Qs-31G"/>
                             <constraint firstItem="nNo-IW-mAR" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="-20" id="Yy2-PD-yL5"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="AFH-gg-ONd" secondAttribute="bottom" constant="8" id="b32-lo-cC9"/>
                             <constraint firstItem="1rX-Lb-l4G" firstAttribute="baseline" secondItem="nNo-IW-mAR" secondAttribute="baseline" constant="-48" id="cc5-Mn-vaM"/>

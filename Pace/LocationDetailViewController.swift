@@ -42,7 +42,7 @@ class LocationDetailViewController: GAITrackedViewController {
         headerView.backgroundColor = darkBlueColor
         
         var titleButton = UILabel(frame: CGRectMake(20, 24, view.frame.width - 40, 30))
-        titleButton.text = "Pace Location"
+        titleButton.text = "Run Location"
         titleButton.textAlignment = .Center
         titleButton.textColor = UIColor.whiteColor()
         titleButton.font = UIFont(name: "Oswald-Regular", size: 20)
@@ -52,7 +52,6 @@ class LocationDetailViewController: GAITrackedViewController {
         backButton.setTitle("<", forState: .Normal)
         backButton.titleLabel?.font = UIFont(name: "Oswald-Bold", size: 25)
         backButton.addTarget(self, action: "goBack", forControlEvents: .TouchUpInside)
-        backButton.titleLabel!.font = UIFont(name: backButton.titleLabel!.font.fontName, size: 14)
         headerView.addSubview(backButton)
         
 
@@ -70,7 +69,7 @@ class LocationDetailViewController: GAITrackedViewController {
         marker.title = "Join Pace"
         marker.map = self.mapView
         marker.icon = UIImage(named: "paceDropPin")
-        mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 14)
+        mapView.camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 15)
         self.screenName = "PaceDetailLocationView"
     }
     
@@ -112,7 +111,7 @@ class LocationDetailViewController: GAITrackedViewController {
                     if let location = geometry["location"] as? NSDictionary {
                         var latitude = location["lat"] as? Double
                         var longitude = location["lng"] as? Double
-                        mapView.camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!), zoom: 12)
+                        mapView.camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!), zoom: 15)
                         var position = CLLocationCoordinate2DMake(latitude!, longitude!)
                         savedLocation = position
                         var marker = GMSMarker(position: position)

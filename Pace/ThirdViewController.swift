@@ -56,7 +56,7 @@ class ThirdViewController: GAITrackedViewController, UITableViewDelegate, UITabl
         termsofservice.setAttributedTitle(attributedString2, forState: .Normal)
         termsofservice.addTarget(self, action: "showtos", forControlEvents: .TouchUpInside)
         
-        let feedback = UIButton(frame: CGRect(x: view.frame.width * 2/3 - 30, y: 560, width: view.frame.width/3, height: 50))
+        let feedback = UIButton(frame: CGRect(x: view.frame.width * 2/3 - 22, y: 560, width: view.frame.width/3, height: 50))
         feedback.setAttributedTitle(attributedString3, forState: .Normal)
         feedback.addTarget(self, action: "showFeedback", forControlEvents: .TouchUpInside)
         

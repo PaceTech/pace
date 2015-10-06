@@ -101,8 +101,8 @@ class NetworkController: NSObject {
 
     }
     
-    func getPaces(successHandler:([Pace]) -> (), failureHandler:NSError -> ()){
-        if let url = NSURL(string: ngrok + "/api/v1/runs/"){
+    func getPaces(page: Int, successHandler:([Pace]) -> (), failureHandler:NSError -> ()){
+        if let url = NSURL(string: ngrok + "/api/v1/runs/?page=\(page)"){
             var request = NSMutableURLRequest(URL: url)
             request.addValue(token, forHTTPHeaderField: "Authorization")
             request.HTTPMethod = "GET"

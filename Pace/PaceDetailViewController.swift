@@ -277,9 +277,9 @@ class PaceDetailViewController: GAITrackedViewController, UITableViewDelegate, U
                 }
             if let hour =  time[0] as? String {
                 if hour.toInt() > 12 {
-                    customTime = "\(24 - hour.toInt()! - 1):\(time[1])"
+                    customTime = "\(hour.toInt()! - 12):\(time[1]) PM"
                 } else {
-                    customTime = "\(time[0]):\(time[1])"
+                    customTime = "\(time[0]):\(time[1]) AM"
                 }
                 
             }

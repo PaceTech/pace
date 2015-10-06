@@ -80,6 +80,7 @@ class SecondViewController: GAITrackedViewController, UIScrollViewDelegate {
         let goButton = UIButton(frame: CGRect(x: view.frame.width - 30, y: 355, width: 20, height: 50))
         goButton.setTitleColor(tealColor, forState: .Normal)
         goButton.setTitle(">", forState: .Normal)
+        goButton.addTarget(self, action: "goToMap", forControlEvents: .TouchUpInside)
         goButton.titleLabel?.font = UIFont(name: "Oswald-Bold", size: 25)
         view.addSubview(goButton)
         
@@ -124,6 +125,11 @@ class SecondViewController: GAITrackedViewController, UIScrollViewDelegate {
     }
 
     @IBAction func goToMapPicker(sender: UIButton) {
+        let vc = SelectHostLocation()
+        navigationController?.showViewController(vc, sender: self)
+    }
+    
+    func goToMap() {
         let vc = SelectHostLocation()
         navigationController?.showViewController(vc, sender: self)
     }

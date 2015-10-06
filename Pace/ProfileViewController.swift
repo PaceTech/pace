@@ -160,8 +160,13 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
                 }
             }
             if let first = user.firstname, last = user.lastname {
-                self.namelabel.text = "\(first) \(last)"
-                self.titleLabel.text = "\(first) \(last)"
+                
+                let idx = advance(last.startIndex, 0)
+                let lastletter = last[idx]
+                let name = "\(first) \(lastletter)."
+                
+                self.namelabel.text = name
+                self.titleLabel.text = name
                 self.view.bringSubviewToFront(self.titleLabel)
             }
             if let work = user.work {
@@ -190,7 +195,7 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         var hostcount = 0
         
         
-        NetworkController().getPaces({paces in
+        NetworkController().getPaces(1,  successHandler: {paces in
         
             for pace in paces {
               
@@ -316,6 +321,7 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
             let lastletter = namesarray[1][idx]
             let name = "\(namesarray[0]) \(lastletter)."
             
+            cell.arrow.text = ""
             cell.nameText.text = name
             cell.profImageView.sd_setImageWithURL(NSURL(string: "http://graph.facebook.com/\(friendsids[indexPath.row])/picture?type=large"))
 

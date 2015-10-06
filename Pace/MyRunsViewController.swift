@@ -47,7 +47,7 @@ class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITab
         
         self.view.addSubview(tableView)
         
-        NetworkController().getPaces({paces in
+        NetworkController().getPaces(1, successHandler: {paces in
             
             for pace in paces {
                 var shoulddrop = false
