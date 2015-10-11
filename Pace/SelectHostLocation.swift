@@ -190,7 +190,7 @@ class SelectHostLocation: GAITrackedViewController, UISearchBarDelegate {
                 if let location = geometry["location"] as? NSDictionary {
                     var latitude = location["lat"] as? Double
                     var longitude = location["lng"] as? Double
-                    mapView.camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!), zoom: 12)
+                    mapView.camera = GMSCameraPosition.cameraWithLatitude(CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!), zoom: 14)
                     var position = CLLocationCoordinate2DMake(latitude!, longitude!)
                     savedLocation = position
                     var marker = GMSMarker(position: position)

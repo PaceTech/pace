@@ -24,6 +24,7 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
     var friendsids: [String] = []
     var titleLabel: UILabel!
     var friendscount = 0
+    var page = 1
     
     override func viewDidLoad() {
         
@@ -195,7 +196,7 @@ class DetailViewController: GAITrackedViewController, UITableViewDelegate, UITab
         var hostcount = 0
         
         
-        NetworkController().getPaces(1,  successHandler: {paces in
+        NetworkController().getPaces(page,  successHandler: {paces in
         
             for pace in paces {
               

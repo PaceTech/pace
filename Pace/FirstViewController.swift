@@ -92,14 +92,14 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
         getPaces()
     }
     
-    var page = 0
+    var page = 1
     var paginatedone = false
     
     func getPaces() {
-      
+
    
-            NetworkController().getPaces(1, successHandler: {paces in
-                
+            NetworkController().getPaces(page, successHandler: {paces in
+                print(paces.count)
                 for pace in paces {
                     var shoulddrop = false
                     
@@ -181,6 +181,10 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
                         
                     }
                 }
+                if paces.count == 10 {
+                    self.page++
+                    self.getPaces()
+                }
                 
                 }, failureHandler: {
                     error in
@@ -195,106 +199,7 @@ class FirstViewController: GAITrackedViewController, UISearchBarDelegate, GMSMap
                     
             })
 
-        
-        NetworkController().getPaces(2, successHandler: {paces in
-            
-            for pace in paces {
-                var shoulddrop = false
-                
-                var isthishour = false
-                var istoday = false
-                if let timestring = pace.time as NSString? {
-                    let arr = timestring.componentsSeparatedByString("T")
-                    let date = arr[0].componentsSeparatedByString("-")
-                    let time = arr[1].componentsSeparatedByString(":")
-                    
-                    var yeardifference = self.yearDiff(date[0] as? String)
-                    var monthdifference = self.monthDiff(date[1] as? String)
-                    var daydifference = self.dayDiff(date[2] as? String)
-                    var hourdifference = self.hourDiff(time[0] as? String)
-                    var mindifference = self.minDiff(time[1] as? String)
-                    
-                    if yeardifference < 0 {
-                        shoulddrop = true
-                    } else if yeardifference == 0 {
-                        if monthdifference < 0 {
-                            shoulddrop = true
-                        } else if monthdifference == 0 {
-                            if daydifference < 0 {
-                                shoulddrop = true
-                            } else if daydifference == 0 {
-                                istoday = true
-                                if hourdifference < 2 && mindifference > 0 {
-                                    isthishour = true
-                                }
-                                if hourdifference < 0 {
-                                    
-                                } else if hourdifference == 0 {
-                                    if mindifference < 0 {
-                                        
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    
-                    if let runners = pace.participants {
-                        for runner in runners {
-                            if "\(runner)" == "18" {
-                                shoulddrop = true
-                            }
-                        }
-                    }
-                    
-                    if shoulddrop {
-                    } else {
-                        if self.pacetoggle == 0 {
-                            if isthishour {
-                                var marker = GMSMarker(position: pace.location!)
-                                marker.title = "Join Pace"
-                                marker.map = self.mapView
-                                marker.userData = pace
-                                marker.icon = UIImage(named: "paceDropPin")
-                            }
-                        }
-                        else if self.pacetoggle == 1 {
-                            if istoday || isthishour {
-                                var marker = GMSMarker(position: pace.location!)
-                                marker.title = "Join Pace"
-                                marker.map = self.mapView
-                                marker.userData = pace
-                                marker.icon = UIImage(named: "paceDropPin")
-                            }
-                        } else if self.pacetoggle == 2 {
-                            var marker = GMSMarker(position: pace.location!)
-                            marker.title = "Join Pace"
-                            marker.map = self.mapView
-                            marker.userData = pace
-                            marker.icon = UIImage(named: "paceDropPin")
-                        }
-                        
-                    }
-                    
-                    
-                }
-            }
-            
-            }, failureHandler: {
-                error in
-                
-                let alertController = UIAlertController(title: NSLocalizedString("Uh oh!", comment: ""), message: NSLocalizedString("Something went wrong loading the paces.", comment: ""), preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: NSLocalizedString("I'll check back later.", comment: ""), style: UIAlertActionStyle.Default) {
-                    UIAlertAction in
-                    
-                }
-                alertController.addAction(okAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-                
-        })
 
-        
-       
     }
     
     func yearDiff(year: String?) -> Int {

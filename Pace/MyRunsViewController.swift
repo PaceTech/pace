@@ -14,6 +14,7 @@ class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITab
     var tableView: UITableView  =   UITableView()
     var items: [String] = [String]()
     var paces: [Pace] = [Pace]()
+    var page = 1
     
     override func viewDidLoad() {
         
@@ -47,7 +48,15 @@ class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITab
         
         self.view.addSubview(tableView)
         
-        NetworkController().getPaces(1, successHandler: {paces in
+        
+        getPaces()
+        
+        
+        
+    }
+    
+    func getPaces() {
+        NetworkController().getPaces(page, successHandler: {paces in
             
             for pace in paces {
                 var shoulddrop = false
@@ -116,15 +125,19 @@ class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITab
                 }
                 
                 
-                                    if shoulddrop {}
-                                    else {
-                                     
-                                        
-                                        self.items.append("\(startstring) run on \(date[1])/\(date[2]) at \(time[0]):\(time[1])")
-                                        self.paces.append(pace)
-                                        self.tableView.reloadData()
-                                    }
-                                    
+                if shoulddrop {}
+                else {
+                    
+                    
+                    self.items.append("\(startstring) run on \(date[1])/\(date[2]) at \(time[0]):\(time[1])")
+                    self.paces.append(pace)
+                    self.tableView.reloadData()
+                }
+                
+            }
+            if paces.count == 10 {
+                self.page++
+                self.getPaces()
             }
             
             }, failureHandler: {
@@ -132,10 +145,6 @@ class MyRunsViewController: GAITrackedViewController, UITableViewDelegate, UITab
                 println(error)
                 
         })
-
-        
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {

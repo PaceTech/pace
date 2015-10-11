@@ -103,7 +103,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="8l8-XI-ong"/>
                                 </constraints>
-                                <state key="normal" title="HOST A RUN">
+                                <state key="normal" title="HOST">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
